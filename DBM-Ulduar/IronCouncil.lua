@@ -11,7 +11,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START",
 	"SPELL_AURA_APPLIED",
         "UNIT_DIED",
-	"SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS",
+        "SPELL_AURA_REMOVED"
 )
 
 mod:AddBoolOption("HealthFrame", true)
@@ -131,6 +132,14 @@ function mod:UNIT_DIED(args)
         elseif args.destName == L.RunemasterMolgeim then
         timerRuneofPower:Cancel()
         timerRuneofDeath:Cancel()		
+	end
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args:IsSpellID(61903, 63493, 312416, 312769) then            -- энергетический удар
+		timerFusionPunchActive:Cancel()
+        elseif args:IsSpellID(312418, 312419, 312771, 312772) then
+                timerOverwhelmingPower:Cancel()
 	end
 end
 
