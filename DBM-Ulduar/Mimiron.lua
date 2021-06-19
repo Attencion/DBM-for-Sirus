@@ -29,13 +29,11 @@ local warnBombSpawn			= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb			= mod:NewSpellAnnounce(64623, 3)
 local warnRockets			= mod:NewSpellAnnounce(63041, 2)
 local warnFlames			= mod:NewSpellAnnounce(312450, 2)
-local warnShockBlast2			= mod:NewSpellAnnounce(312792, 4)
+local warnShockBlast2			= mod:NewSpellAnnounce(312792, 1)
 
 local warnShockBlast			= mod:NewSpecialWarning("WarningShockBlast", nil, false)
 local warnDarkGlare			= mod:NewSpecialWarningSpell(63293)
 
-mod:AddBoolOption("ShockBlastWarningInP1", mod:IsMelee(), "announce")
-mod:AddBoolOption("ShockBlastWarningInP4", true, "announce")
 
 local enrage 				= mod:NewBerserkTimer(900)
 local timerHardmode			= mod:NewTimer(610, "TimerHardmode", 312811)
@@ -148,13 +146,12 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(63631, 312439, 312792) then   -- Шоковый удар
-		if phase == 1 and self.Options.ShockBlastWarningInP1 or phase == 4 and self.Options.ShockBlastWarningInP4 then
-			warnShockBlast:Show()
-		end
                 warnShockBlast2:Show()
+		warnShockBlast:Show()
 		timerShockBlast:Start()
 		timerNextShockblast:Start()
 		PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+                DBM.RangeCheck:Show(15)
 	end
 	if args:IsSpellID(64529, 62997, 312437, 312790) then    -- Взрыв плазмы
 		timerPlasmaBlastCD:Start()
@@ -200,18 +197,22 @@ local function show_warning_for_spinup()
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(63027, 63667, 312436, 312789) then				-- Мины
+	if args:IsSpellID(63027, 63667, 312436, 312789) then		-- Мины
 		timerProximityMines:Start()
 
-        elseif args:IsSpellID(312450, 312803, 64566) then  -- Пламя
+        elseif args:IsSpellID(312450, 312803, 64566) then               -- Пламя
                 warnFlames:Show()
                 timerNextFlames:Start()
 
-        elseif args:IsSpellID(63041, 63036, 64064, 64402) then  -- Ракетный залп
+        elseif args:IsSpellID(63041, 63036, 64064, 64402) then          -- Ракетный залп
                 warnRockets:Show()
                 timerNextRockets:Start()
 
-	elseif args:IsSpellID(63414, 312441, 312794) then			-- Вращение
+        elseif args:IsSpellID(63631, 312439, 312792) then               -- Шоковый удар
+                if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(6)
+		end
+	elseif args:IsSpellID(63414, 312441, 312794) then		-- Вращение
 		is_spinningUp = true
 		timerSpinUp:Start()
 		timerDarkGlareCast:Schedule(4)
@@ -239,7 +240,6 @@ function mod:NextPhase()
 		timerProximityMines:Stop()
 		timerNextFlameSuppressant:Stop()
 		timerP1toP2:Start()
-                timerNextFlames:Start(10)
                 timerNextRockets:Schedule(48)		
 		timerNextDarkGlare:Schedule(38)
 		if self.Options.HealthFrame then
@@ -250,7 +250,8 @@ function mod:NextPhase()
 			DBM.RangeCheck:Hide()
 		end
 		if hardmode then
-            timerNextFrostBomb:Start(114)
+                        timerNextFrostBomb:Start(114)
+                        timerNextFlames:Start(10)
         end
 
 	elseif phase == 3 then
@@ -263,11 +264,13 @@ function mod:NextPhase()
 		timerNextDarkGlare:Cancel()
 		timerNextFrostBomb:Cancel()
 		timerP2toP3:Start()
-                timerNextFlames:Start(35)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
 		end
+                if hardmode then
+                        timerNextFlames:Start(35)
+        end
 
 	elseif phase == 4 then
 		if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
@@ -282,7 +285,6 @@ function mod:NextPhase()
                 timerNextRockets:Schedule(30)
 		timerDarkGlareCast:Schedule(52)
                 timerNextShockblast:Schedule(55)
-                timerNextFlames:Start(28)
 		if self.Options.HealthFramePhase4 or self.Options.HealthFrame then
 			DBM.BossHealth:Show(L.name)
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
@@ -292,7 +294,8 @@ function mod:NextPhase()
 		if hardmode then
 			self:UnscheduleMethod("Flames")
 			self:Flames()
-            timerNextFrostBomb:Start(73)
+                        timerNextFrostBomb:Start(73)
+                        timerNextFlames:Start(28)
         end
 	end
 end

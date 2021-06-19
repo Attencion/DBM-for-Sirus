@@ -174,19 +174,20 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(312418, 312419, 312771, 312772) then	-- Переполняющая энергия
 		warnOverwhelmingPower:Show(args.destName)
 		if mod:IsDifficulty("heroic10") then
-			timerOverwhelmingPower:Start(60, args.destName)
+			timerOverwhelmingPower:Start(35, args.destName)
 		else
 			timerOverwhelmingPower:Start(35, args.destName)
 		end
 		if self.Options.SetIconOnOverwhelmingPower then
 			if mod:IsDifficulty("heroic10") then
-				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)
+				self:SetIcon(args.destName, 8, 35) -- skull for 60 seconds (until meltdown)
 			else
 				self:SetIcon(args.destName, 8, 35) -- skull for 35 seconds (until meltdown)
 			end
 		end
                 if self.Options.YellOnOverwhelmingPower and args:IsPlayer() then
 				SendChatMessage(L.YellOverwhelmingPower, "SAY")
+                                DBM.RangeCheck:Show(15)
                 end
 	elseif args:IsSpellID(63486, 61887, 312432, 312433, 312785, 312786) then	-- Светящиеся придатки
 		timerLightningTendrils:Start()

@@ -397,7 +397,7 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	MagneticCore		= "Магнитное ядро у |3-1(>%s<)",
-	WarningShockBlast	= "Шоковый удар - бегите",
+	WarningShockBlast	= "Шоковый удар - БЕГИТЕ",
 	WarnBombSpawn		= "Бомбот"
 }
 

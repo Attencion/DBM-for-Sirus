@@ -32,13 +32,13 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer			= mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCDTimer(18, 312889)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 1, nil)                         -- Разряд молнии
-local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)   -- Цепная молния
-local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 1, nil, DBM_CORE_HEALER_ICON)   -- нова
-local timerVolley                       = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON)   -- залп
-local timerUnbalancingStrike	        = mod:NewTargetTimer(15, 312898, nil, nil, nil, 3, nil)                     -- дисбаланс
+local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 1, nil)                          -- Разряд молнии
+local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)    -- Цепная молния
+local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 1, nil, DBM_CORE_HEALER_ICON)    -- нова
+local timerVolley                       = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON)    -- залп
+local timerUnbalancingStrike	        = mod:NewTargetTimer(15, 312898, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON)  -- дисбаланс
 local timerHardmode			= mod:NewTimer(175, "TimerHardmode")
-local timerUnbalancingStrikeCD	 	= mod:NewCDTimer(20, 312898, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON)     -- дисбаланс
+local timerUnbalancingStrikeCD	 	= mod:NewCDTimer(20, 312898, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON)      -- дисбаланс
 local timerAchieve		        = mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
 
 local yellBomb		                = mod:NewYell(312910)
