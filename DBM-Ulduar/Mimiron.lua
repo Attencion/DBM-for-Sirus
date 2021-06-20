@@ -150,7 +150,7 @@ function mod:SPELL_CAST_START(args)
 		warnShockBlast:Show()
 		timerShockBlast:Start()
 		timerNextShockblast:Start()
-		PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
+		PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
                 DBM.RangeCheck:Show(15)
 	end
 	if args:IsSpellID(64529, 62997, 312437, 312790) then    -- Взрыв плазмы

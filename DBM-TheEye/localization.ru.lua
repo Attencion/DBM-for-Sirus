@@ -63,14 +63,14 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-        SpecWarnShadowLow   = "У Воплощения мало хп - СМЕНИ ЦЕЛЬ",
+        specWarnShadowLow   = "У Воплощения мало хп - СМЕНИ ЦЕЛЬ",
         specWarnStar        = "Звёздное пламя - РАССЕЙТЕ",
         specWarHeal	    = "Высшее исцеление - ПРЕРВИТЕ",
 	WarnAddsSoon        = "Скоро вызов послушников"
 }
 
 L:SetOptionLocalization{
-        SpecWarnShadowLow   = "Спец-предупреждение, когда у Воплощения Бездны меньше 40% ХП",
+        specWarnShadowLow   = "Спец-предупреждение, когда у Воплощения Бездны меньше 40% ХП",
         specWarnStar    = "Спец-предупреждение об $spell:308565 (для диспела)",
         specWarnHeal	= "Спец-предупреждение об $spell:308561 (для кика)",
 	WarnAddsSoon    = "Предупреждение о скором вызове послушников",

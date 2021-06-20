@@ -66,7 +66,7 @@ local specWarnStar		= mod:NewSpecialWarningDispel(308565, MagicDispeller)
 local specWarnWrathH	        = mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 local specWarnDebaf  	        = mod:NewSpecialWarningRun(308544, nil, nil, nil, 3, 4) -- Дебаф 1я фаза
 local specWarnFlashVoid         = mod:NewSpecialWarningDefensive(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
-local specWarnShadowLow		= mod:NewSpecialWarning("SpecWarnShadowLow", nil, nil, nil, 1, 2)
+local specWarnShadowLow		= mod:NewSpecialWarning("specWarnShadowLow", nil, nil, nil, 1, 2)
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, nil, nil, 1)
 local timerNextGates	        = mod:NewTimer(40, "TimerNextGates", 308545, nil, nil, 3)
@@ -309,7 +309,7 @@ function mod:UNIT_HEALTH(uId)
 		        warnPhase2:Show()
 		end
 	end
-	if (mod:IsDifficulty("heroic25")) and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedShadowGUIDs[UnitGUID(uId)] then
+	if (mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25")) and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedShadowGUIDs[UnitGUID(uId)] then
 		warnedShadowGUIDs[UnitGUID(uId)] = true
 		specWarnShadowLow:Show()
 		specWarnShadowLow:Play("stopattack")

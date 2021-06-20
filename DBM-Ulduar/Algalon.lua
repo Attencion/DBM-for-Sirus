@@ -26,7 +26,7 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
-local warnPhasePunch		        = mod:NewStackAnnounce(313033, 3)
+local warnPhasePunch		        = mod:NewStackAnnounce(313033, 1, nil, "Tank|Healer")
 local announceBigBang			= mod:NewSpellAnnounce(313034, 3)
 local warnPhase2			= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
@@ -48,7 +48,7 @@ local timerNextCollapsingStar	        = mod:NewTimer(15, "NextCollapsingStar", n
 local timerCDCosmicSmash		= mod:NewTimer(25, "PossibleNextCosmicSmash", nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 313037, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 local warned_preP2 = false
 local warned_star = false
@@ -111,28 +111,10 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(64412, 312680, 313033) then   -- Фазовый удар
-		local uId = DBM:GetRaidUnitId(args.destName)
-		if self:IsTanking(uId) then
-			local amount = args.amount or 1
-			if amount >= 3 then
-				local _, _, _, _, _, _, expireTime = DBM:UnitDebuff("player", spellId)
-				local remaining
-				if expireTime then
-					remaining = expireTime-GetTime()
-				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 8) then
-					specPhasePunchlf:Show(args.destName)
-					specPhasePunchlf:Play("tauntboss")
-				else
-					specWarnPhasePunch:Show(args.destName, amount)
-				end
-			else
-				warnPhasePunch:Show(args.destName, args.amount or 1)
-			end
-                        timerPhasePunch:Start(args.destName)
-                        timerNextPhasePunch:Start()
-		end
-        end
+                warnPhasePunch:Show(args.destName, args.amount or 1)
+                timerPhasePunch:Start(args.destName)
+                timerNextPhasePunch:Start()
+	end
 end
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

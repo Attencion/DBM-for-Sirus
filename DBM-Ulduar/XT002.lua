@@ -17,7 +17,7 @@ mod:RegisterEvents(
 )
 
 local warnLightBomb			= mod:NewTargetAnnounce(312588, 1)
-local warnGravityBomb			= mod:NewTargetAnnounce(312943, 3)
+local warnGravityBomb			= mod:NewTargetAnnounce(312943, 1)
 local warnHeart			        = mod:NewSpellAnnounce(312945, 1)
 local warnPhase2			= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
@@ -102,6 +102,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(63024, 64234, 312590, 312943) then         -- Гравибомба
                 timerGravityBombCD:Start()
 		if args:IsPlayer() then
+                        PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
 			specWarnGravityBomb:Show()
                         yellGravityBomb:Yell()
 			DBM.RangeCheck:Show(20)
