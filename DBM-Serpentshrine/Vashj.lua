@@ -226,7 +226,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 310636 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
-			timerStaticAngerCD:Start()
 			yellStaticAnger:Yell()
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
@@ -249,7 +248,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 310659 then -- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger2:Show()
-			timerStaticAnger2CD:Start()
 			yellStaticAnger2:Yell()
 		else
 			local uId = DBM:GetRaidUnitId(args.destName)
@@ -302,6 +300,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			specWarnCharge:Show()
 		end
+	elseif spellId == 310636 then -- хм заряд1
+		timerStaticAngerCD:Start()
+	elseif spellId == 310659 then -- хм заряд2
+		timerStaticAnger2CD:Start()
 	end
 end
 

@@ -50,7 +50,7 @@ local timerTopCast        = mod:NewCastTimer(3, 310140, nil, nil, nil, 2) -- Ð¢Ð
 local timerTopCD          = mod:NewCDTimer(20, 310140, nil, nil, nil, 2)
 local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
 local timerKrikCD         = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
-local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 1)
+local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 3)
 
 local berserkTimerhm      = mod:NewBerserkTimer(360)
 
@@ -84,7 +84,7 @@ do
 				end
 			end
 			if self.Options.SetIconOnSuhTargets then
-				self:SetIcon(UnitName(v), SvazIcons, 20)
+				self:SetIcon(UnitName(v), SuhIcons, 20)
 			end
 			SuhIcons = SuhIcons - 1
 		end

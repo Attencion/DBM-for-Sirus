@@ -36,21 +36,19 @@ do
 end
 
 local warnStrongBeat	     = mod:NewStackAnnounce(310548, 1, nil, "Tank|Healer") --Клешня
-local warnPoisonous	     = mod:NewTargetAnnounce(310549, 1) --Ядовитая рвота
+local warnPoisonous	     = mod:NewSpellAnnounce(310549, 1) --Ядовитая рвота
 local warnMassiveShell	     = mod:NewTargetAnnounce(310560, 1) --Обстрел
 local warnPowerfulShot	     = mod:NewSpellAnnounce(310564, 2)  --Мощный выстрел
 local warnCallGuardians	     = mod:NewSpellAnnounce(310557, 1)  --Вызов треша
 local warnParalysis	     = mod:NewSpellAnnounce(310555, 2)  --Паралич
 local warnCallGuardiansSoon  = mod:NewPreWarnAnnounce(310557, 5, 1)  --Вызов треша
-local warnRippingThorn       = mod:NewCountAnnounce(310546, 2, nil, false)
-local warnPoisonousBlood     = mod:NewCountAnnounce(310547, 2, nil, false)
 
 local specwarnCallGuardians = mod:NewSpecialWarningSwitch(310557, "Dps", nil, nil, 1, 2) --треш
-local specWarnParalysis	    = mod:NewSpecialWarning("specWarnParalysis", MagicDispeller) --Паралич
 local specWarnShrillScreech = mod:NewSpecialWarning("specWarnShrillScreech", canInterrupt)
 local specWarnRippingThorn   = mod:NewSpecialWarningStack(310546, nil, 7, nil, nil, 1, 6)
 local specWarnPoisonousBlood  = mod:NewSpecialWarningStack(310547, nil, 7, nil, nil, 1, 6)
-local specWarnPoisonous	     = mod:NewSpecialWarningYou(310549, "Tank", nil, nil, 1, 2) -- рвота
+local specWarnPoisonous	     = mod:NewSpecialWarningYou(310549, nil, nil, nil, 1, 2) -- рвота
+local specWarnStrongBeat     = mod:NewSpecialWarningYou(310548, nil, nil, nil, 1, 2) -- клешня
  
 
 local timerParalysis	    = mod:NewBuffFadesTimer(10, 310555, nil, nil, nil, 7, nil, DBM_CORE_MAGIC_ICON)
@@ -92,6 +90,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnShrillScreech:Show()
                 specWarnShrillScreech:Play("kickcast")
          elseif args:IsSpellID(310549) then                    -- рвота
+                warnPoisonous:Show()
                 timerPoisonousCD:Start() 
          elseif args:IsSpellID(310564, 310565) then            -- Мощный выстрел
 		warnPowerfulShot:Show(args.destName)
@@ -116,44 +115,38 @@ function mod:SPELL_CAST_START(args)
                 specwarnCallGuardians:Play("killmob")
                 timerCallGuardiansCD:Start()
                 warnCallGuardiansSoon:Schedule(40)
-                PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
+                PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
          end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
          if args:IsSpellID(310546) then	 -- шип
-		if args:IsPlayer() then
-                        WarnRippingThorn:Show(args.amount or 1)
-			timerRippingThorn:Start()
-			if (args.amount or 1) >= 7 then
-				specWarnRippingThorn:Show(args.amount)
-				specWarnRippingThorn:Play("stackhigh")
-                end
+		timerRippingThorn:Start()
+		if (args.amount) >= 7 then
+			specWarnRippingThorn:Show(args.amount)
+			specWarnRippingThorn:Play("stackhigh")
          end
 
          elseif args:IsSpellID(310547) then	-- кровь
-		if args:IsPlayer() then
-                        warnPoisonousBlood:Show(args.amount or 1)
-			timerPoisonousBlood:Start()
-			if (args.amount or 1) >= 7 then
-				specWarnPoisonousBlood:Show(args.amount)
-				specWarnPoisonousBlood:Play("stackhigh")
-                end
+		timerPoisonousBlood:Start()
+		if (args.amount) >= 7 then
+			specWarnPoisonousBlood:Show(args.amount)
+			specWarnPoisonousBlood:Play("stackhigh")
          end
 
          elseif args:IsSpellID(310548) then		-- клешня
+                warnStrongBeat:Show(args.destName, args.amount or 1)
                 if args:IsPlayer() then
-                        warnStrongBeat:Show(args.destName, args.amount or 1)
+                        specWarnStrongBeat:Show()
                         timerStrongBeat:Start(args.destName)
                 end
 
-         elseif args:IsSpellID(310555) then		-- паралич
-		specwarnParalysis:Show()
+         elseif args:IsSpellID(310555) then		-- паралич)
+                warnParalysis:Show()
                 timerParalysis:Start()
                 timerParalysisCD:Start()
 
          elseif args:IsSpellID(310549) then		-- рвота
-		warnPoisonous:Show(args.destName)
                 timerPoisonous:Start(args.destName)
                 specWarnPoisonous:Show()
          end
@@ -161,9 +154,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
          if args:IsSpellID(310548) then                 -- Клешня
-                timerStrongBeatCD:Start()
-         elseif args:IsSpellID(310555) then             -- паралич
-                warnParalysis:Show()        
+                timerStrongBeatCD:Start()        
          end
 end
 
