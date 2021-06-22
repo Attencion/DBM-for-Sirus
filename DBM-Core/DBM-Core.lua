@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210620180000"),
+	Revision = parseCurseDate("20210621070000"),
 	DisplayVersion = "5.54", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 02) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -123,7 +123,7 @@ DBM.DefaultOptions = {
 	ModelSoundValue = "Short",
 	CountdownVoice = "Alarak",
 	CountdownVoice2 = "Kerrigan",
-	CountdownVoice3 = "Tani",
+	CountdownVoice3 = "Jim Raynor",
 	ChosenVoicePack = "None",
 	VoiceOverSpecW2 = "DefaultOnly",
 	AlwaysPlayVoice = false,
@@ -324,33 +324,36 @@ DBM.Bars = DBT:New()
 DBM.Mods = {}
 DBM.ModLists = {}
 DBM.Counts = {
+	{text = "Alarak",			   		value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 5},
+	{text = "Alarak2",			   		value = "Alarak2",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak2\\", max = 5},
+	{text = "Artanis",				        value = "Artanis",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Artanis\\", max = 5},
+	{text = "Kerrigan",					value = "Kerrigan",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kerrigan\\", max = 5},
+	{text = "Jim Raynor",					value = "Jim Raynor",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Raynor\\", max = 5},
+	{text = "Vorazun",					value = "Vorazun",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Vorazun\\", max = 5},
+	{text = "Tychus",					value = "Tychus",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Tychus\\", max = 5},
 	{text = "Corsica",					value = "Corsica",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Corsica\\", max = 10},
 	{text = "Koltrane",					value = "Kolt",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kolt\\", max = 10},
 	{text = "Smooth",					value = "Smooth",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Smooth\\", max = 10},
 	{text = "Smooth (Reverb)",			value = "SmoothR",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\SmoothReverb\\", max = 10},
 	{text = "Pewsey",					value = "Pewsey",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Pewsey\\", max = 10},
-	{text = "Bear (Child)",				value = "Bear",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Bear\\", max = 10},
 	{text = "Moshne",					value = "Mosh",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Mosh\\", max = 5},
-	{text = "Anshlun (ptBR)",			value = "Anshlun",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Anshlun\\", max = 10},
-	{text = "Neryssa (ptBR)",			value = "Neryssa",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Neryssa\\", max = 10},
-	{text = "Alarak",			   		value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 5},
-	{text = "Kerrigan",					value = "Kerrigan",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kerrigan\\", max = 5},
-	{text = "Tani",						value = "Tani",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Tani\\", max = 10},
 }
 --Sounds use SoundKit Ids (not file data ids)
 DBM.Victory = {
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
+	{text = "Alarak: Rakshir",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
+	{text = "Artanis: En Taro",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Artanis_En_Taro.ogg", length = 4},
+	{text = "Vorazun: History",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunHistory.ogg", length = 4},
+	{text = "Tychus: Victory",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Tychus_EndGame.ogg", length = 3},
 	{text = "Blakbyrd: FF Fanfare",		value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\bbvictory.ogg", length = 4},
 	{text = "SMG: FF Fanfare",		value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\SmoothMcGroove_Fanfare.ogg", length = 4},
-	{text = "Alarak: Rakshir",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
-	{text = "Vorazun: History",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunHistory.ogg", length = 4},
-	{text = "Vorazun: GG",			        value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunGG.ogg", length = 4},
 }
 DBM.Defeat = {
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "Alizabal: Raiders",	        value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Alizabal_Incompetent_Raiders.ogg", length = 4},
+	{text = "Alizabal: Incompetent Raiders",	value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Alizabal_Incompetent_Raiders.ogg", length = 4},
+	{text = "Bwonsamdi: Impressive Death",	        value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Bwonsamdi_Impressive_Death.ogg", length = 6},
 	{text = "Kologarn: You Fail",		        value = "Sound\\Creature\\Kologarn\\UR_Kologarn_Slay02.wav", length = 4},
 	{text = "Hodir: Tragic",			value = "Sound\\Creature\\Hodir\\UR_Hodir_Slay01.wav", length = 4},
 	{text = "Thorim: Failures",			value = "Sound\\Creature\\Thorim\\UR_Thorim_P1Wipe01.wav", length = 4},
