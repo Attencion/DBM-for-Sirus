@@ -50,7 +50,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(312355, 312708, 62907, 312363, 312716) then		--защитники жизни
+	if args:IsSpellID(312355, 312708, 62907, 312363, 312716) then		-- Р·Р°С‰РёС‚РЅРёРєРё Р¶РёР·РЅРё
 		warnWardofLife:Show()
 		timerWardoflifeCD:Start()
                 PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
@@ -58,13 +58,13 @@ function mod:SPELL_SUMMON(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312689, 62396) then		        --Дыхание
+	if args:IsSpellID(312689, 62396) then		        -- РґС‹С…Р°РЅРёРµ
 		timerFlameVents:Start()
-	elseif args:IsSpellID(312692, 62475, 312339) then	--Перезагрузка
+	elseif args:IsSpellID(312692, 62475, 312339) then	-- РїРµСЂРµРіСЂСѓР·РєР°
 		timerSystemOverload:Start()
 		warnSystemOverload:Show()
                 PlaySoundFile("Sound\\Creature\\FlameLeviathan\\UR_Leviathan_Overload02.wav")
-	elseif args:IsSpellID(62374) then	                -- преследование
+	elseif args:IsSpellID(62374) then	                -- РїСЂРµСЃР»РµРґРѕРІР°РЅРёРµ
 		local target = guids[args.destGUID]
 		warnNextPursueSoon:Schedule(25)
 		timerPursued:Start(target)
@@ -75,7 +75,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				pursueSpecWarn:Show()
 			end
 		end
-	elseif args:IsSpellID(312705, 62533, 312352) then		--Ярость ходира
+	elseif args:IsSpellID(312705, 62533, 312352) then		-- СЏСЂРѕСЃС‚СЊ С…РѕРґРёСЂР°
 		warnHodirsFury:Show(args.destName)
 	end
 
