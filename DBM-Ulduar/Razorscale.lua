@@ -68,10 +68,11 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33186, "Razorscale", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(64733, 64704) and args:IsPlayer() then  --бомба
+	if args:IsSpellID(64733, 64704) and args:IsPlayer() then  -- Бомба
 		specWarnDevouringFlame:Show()		
 	end
 end
@@ -110,12 +111,38 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, mob)
 	end
 end
 
+--function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpellID(312721, 64771, 312368) then   -- Плавящийся доспех
+                        timerArmorfire:Start(args.destName)
+                if self:IsTank() then
+
+                        warnArmorfire:Show(args.destName, args.amount or 1)
+                        timerNextArmorfire:Start()
+                        specWarnArmorfire:Show()
+                else
+                        specWarnArmorfirelf:Show(args.destName)
+                        specWarnArmorfirelf:Play("tauntboss")
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(312721, 64771, 312368) then   -- Плавящийся доспех
-                warnArmorfire:Show(args.destName, args.amount or 1)
-                timerArmorfire:Start(args.destName)
-                timerNextArmorfire:Start()
-	end
+                        timerArmorfire:Start(args.destName)
+                        timerNextArmorfire:Start()
+                if self:IsTanking(uId) then
+			if (args.amount) >= 2 then
+				if args:IsPlayer() then
+					specWarnArmorfire:Show(args.amount)
+					specWarnArmorfire:Play("stackhigh")
+				else
+					if not UnitIsDeadOrGhost("player") and not DBM:UnitDebuff("player", args.spellName) then
+						specWarnArmorfirelf:Show(args.destName)
+						specWarnArmorfirelf:Play("tauntboss")
+					end
+				end
+                        end
+                end
+        end
 end
  
 function mod:SPELL_CAST_START(args)

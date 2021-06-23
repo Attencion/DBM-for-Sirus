@@ -46,6 +46,7 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33118, "Ignis", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)
@@ -73,7 +74,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312378, 312731, 312732) and args:IsPlayer() then		-- Ковш
+	if args:IsSpellID(312378, 312731, 312732) and args:IsPlayer() then	-- Ковш
 		announceSlagPot:Show(args.destName)
 		timerSlagPot:Start(args.destName)
                 yellSlagPot:Yell()

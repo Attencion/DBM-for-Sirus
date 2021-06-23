@@ -45,6 +45,7 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 32845, "Hodir", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)

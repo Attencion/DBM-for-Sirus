@@ -73,17 +73,18 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 32930, "Kologarn", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:UNIT_DIED(args)
-	if self:GetCIDFromGUID(args.destGUID) == 32934 then 		-- правая рука
+	if self:GetCIDFromGUID(args.destGUID) == 32934 then 		-- Правая рука
 		timerRespawnRightArm:Start()
 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
 			timerTimeForDisarmed:Start(12)
 		else
 			timerTimeForDisarmed:Start()			
 		end
-	elseif self:GetCIDFromGUID(args.destGUID) == 32933 then		-- левая рука
+	elseif self:GetCIDFromGUID(args.destGUID) == 32933 then		-- Левая рука
 		timerRespawnLeftArm:Start()
 		if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
 			timerTimeForDisarmed:Start(12)

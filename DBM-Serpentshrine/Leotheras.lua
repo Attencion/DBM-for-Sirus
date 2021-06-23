@@ -41,7 +41,7 @@ local warnPepels  	     	= mod:NewTargetAnnounce(310514, 3) -- Испепеле�
 local warnKlei                  = mod:NewTargetAnnounce(310496, 4) -- Клеймо
 local warnMeta		        = mod:NewSpellAnnounce(310484, 3) --Мета
 local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
-local warnVsp		        = mod:NewStackAnnounce(310521, 5) --Вспышка
+local warnVsp		        = mod:NewStackAnnounce(310521, 1, nil, "Tank|Healer") --Вспышка
 local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2     		= mod:NewPhaseAnnounce(2)
 
@@ -152,6 +152,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(310484) then
 	warnMeta:Show()
 	timerMetaCast:Start()
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
 	elseif args:IsSpellID(310478) then
 	warnNat:Show(args.destName)
 	timerNatCast:Start()
@@ -180,8 +181,8 @@ function mod:SPELL_AURA_APPLIED(args)
                 warnKogti:Show(args.destName, args.amount or 1)
 		timerKogti:Start(args.destName)
 	elseif args:IsSpellID(310521) then --хм Вспышка
-		if (args.amount or 1) > 4 then
-                warnVsp:Show(args.destName, args.amount or 1)
+		if self:IsTank() then
+                        warnVsp:Show(args.destName, args.amount or 1)
 		end
 	elseif args:IsSpellID(310496) then --хм Клеймо
 		warnKlei:Show(args.destName)

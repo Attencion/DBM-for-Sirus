@@ -43,7 +43,7 @@ mod:AddSetIconOption("SetIconOnGravityBombTarget", 312943, true, false, {8})
 mod:AddSetIconOption("SetIconOnLightBombTarget", 312588, true, false, {7})
 mod:AddBoolOption("RangeFrame")
 
-mod.vb.phase = 1
+mod.vb.phase = 0
 
 local warned_preP1 = false
 local warned_preP2 = false
@@ -53,41 +53,38 @@ function mod:OnCombatStart(delay)
         self.vb.phase = 1
         warned_preP1 = false
         warned_preP2 = false
-	enrageTimer:Start(-delay)
-	timerAchieve:Start()
 	if mod:IsDifficulty("heroic10") then
 		timerTympanicTantrumCD:Start(35-delay)
 	else
 		timerTympanicTantrumCD:Start(68-delay)
 	end
-	if self.Options.RangeFrame then
-    DBM.RangeCheck:Show(20)	   
-    end
+        enrageTimer:Start(-delay)
+	timerAchieve:Start()
 end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33293, "XT002", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(62776, 312586, 312939) then			-- Раскаты ярости
+	if args:IsSpellID(62776, 312586, 312939) then			--Раскаты ярости
 		timerTympanicTantrumCD:Stop()
                 timerTympanicTantrum:Start()
                 PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
-        elseif args:IsSpellID(312945, 312592, 64193, 65737) then   -- Сердце
+        elseif args:IsSpellID(312945, 312592, 64193, 65737) then   --Сердце
                 warnHeart:Show()
                 timerHeart:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62775, 312587, 62776, 312586, 312940, 312939) and args.auraType == "DEBUFF" then   -- Раскаты ярости
+	if args:IsSpellID(62775, 312587, 62776, 312586, 312940, 312939) and args.auraType == "DEBUFF" then   --Раскаты ярости
 		timerTympanicTantrumCD:Start()
 		timerTympanicTantrum:Start()
 
-	elseif args:IsSpellID(63018, 65121, 312588, 312941) then 	-- Опаляющий свет
-                timerLightBombCD:Start()
+	elseif args:IsSpellID(63018, 65121, 312588, 312941) then 	--Опаляющий свет
 		if args:IsPlayer() then
 			specWarnLightBomb:Show()
                         specWarnLightBomb:Play("moveaway")
@@ -99,8 +96,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		warnLightBomb:Show(args.destName)
 		timerLightBomb:Start(args.destName)
-	elseif args:IsSpellID(63024, 64234, 312590, 312943) then         -- Гравибомба
-                timerGravityBombCD:Start()
+                timerLightBombCD:Start()
+	elseif args:IsSpellID(63024, 64234, 312590, 312943) then         --Гравибомба
 		if args:IsPlayer() then
                         PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
 			specWarnGravityBomb:Show()
@@ -112,6 +109,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		warnGravityBomb:Show(args.destName)
 		timerGravityBomb:Start(args.destName)
+                timerGravityBombCD:Start()
 	end
 end
 
@@ -127,20 +125,22 @@ function mod:UNIT_HEALTH(uId)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(63018, 65121, 312588, 312941) then   -- Свет
+	if args:IsSpellID(63018, 65121, 312588, 312941) then   --Свет
 	    if args:IsPlayer() and self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end
 		if self.Options.SetIconOnLightBombTarget then
 			self:SetIcon(args.destName, 0)
 		end
-	elseif args:IsSpellID(63024, 64234, 312590, 312943) then   -- Бомба
+                timerLightBomb:Stop()
+	elseif args:IsSpellID(63024, 64234, 312590, 312943) then   --Бомба
 		if args:IsPlayer() and self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end	
 		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 0)
 		end
+                timerGravityBomb:Stop()
 	end
 end
 

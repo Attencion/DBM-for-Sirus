@@ -29,20 +29,21 @@ local warnPhase2		= mod:NewPhaseAnnounce(2, 3)
 local warnSimulKill		= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury			= mod:NewTargetAnnounce(312880, 1)
 local warnRoots			= mod:NewTargetAnnounce(312860, 1)
-local warnDar                   = mod:NewSpellAnnounce(64185, 1)
+local WarnLifebinder            = mod:NewSpellAnnounce(62869, 1)
+local warnAlliesOfNature        = mod:NewSpellAnnounce(62678, 1)
 
 
 local specWarnFury		= mod:NewSpecialWarningYou(312880)
 local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster") -- Hard mode
 local specWarnBeam		= mod:NewSpecialWarningMove(312888)	           -- Hard mode
-local specWarnDar	        = mod:NewSpecialWarningSwitch(64185, "Dps", nil, nil, 1, 2)
+local specWarnLifebinder	= mod:NewSpecialWarningSwitch(62869, "Dps", nil, nil, 1, 2)
 
 local enrage 			= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewCDTimer(60, 62678, "Призыв союзников", nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill")
 local timerFury			= mod:NewTargetTimer(10, 312880, nil, nil, nil, 3, nil)
 local timerTremorCD 		= mod:NewCDTimer(35, 312842, nil, nil, nil, 7, nil)
-local timerDarCD 		= mod:NewCDTimer(40, 64185, "Дар Жизни")
+local timerLifebinderCD 	= mod:NewCDTimer(40, 62869, "Дар Жизни", nil, nil, 1)
 
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("YellOnRoots", true)
@@ -56,16 +57,17 @@ local killTime		= 0
 local iconId		= 6
 
 function mod:OnCombatStart(delay)
-    DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
-    enrage:Start()
-    table.wipe(adds)
-    timerAlliesOfNature:Start(70)
-    timerDarCD:Start()		
+        DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
+        enrage:Start()
+        table.wipe(adds)
+        timerAlliesOfNature:Start(10)
+        timerDarCD:Start(25)		
 end
 
 function mod:OnCombatEnd(wipe)
         DBM:FireCustomEvent("DBM_EncounterEnd", 32906, "Freya", wipe)
-	DBM.BossHealth:Hide()	
+	DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()	
 end
 
 local function showRootWarning()
@@ -81,27 +83,29 @@ function mod:SPELL_CAST_START(args)
 end 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(62678) then                                 -- Призыв защитников
+	if args:IsSpellID(62678) then                                 --Призыв защитников
 		timerAlliesOfNature:Start()
-        elseif args:IsSpellID(64185, 62584) then                      -- дар эонар
-                warnDar:Show()
-                specWarnDar:Show()
-                specWarnDar:Play("targetchange")
-                timerDarCD:Start()
-	elseif args:IsSpellID(63571, 62589, 312527, 312880) then      -- Гнев природы
+                warnAlliesOfNature:Show()
+        elseif args.spellId(62869) and self:GetUnitCreatureId(args.sourceName) == 33228 then  --Дар эонар
+                WarnLifebinder:Show()
+                specWarnLifebinder:Show()
+                specWarnLifebinder:Play("targetchange")
+                timerLifebinderCD:Start()
+	elseif args:IsSpellID(63571, 62589, 312527, 312880) then      --Гнев природы
 		altIcon = not altIcon	--Alternates between Skull and X
 		self:SetIcon(args.destName, altIcon and 7 or 8, 10)
 		warnFury:Show(args.destName)
 		if args:IsPlayer() then -- only cast on players; no need to check destFlags
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 			specWarnFury:Show()
+                        DBM.RangeCheck:Show(8)
 		end
 		timerFury:Start(args.destName)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then   -- Корни
+	if args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then   --Корни
 		iconId = iconId - 1
 		self:SetIcon(args.destName, 6, 15)
 		table.insert(rootedPlayers, args.destName)
@@ -127,6 +131,8 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif args:IsSpellID(62861, 62438, 312490, 312507, 312843, 312860) then
 		self:RemoveIcon(args.destName)
 		iconId = iconId + 1
+        elseif args:IsSpellID(63571, 62589, 312527, 312880) then      --Гнев природы
+                DBM.RangeCheck:Hide()
 	end
 end
 

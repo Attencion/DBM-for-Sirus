@@ -44,25 +44,26 @@ local timerNextBomb			= mod:NewCDTimer(46, 35181)
 local berserkTimerN			= mod:NewBerserkTimer(1200)
 
 -- Heroic
+local warnFlameBlow		        = mod:NewStackAnnounce(308628, 1, nil, "Tank|Healer")
 local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1) -- Вторая фаза
 local specWarnPhase2			= mod:NewSpecialWarning("WarnPhase2", 1) -- Вторая фаза
 local specWarnFlamefall			= mod:NewSpecialWarningSpell(308987, nil, nil, nil, 1, 2) -- Падение пламени
-local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 2) -- Ожившее плямя
+local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 2) -- Ожившее пламя
 local specWarnFireSign			= mod:NewSpecialWarningSpell(308638, nil, nil, nil, 1, 2) -- Знак огня
 local specWarnPhoenixScream             = mod:NewSpecialWarningSpell(308671, nil, nil, nil, 1, 2)  -- Крик феникса
 local specWarnFireSign2                 = mod:NewSpecialWarningYou(308638, nil, nil, nil, 1, 2)
 
-local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Ожившее плямя
+local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Ожившее пламя
 local timerFireSignCD			= mod:NewCDTimer(37, 308638, nil, nil, nil, 7, nil, DBM_CORE_MAGIC_ICON) -- Знак огня
 local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Перезарядка перьев
 local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
 
 
-local timerAnimatedCast			= mod:NewCastTimer(2, 308633, nil, nil, nil, 2) -- Ожившее плямя
+local timerAnimatedCast			= mod:NewCastTimer(2, 308633, nil, nil, nil, 2) -- Ожившее пламя
 local timerFireSignCast			= mod:NewCastTimer(1, 308638, nil, nil, nil, 2) -- Знак огня
 local timerFlamefallCast		= mod:NewCastTimer(5, 308987, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5) -- Каст перьев
 local timerPhase2Cast			= mod:NewCastTimer(20, 308640, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Перефаза
--- 2 фаза --
+-- 2 phase --
 local timerPhoenixScreamCast	        = mod:NewCastTimer(2, 308671, nil, nil, nil, 6, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
 local timerScatteringCast		= mod:NewCastTimer(20, 308663) -- Знак феникса: рассеяность
 local timerWeaknessCast			= mod:NewCastTimer(20, 308664) -- Знак феникса: слабость
@@ -137,9 +138,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-         if args:IsSpellID(308638) then	 -- знак огня
+        if args:IsSpellID(308638) then	 -- Знак огня
 		specWarnFireSign2:Show()
-         end
+	elseif args:IsSpellID(308628) then
+		warnFlameBlow:Show(args.destName, args.amount or 1)
+	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -163,11 +166,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnFlamefall:Show()
 		timerFlamefallCD:Start()
 	    timerFlamefallCast:Start()
-	elseif args:IsSpellID(308633) then -- Ожившее плямя
+	elseif args:IsSpellID(308633) then -- Ожившее пламя
 		specWarnAnimated:Show()
 		timerAnimatedCD:Start()
 		timerAnimatedCast:Start()
-	------- 2 фаза ---------
+	------- 2 Phase ---------
 	elseif args:IsSpellID(308671) then -- Крик феникса
 	    timerPhoenixScreamCast:Start()
 		timerPhoenixScreamCD:Start()
@@ -190,11 +193,5 @@ function mod:UNIT_HEALTH(uId)
 		specWarnPhase2Soon:Show()
 	end
 end
-
----------------------------перья--------------------
-
-
-
-
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

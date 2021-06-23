@@ -136,7 +136,7 @@ function mod:UNIT_DIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(61903, 63493, 312416, 312769) then            -- энергетический удар
+	if args:IsSpellID(61903, 63493, 312416, 312769) then            -- Энергетический удар
 		timerFusionPunchActive:Cancel()
         elseif args:IsSpellID(312418, 312419, 312771, 312772) then
                 timerOverwhelmingPower:Cancel()

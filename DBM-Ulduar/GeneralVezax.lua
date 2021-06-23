@@ -27,7 +27,7 @@ end
 
 local warnShadowCrash		   = mod:NewTargetAnnounce(312625, 1)
 local warnLeechLife		   = mod:NewTargetAnnounce(312974, 4)
-local warnSurgeDarknessSoon        = mod:NewPreWarnAnnounce(312981, 5, 2)  --Всплеск
+local warnSurgeDarknessSoon        = mod:NewPreWarnAnnounce(312981, 5, 2)  -- Всплеск
 
 local specwarnSearingFlames	   = mod:NewSpecialWarning("SpecWarnSearingFlames", canInterrupt)
 local specWarnShadowCrash	   = mod:NewSpecialWarning("SpecialWarningShadowCrash")
@@ -37,14 +37,15 @@ local specWarnLifeLeechYou	   = mod:NewSpecialWarningYou(312974)
 local specWarnLifeLeechNear 	   = mod:NewSpecialWarning("SpecialWarningLLNear", true)
 
 local timerEnrage		   = mod:NewBerserkTimer(600)
-local timerSearingFlamesCast	   = mod:NewCastTimer(2, 312977, nil, nil, nil, 1, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSearingFlamesCast	   = mod:NewCastTimer(2, 312977, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSearingFlamesCD         = mod:NewCDTimer(16, 312977, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 local timerSurgeofDarkness	   = mod:NewBuffActiveTimer(10, 312981, nil, nil, nil, 5, nil)
 local timerNextSurgeofDarkness	   = mod:NewCDTimer(62, 312981, nil, nil, nil, 7, nil, DBM_CORE_TANK_ICON)
-local timerSaroniteVapors	   = mod:NewNextTimer(30, 312985)
+local timerSaroniteVapors	   = mod:NewNextTimer(30, 312983, nil, nil, nil, 5)
 local timerLifeLeech	           = mod:NewTargetTimer(10, 312974, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 local timerAchieve		   = mod:NewTimer(210, "TimerHardmode")
 local timerLeech		   = mod:NewNextTimer(37, 312974, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
-local timerSearingFlamesCD         = mod:NewCDTimer(16, 312977, nil, nil, nil, 1, nil, DBM_CORE_INTERRUPT_ICON)
+
 
 local yellShadowCrash		   = mod:NewYell(312625)
 
@@ -68,15 +69,16 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33271, "GeneralVezax", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(62661, 312624, 312977) then	-- Жгучее пламя
+	if args:IsSpellID(62661, 312624, 312977) then	--Жгучее пламя
 		timerSearingFlamesCast:Start()
                 timerSearingFlamesCD:Start()
                 specwarnSearingFlames:Show()
                 specwarnSearingFlames:Play("kickcast")
-	elseif args:IsSpellID(62662, 312628, 312981) then -- Всплеск тьмы
+	elseif args:IsSpellID(62662, 312628, 312981) then --Всплеск тьмы
 		specWarnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
                 warnSurgeDarknessSoon:Schedule(57)
@@ -90,7 +92,7 @@ function mod:SPELL_INTERRUPT(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62662, 312628, 312981) then	-- Всплекс тьмы
+	if args:IsSpellID(62662, 312628, 312981) then	--Всплекс тьмы
 		timerSurgeofDarkness:Start()
                 specWarnSurgeDarkness:Show()
 		specWarnSurgeDarkness:Play("defensive")
@@ -101,7 +103,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(62662, 312628, 312981) then	
 		timerSurgeofDarkness:Stop()
-        elseif args:IsSpellID(63276, 312621, 312974) then	        -- Метка Безликого
+        elseif args:IsSpellID(63276, 312621, 312974) then	        --Метка Безликого
                 if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 0)
 		end
@@ -146,13 +148,13 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(62660, 312978, 312625, 312627) then		-- Темное сокрушение
+	if args:IsSpellID(62660, 312978, 312625, 312627) then		--Темное сокрушение
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldShadowCrashTarget")
 		else
 			self:ScheduleMethod(0.1, "ShadowCrashTarget")
 		end
-	elseif args:IsSpellID(63276, 312621, 312974) then	        -- Метка Безликого
+	elseif args:IsSpellID(63276, 312621, 312974) then	        --Метка Безликого
 		if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 8, 10)
 		end

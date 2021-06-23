@@ -289,7 +289,7 @@ function mod:SPELL_CAST_START(args)
 	    timerShadowCD:Start()
 		warnShadow:Schedule(0)
     elseif args:IsSpellID(308790) then --катаклизм
-	    timerCataCD:Start()
+	        timerCataCD:Start()
 		timerCataCast:Start()
 	    specWarnCata:Show()
 		DBM.RangeCheck:Show(40, GetRaidTargetIndex)
@@ -379,7 +379,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(36797) then
 		self:SetIcon(args.destName, 0)
-	elseif args:IsSpellID("TimerGravity") then --падение
+	elseif args:IsSpellID(35941) then --падение
 		timerGravity:Stop()
 		timerGravityH:Stop()
 	end

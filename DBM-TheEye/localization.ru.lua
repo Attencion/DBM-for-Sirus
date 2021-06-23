@@ -18,7 +18,7 @@ L:SetWarningLocalization{
 	SpecWarnFeatherNear	= "Падающее перо феникса около вас - остерегайтесь",
 	WarnSupernova = "Супернова >%d<",
 	WarnPhase2Soon = "Скоро 2-я фаза",
-	WarnPhase2 = "ФАЗА 2 БЕГИТЕ",
+	WarnPhase2 = "ФАЗА 2 - БЕГИТЕ",
 	WarnFlamefal0 = "Перья полетели, БЕГИТЕ!!!",
 
 	WarnFireSign = "Знак огня"
@@ -54,8 +54,8 @@ L:SetGeneralLocalization{
 
 L:SetTimerLocalization{
 	TimerNextRing = "Ослепление",
+        TimerNextHelp = "Вызов послушников",
 	TimerNextStar = "Звездное пламя",
-	TimerNextHelp = "Вызов послушников",
 	TimerNextGates = "Призыв врат бездны",
 	TimerNextHeal = "Высшее исцеление",
 	TimerAdds = "Вызов послушников",
@@ -71,12 +71,12 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
         specWarnShadowLow   = "Спец-предупреждение, когда у Воплощения Бездны меньше 40% ХП",
+        TimerNextHelp = "Отсчет времени до следующего $spell:308558",
         specWarnStar    = "Спец-предупреждение об $spell:308565 (для диспела)",
         specWarnHeal	= "Спец-предупреждение об $spell:308561 (для кика)",
 	WarnAddsSoon    = "Предупреждение о скором вызове послушников",
 	TimerNextRing   = "Отсчет времени до следующего $spell:308563 ",
 	TimerNextStar   = "Отсчет времени до следующего $spell:308565 ",
-	TimerNextHelp   = "Отсчет времени до следующего $spell:308559 ",
 	TimerNextHeal   = "Отсчет времени до следующего $spell:308561 ",
 	TimerNextGates  = "Отсчет времени до следующего $spell:308545 ",
 	TimerAdds       = "Отсчет времени до следующих послушников",

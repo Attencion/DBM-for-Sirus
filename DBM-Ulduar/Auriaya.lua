@@ -39,7 +39,7 @@ local timerDefender 	= mod:NewTimer(35, "timerDefender", nil, nil, nil, 1, nil, 
 local timerFear		= mod:NewCastTimer(312955, nil, nil, nil, 7, nil)
 local timerNextFear 	= mod:NewNextTimer(35.5, 312955, nil, nil, nil, 7, nil)
 local timerNextSwarm 	= mod:NewNextTimer(36, 312956, nil, nil, nil, 1, nil)
-local timerNextSonic 	= mod:NewNextTimer(27, 312954, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerNextSonic 	= mod:NewNextTimer(30, 312954, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerSonic	= mod:NewCastTimer(312954, nil, nil, nil, 2, nil)
 
 mod:AddBoolOption("HealthFrame", true)
@@ -61,6 +61,7 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33515, "Auriaya", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:SPELL_CAST_START(args)

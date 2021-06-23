@@ -120,6 +120,7 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33288, "YoggSaron", wipe)
         DBM.BossHealth:Hide()
+        DBM.RangeCheck:Hide()
 end
 
 function mod:FervorTarget()
@@ -138,14 +139,14 @@ local function warnBrainLinkWarning(self)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(64059, 312650, 313003) then	-- Доведение до помешательства
+	if args:IsSpellID(64059, 312650, 313003) then	    -- Доведение до помешательства
 		timerMadness:Start()
 		warnMadness:Show()
 		brainportal:Schedule(60)
 		warnBrainPortalSoon:Schedule(85)
 		specWarnBrainPortalSoon:Schedule(85)
 		specWarnMadnessOutNow:Schedule(55)
-	elseif args:IsSpellID(64189, 312647, 313000) then		-- Оглушающий рёв
+	elseif args:IsSpellID(64189, 312647, 313000) then   -- Оглушающий рёв
 		timerNextDeafeningRoar:Start()
 		warnDeafeningRoarSoon:Schedule(55)
 		timerCastDeafeningRoar:Start()
@@ -157,7 +158,7 @@ function mod:SPELL_CAST_START(args)
                 warnBrainPortalSoon:Cancel()
                 specWarnBrainPortalSoon:Cancel()
                 specWarnMadnessOutNow:Cancel()
-	elseif args:IsSpellID(63138, 312636, 312989) then		-- Рвение Сары
+	elseif args:IsSpellID(63138, 312636, 312989) then   -- Рвение Сары
 		self:ScheduleMethod(0.1, "FervorTarget")
 		warnFervorCast:Show()
 	end
