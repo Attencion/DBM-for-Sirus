@@ -29,12 +29,12 @@ do
 end
 
 local warnStrongBeat	      = mod:NewStackAnnounce(310548, 1, nil, "Tank|Healer")  --Клешня
-local warnPoisonous	          = mod:NewSpellAnnounce(310549, 1) -- Ядовитая рвота
-local warnMassiveShell	      = mod:NewTargetAnnounce(310560, 1) -- Обстрел
-local warnPowerfulShot	      = mod:NewSpellAnnounce(310564, 2)  -- Мощный выстрел
-local warnCallGuardians	      = mod:NewSpellAnnounce(310557, 1)  -- Вызов треша
-local warnParalysis	          = mod:NewSpellAnnounce(310555, 2)  -- Паралич
-local warnCallGuardiansSoon   = mod:NewPreWarnAnnounce(310557, 5, 1)  -- Вызов треша
+local warnPoisonous	          = mod:NewSpellAnnounce(310549, 1)   --Ядовитая рвота
+local warnMassiveShell	      = mod:NewTargetAnnounce(310560, 1)  --Обстрел
+local warnPowerfulShot	      = mod:NewSpellAnnounce(310564, 2)   --Мощный выстрел
+local warnCallGuardians	      = mod:NewSpellAnnounce(310557, 1)   --Вызов треша
+local warnParalysis	          = mod:NewSpellAnnounce(310555, 2)   --Паралич
+local warnCallGuardiansSoon   = mod:NewPreWarnAnnounce(310557, 5, 1)  --Вызов треша
 
 local specwarnCallGuardians   = mod:NewSpecialWarningSwitch(310557, "Dps", nil, nil, 1, 2)  --Треш
 local specWarnShrillScreech   = mod:NewSpecialWarning("specWarnShrillScreech", canInterrupt)
