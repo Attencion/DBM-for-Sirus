@@ -48,26 +48,26 @@ local warnHelp			= mod:NewSoonAnnounce(308558, 3) -- Призыв помощни
 local warnWrathH		= mod:NewTargetAnnounce(308550, 4) -- Гнев звездочета
 local warnKol    		= mod:NewTargetAnnounce(308563, 2) -- Кольцо
 local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - активация
-local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
-local warnPhase2     		= mod:NewPhaseAnnounce(2)
+local warnPhase2Soon    = mod:NewPrePhaseAnnounce(2)
+local warnPhase2     	= mod:NewPhaseAnnounce(2)
 
 local specWarnHeal		= mod:NewSpecialWarning("specWarnHeal", canInterrupt)   -- Хил
 local specWarnGates		= mod:NewSpecialWarningSoak(308545, nil, nil, nil, 1, 2)  -- Врата
 local specWarnHelp		= mod:NewSpecialWarningAdds(308558, nil, nil, nil, 1, 2)  -- Послушники
 local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
-local specWarnWrathH	        = mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
-local specWarnDebaf  	        = mod:NewSpecialWarningRun(308544, nil, nil, nil, 3, 4) -- Дебаф 1я фаза
-local specWarnFlashVoid         = mod:NewSpecialWarningDefensive(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
-local specWarnShadowLow		= mod:NewSpecialWarning("specWarnShadowLow", nil, nil, nil, 1, 2)
+local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
+local specWarnDebaf  	= mod:NewSpecialWarningRun(308544, nil, nil, nil, 3, 4) -- Дебаф 1я фаза
+local specWarnFlashVoid  = mod:NewSpecialWarningDefensive(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
+local specWarnValkyrLow	 = mod:NewSpecialWarning("SpecWarnValkyrLow", nil, nil, nil, 1, 2)
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, nil, nil, 1, DBM_CORE_INTERRUPT_ICON)
-local timerNextGates	        = mod:NewTimer(40, "TimerNextGates", 308545, nil, nil, 3)
+local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, nil, nil, 3)
 local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, nil, nil, 7)
 local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5)
 local timerNextHelp		= mod:NewTimer(120, "TimerNextHelp", 308558, nil, nil, 1, DBM_CORE_TANK_ICON)
 local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
-local timerNextWrathH	        = mod:NewCDTimer(43, 308548, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
-local timerFlashVoid            = mod:NewCDTimer(75, 308585, nil, nil, nil, 7, nil, DBM_CORE_HEROIC_ICON)
+local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
+local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, nil, nil, 7, nil, DBM_CORE_HEROIC_ICON)
 
 local yellWrathH		= mod:NewYell(308548)
 local yellWrathN		= mod:NewYell(42783)
@@ -81,7 +81,7 @@ local provid = true
 local KolTargets = {}
 local warned_preP1 = false
 local warned_preP2 = false
-local warnedShadowGUIDs = {}
+local warnedValkyrGUIDs = {}
 
 mod:AddBoolOption("Zrec")
 
@@ -101,8 +101,8 @@ function mod:OnCombatStart(delay)
 	       timerNextGates:Start(20)
 	       timerNextWrathH:Start()
 	       self.vb.phase = 1
+		   table.wipe(warnedValkyrGUIDs)
 	end
-        table.wipe(warnedShadowGUIDs)
 end
 
 
@@ -299,10 +299,10 @@ function mod:UNIT_HEALTH(uId)
 		        warnPhase2:Show()
 		end
 	end
-	if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedShadowGUIDs[UnitGUID(uId)] then
-		warnedShadowGUIDs[UnitGUID(uId)] = true
-		specWarnShadowLow:Show()
-		specWarnShadowLow:Play("stopattack")
+	if mod:IsDifficulty("heroic25") and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedValkyrGUIDs[UnitGUID(uId)] then
+		warnedValkyrGUIDs[UnitGUID(uId)] = true
+		specWarnValkyrLow:Show()
+		specWarnValkyrLow:Play("stopattack")
 	end
 end
 

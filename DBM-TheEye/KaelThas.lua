@@ -272,7 +272,7 @@ function mod:SPELL_CAST_START(args)
 		timerRoarCD:Start()
 	elseif args:IsSpellID(308733) then
 		specWarnBattleRoar:Show()
-                specWarnBattleRoar:Play("kickcast")
+        specWarnBattleRoar:Play("kickcast")
 	elseif args:IsSpellID(37036) then
 		warnBombSoon:Schedule(20)
 		timerBombCD:Start()

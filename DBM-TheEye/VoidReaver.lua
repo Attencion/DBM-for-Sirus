@@ -23,15 +23,15 @@ local timerNextKnockback        = mod:NewCDTimer(30, 25778, nil, "Healer", nil, 
 local warnPhase1		= mod:NewAnnounce("Phase1", 2) -- Фаза пониженного урона
 local warnPhase2		= mod:NewAnnounce("Phase2", 2) -- Фаза повышенного урона
 --local warnKnockback		= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
-local warnMagnet                = mod:NewTargetAnnounce(308467, 4) -- Сфера магнетизм
-local warnSign                  = mod:NewTargetAnnounce(308471, 4) -- Знак
+local warnMagnet        = mod:NewTargetAnnounce(308467, 4) -- Сфера магнетизм
+local warnSign          = mod:NewTargetAnnounce(308471, 4) -- Знак
 
 --local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)
 --local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 --local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
-local specWarnSign              = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
-local specWarnMagnet            = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
+local specWarnSign      = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
+local specWarnMagnet    = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
 
 
 
@@ -41,7 +41,7 @@ local timerLoadCD		= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_
 local timerReloadCD		= mod:NewCDTimer(60, 308474, nil, nil, nil, 2, nil, DBM_CORE_DAMAGE_ICON) -- Таймер 2 фазы
 local timerSignCD		= mod:NewCDTimer(16, 308471, nil, nil, nil, 7) -- Знак
 
-local yellSign		        = mod:NewYell(308471)
+local yellSign		    = mod:NewYell(308471)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 

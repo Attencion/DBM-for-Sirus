@@ -27,7 +27,7 @@ mod:RegisterEvents(
 
 -- Normal
 local warnPlatSoon			= mod:NewAnnounce("WarnPlatSoon", 3, 46599)
-local warnFeatherSoon			= mod:NewSoonAnnounce(34229, 4)
+local warnFeatherSoon	    = mod:NewSoonAnnounce(34229, 4)
 local warnBombSoon			= mod:NewSoonAnnounce(35181, 3)
 local warnBomb				= mod:NewTargetAnnounce(35181, 3)
 
@@ -37,40 +37,41 @@ local specWarnPatch			= mod:NewSpecialWarningMove(35383)
 
 local timerNextPlat			= mod:NewTimer(33, "TimerNextPlat", 46599)
 local timerFeather			= mod:NewCastTimer(10, 34229)
-local timerNextFeather			= mod:NewCDTimer(180, 34229)
-local timerNextCharge			= mod:NewCDTimer(22, 35412)
+local timerNextFeather	    = mod:NewCDTimer(180, 34229)
+local timerNextCharge		= mod:NewCDTimer(22, 35412)
 local timerNextBomb			= mod:NewCDTimer(46, 35181)
 
 local berserkTimerN			= mod:NewBerserkTimer(1200)
 
 -- Heroic
 local warnFlameBlow		        = mod:NewStackAnnounce(308628, 1, nil, "Tank|Healer")
-local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1) -- Вторая фаза
-local specWarnPhase2			= mod:NewSpecialWarning("WarnPhase2", 1) -- Вторая фаза
-local specWarnFlamefall			= mod:NewSpecialWarningSpell(308987, nil, nil, nil, 1, 2) -- Падение пламени
-local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 2) -- Ожившее пламя
-local specWarnFireSign			= mod:NewSpecialWarningSpell(308638, nil, nil, nil, 1, 2) -- Знак огня
-local specWarnPhoenixScream             = mod:NewSpecialWarningSpell(308671, nil, nil, nil, 1, 2)  -- Крик феникса
-local specWarnFireSign2                 = mod:NewSpecialWarningYou(308638, nil, nil, nil, 1, 2)
+local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1)  --РІС‚РѕСЂР°СЏ С„Р°Р·Р°
+local specWarnPhase2			= mod:NewSpecialWarning("WarnPhase2", 1)  --РІС‚РѕСЂР°СЏ С„Р°Р·Р°
+local specWarnFlamefall			= mod:NewSpecialWarningSpell(308987, nil, nil, nil, 1, 2)  --РїР°РґРµРЅРёРµ РїР»Р°РјРµРЅРё
+local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 2)  --РѕР¶РёРІС€РµРµ РїР»Р°РјСЏ
+local specWarnFireSign			= mod:NewSpecialWarningSpell(308638, nil, nil, nil, 1, 2)  --Р·РЅР°Рє РѕРіРЅСЏ
+local specWarnPhoenixScream     = mod:NewSpecialWarningSpell(308671, nil, nil, nil, 1, 2)  --РєСЂРёРє С„РµРЅРёРєСЃР°
+local specWarnFireSign2         = mod:NewSpecialWarningYou(308638, nil, nil, nil, 1, 2)
 
-local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) -- Ожившее пламя
-local timerFireSignCD			= mod:NewCDTimer(37, 308638, nil, nil, nil, 7, nil, DBM_CORE_MAGIC_ICON) -- Знак огня
-local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Перезарядка перьев
-local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
+local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) --РѕР¶РёРІС€РµРµ РїР»Р°РјВ¤
+local timerFireSignCD			= mod:NewCDTimer(37, 308638, nil, nil, nil, 7, nil, DBM_CORE_MAGIC_ICON) --Р·РЅР°Рє РѕРіРЅСЏ
+local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) --РїРµСЂРµР·Р°СЂСЏРґРєР° РїРµСЂСЊРµРІ
+local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) --РєСЂРёРє С„РµРЅРёРєСЃР°
 
 
-local timerAnimatedCast			= mod:NewCastTimer(2, 308633, nil, nil, nil, 2) -- Ожившее пламя
-local timerFireSignCast			= mod:NewCastTimer(1, 308638, nil, nil, nil, 2) -- Знак огня
-local timerFlamefallCast		= mod:NewCastTimer(5, 308987, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5) -- Каст перьев
-local timerPhase2Cast			= mod:NewCastTimer(20, 308640, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Перефаза
+local timerAnimatedCast			= mod:NewCastTimer(2, 308633, nil, nil, nil, 2) --РѕР¶РёРІС€РµРµ РїР»Р°РјСЏ
+local timerFireSignCast			= mod:NewCastTimer(1, 308638, nil, nil, nil, 2) --Р·РЅР°Рє РѕРіРЅСЏ
+local timerFlamefallCast		= mod:NewCastTimer(5, 308987, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5) --РєР°СЃС‚ РїРµСЂСЊРµРІ
+local timerPhase2Cast			= mod:NewCastTimer(20, 308640, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) --РїРµСЂРµС„Р°Р·Р°
+
 -- 2 phase --
-local timerPhoenixScreamCast	        = mod:NewCastTimer(2, 308671, nil, nil, nil, 6, nil, DBM_CORE_HEROIC_ICON) -- Крик феникса
-local timerScatteringCast		= mod:NewCastTimer(20, 308663) -- Знак феникса: рассеяность
-local timerWeaknessCast			= mod:NewCastTimer(20, 308664) -- Знак феникса: слабость
-local timerFuryCast			= mod:NewCastTimer(20, 308665) -- Знак феникса: ярость
-local timerFatigueCast			= mod:NewCastTimer(20, 308667) -- Знак феникса: усталость
+local timerPhoenixScreamCast	= mod:NewCastTimer(2, 308671, nil, nil, nil, 6, nil, DBM_CORE_HEROIC_ICON) --РєСЂРёРє С„РµРЅРёРєСЃР°
+local timerScatteringCast		= mod:NewCastTimer(20, 308663) --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЂР°СЃСЃРµСЏРЅРѕСЃС‚СЊ
+local timerWeaknessCast			= mod:NewCastTimer(20, 308664) --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЃР»Р°Р±РѕСЃС‚СЊ
+local timerFuryCast			    = mod:NewCastTimer(20, 308665) --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЏСЂРѕСЃС‚СЊ
+local timerFatigueCast			= mod:NewCastTimer(20, 308667) --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СѓСЃС‚Р°Р»РѕСЃС‚СЊ
 
-local berserkTimerH			= mod:NewBerserkTimer(444)
+local berserkTimerH			    = mod:NewBerserkTimer(444)
 local berserkTimerH2			= mod:NewBerserkTimer(500)
 
 
@@ -138,8 +139,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-        if args:IsSpellID(308638) then	 -- Знак огня
-		specWarnFireSign2:Show()
+        if args:IsSpellID(308638) and args:IsPlayer() then	 --Р·РЅР°Рє РѕРіРЅСЏ
+		    specWarnFireSign2:Show()
 	elseif args:IsSpellID(308628) then
 		warnFlameBlow:Show(args.destName, args.amount or 1)
 	end
@@ -156,32 +157,32 @@ function mod:SPELL_CAST_START(args)
 		timerNextCharge:Start()
 		timerNextBomb:Start()
 		warnBombSoon:Schedule(43)
-	elseif args:IsSpellID(46599) then -- Знак огня
+	elseif args:IsSpellID(46599) then --Р·РЅР°Рє РѕРіРЅСЏ
 		timerNextPlat:Start(33)
-	elseif args:IsSpellID(308638) then -- Знак огня
+	elseif args:IsSpellID(308638) then --Р·РЅР°Рє РѕРіРЅСЏ
 		specWarnFireSign:Show()
 		timerFireSignCD:Start()
 		timerFireSignCast:Start()
-	elseif args:IsSpellID(308987) then -- Падение пламени
+	elseif args:IsSpellID(308987) then --РїР°РґРµРЅРёРµ РїР»Р°РјРµРЅРё
 		specWarnFlamefall:Show()
 		timerFlamefallCD:Start()
 	    timerFlamefallCast:Start()
-	elseif args:IsSpellID(308633) then -- Ожившее пламя
+	elseif args:IsSpellID(308633) then --РѕР¶РёРІС€РµРµ РїР»Р°РјСЏ
 		specWarnAnimated:Show()
 		timerAnimatedCD:Start()
 		timerAnimatedCast:Start()
 	------- 2 Phase ---------
-	elseif args:IsSpellID(308671) then -- Крик феникса
+	elseif args:IsSpellID(308671) then --РєСЂРёРє С„РµРЅРёРєСЃР°
 	    timerPhoenixScreamCast:Start()
 		timerPhoenixScreamCD:Start()
 		specWarnPhoenixScream:Show()
-	elseif args:IsSpellID(308663) then -- Знак феникса: Рассеяность
+	elseif args:IsSpellID(308663) then --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЂР°СЃСЃРµСЏРЅРѕСЃС‚СЊ
 		timerScatteringCast:Start()
-	elseif args:IsSpellID(308664) then -- Знак феникса: Слабость
+	elseif args:IsSpellID(308664) then --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЃР»Р°Р±РѕСЃС‚СЊ
 		timerWeaknessCast:Start()
-	elseif args:IsSpellID(308665) then -- Знак феникса: Ярость
+	elseif args:IsSpellID(308665) then --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СЏСЂРѕСЃС‚СЊ
 		timerFuryCast:Start()
-	elseif args:IsSpellID(308667) then -- Знак феникса: Усталость
+	elseif args:IsSpellID(308667) then --Р·РЅР°Рє С„РµРЅРёРєСЃР°: СѓСЃС‚Р°Р»РѕСЃС‚СЊ
 		timerFatigueCast:Start()
 	end
 end
