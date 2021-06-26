@@ -3,8 +3,8 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20201208235000")
 
-mod:SetCreatureID(55681)
-mod:RegisterCombat("combat", 55681)
+mod:SetCreatureID(121217)
+mod:RegisterCombat("combat", 121217)
 mod:SetUsedIcons(8, 7)
 
 
@@ -66,7 +66,7 @@ mod.vb.phase = 0
 
 
 function mod:OnCombatStart(delay)
-        DBM:FireCustomEvent("DBM_EncounterStart", 55681, "Gorelac")
+        DBM:FireCustomEvent("DBM_EncounterStart", 121217, "Gorelac")
         enrageTimer:Start(-delay)
         timerCallGuardians:Start(45-delay)
         warnCallGuardiansSoon:Schedule(40-delay)
@@ -74,7 +74,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd(wipe)
-	    DBM:FireCustomEvent("DBM_EncounterEnd", 55681, "Gorelac", wipe)
+	    DBM:FireCustomEvent("DBM_EncounterEnd", 121217, "Gorelac", wipe)
         DBM.BossHealth:Hide()
         DBM.RangeCheck:Hide()
 end
