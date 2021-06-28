@@ -89,7 +89,7 @@ function mod:SPELL_INTERRUPT(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62662, 312628, 312981) then	--Всплекс тьмы
+	if args:IsSpellID(62662, 312628, 312981) then  --Всплекс тьмы
 		timerSurgeofDarkness:Start()
         specWarnSurgeDarkness:Show()
 		specWarnSurgeDarkness:Play("defensive")
@@ -99,7 +99,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(62662, 312628, 312981) then  --Всплекс тьмы
 		timerSurgeofDarkness:Stop()
-	elseif args:IsSpellID(63276, 312621, 312974) then	        --Метка Безликого
+	elseif args:IsSpellID(63276, 312621, 312974) then  --Метка Безликого
         if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 0)
 		end
