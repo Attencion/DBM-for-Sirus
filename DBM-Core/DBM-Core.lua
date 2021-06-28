@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210621070000"),
+	Revision = parseCurseDate("20210628070000"),
 	DisplayVersion = "5.54", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 02) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -324,68 +324,72 @@ DBM.Bars = DBT:New()
 DBM.Mods = {}
 DBM.ModLists = {}
 DBM.Counts = {
-	{text = "Alarak",			   		value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 5},
-	{text = "Alarak2",			   		value = "Alarak2",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak2\\", max = 5},
-	{text = "Artanis",				        value = "Artanis",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Artanis\\", max = 5},
+	{text = "Alarak",					value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 5},
+	{text = "Alarak2",					value = "Alarak2",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak2\\", max = 5},
+	{text = "Artanis",					value = "Artanis",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Artanis\\", max = 5},
 	{text = "Kerrigan",					value = "Kerrigan",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kerrigan\\", max = 5},
-	{text = "Jim Raynor",					value = "Jim Raynor",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Raynor\\", max = 5},
+	{text = "Jim Raynor",				value = "Jim Raynor",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Raynor\\", max = 5},
 	{text = "Vorazun",					value = "Vorazun",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Vorazun\\", max = 5},
 	{text = "Tychus",					value = "Tychus",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Tychus\\", max = 5},
 	{text = "Corsica",					value = "Corsica",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Corsica\\", max = 10},
-	{text = "Koltrane",					value = "Kolt",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kolt\\", max = 10},
+	{text = "Koltrane",					value = "Kolt",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kolt\\", max = 10},
 	{text = "Smooth",					value = "Smooth",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Smooth\\", max = 10},
 	{text = "Smooth (Reverb)",			value = "SmoothR",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\SmoothReverb\\", max = 10},
 	{text = "Pewsey",					value = "Pewsey",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Pewsey\\", max = 10},
-	{text = "Moshne",					value = "Mosh",		path = "Interface\\AddOns\\DBM-Core\\Sounds\\Mosh\\", max = 5},
+	{text = "Moshne",					value = "Mosh",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Mosh\\", max = 5},
 }
 --Sounds use SoundKit Ids (not file data ids)
 DBM.Victory = {
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "Alarak: Rakshir",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
-	{text = "Artanis: En Taro",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Artanis_En_Taro.ogg", length = 4},
-	{text = "Vorazun: History",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunHistory.ogg", length = 4},
-	{text = "Tychus: Victory",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Tychus_EndGame.ogg", length = 3},
+	{text = "Alarak: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
+	{text = "Alarak: Win2",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Alarak_Win.ogg", length = 4},
+	{text = "Artanis: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Artanis_Win.ogg", length = 4},
+	{text = "Kerrigan: Win-",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Kerrigan_Win.ogg", length = 4},
+	{text = "Jim Raynor: Win",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Jim Raynor_Win.ogg", length = 4},
+	{text = "Vorazun: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\VorazunHistory.ogg", length = 4},
+	{text = "Tychus: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Tychus_Win.ogg", length = 3},
 	{text = "Blakbyrd: FF Fanfare",		value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\bbvictory.ogg", length = 4},
-	{text = "SMG: FF Fanfare",		value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\SmoothMcGroove_Fanfare.ogg", length = 4},
+	{text = "SMG: FF Fanfare",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\SmoothMcGroove_Fanfare.ogg", length = 4},
 }
 DBM.Defeat = {
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
 	{text = "Alizabal: Incompetent Raiders",	value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Alizabal_Incompetent_Raiders.ogg", length = 4},
-	{text = "Bwonsamdi: Impressive Death",	        value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Bwonsamdi_Impressive_Death.ogg", length = 6},
-	{text = "Kologarn: You Fail",		        value = "Sound\\Creature\\Kologarn\\UR_Kologarn_Slay02.wav", length = 4},
+	{text = "Bwonsamdi: Impressive Death",	value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Bwonsamdi_Impressive_Death.ogg", length = 6},
+	{text = "Artanis: Fail",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\Artanis_Fail.ogg", length = 4},
+	{text = "Kologarn: You Fail",		value = "Sound\\Creature\\Kologarn\\UR_Kologarn_Slay02.wav", length = 4},
 	{text = "Hodir: Tragic",			value = "Sound\\Creature\\Hodir\\UR_Hodir_Slay01.wav", length = 4},
 	{text = "Thorim: Failures",			value = "Sound\\Creature\\Thorim\\UR_Thorim_P1Wipe01.wav", length = 4},
 	{text = "Valithria: Failures",		value = "Sound\\Creature\\ValithriaDreamwalker\\IC_Valithria_Berserk01.wav", length = 4},
-	{text = "Yogg-Saron: Laugh",		        value = "Sound\\Creature\\YoggSaron\\UR_YoggSaron_Slay01.wav", length = 4},
+	{text = "Yogg-Saron: Laugh",		value = "Sound\\Creature\\YoggSaron\\UR_YoggSaron_Slay01.wav", length = 4},
 }
 --Music uses file data IDs
 DBM.Music = {--Contains all music media, period
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "AnduinPart1",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
-	{text = "AnduinPart2",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
-	{text = "Nightsong",                            value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_NightElves_B.mp3", length = 160},
-	{text = "Invincible",                           value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
+	{text = "Anduin: Part 1",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
+	{text = "Anduin: Part 2",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
+	{text = "Nightsong",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_NightElves_B.mp3", length = 160},
+	{text = "Invincible",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
 	{text = "Bronze Jam",				value = "Sound\\Music\\ZoneMusic\\IcecrownRaid\\IR_BronzeJam.mp3", length = 116},
-	{text = "Ulduar: Titan Orchestra",	        value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
+	{text = "Ulduar: Titan Orchestra",	value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
 }
 DBM.DungeonMusic = {--Filtered list of media assigned to dungeon/raid background music catagory
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "AnduinPart1",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
-	{text = "AnduinPart2",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
-	{text = "Invincible",                           value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
-	{text = "Ulduar: Titan Orchestra",	        value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
+	{text = "Anduin: Part 1",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
+	{text = "Anduin: Part 2",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
+	{text = "Invincible",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
+	{text = "Ulduar: Titan Orchestra",	value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
 }
 DBM.BattleMusic = {--Filtered list of media assigned to boss/encounter background music catagory
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "AnduinPart1",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
-	{text = "AnduinPart2",                          value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
-	{text = "Nightsong",                            value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_NightElves_B.mp3", length = 160},
-	{text = "Invincible",                           value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
+	{text = "AnduinPart1",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 140},
+	{text = "AnduinPart2",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 111},
+	{text = "Nightsong",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_NightElves_B.mp3", length = 160},
+	{text = "Invincible",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
 	{text = "Bronze Jam",				value = "Sound\\Music\\ZoneMusic\\IcecrownRaid\\IR_BronzeJam.mp3", length = 116},
 }
 
