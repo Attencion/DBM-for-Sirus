@@ -110,12 +110,15 @@ L:SetGeneralLocalization{
 }
 
 L:SetTimerLocalization{
+	TimerSpeedKill	= "Быстрая разборка"
 }
 
 L:SetWarningLocalization{
+	WarnPhase2Soon			= "Скоро фаза 2"
 }
 
 L:SetOptionLocalization{
+	WarnPhase2Soon			= "Предупреждать заранее о фазе 2",
     RangeFrame		            = "Показывать игроков  в окне проверки дистанции (8-20)",
 	SetIconOnLightBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312941),
 	SetIconOnGravityBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312943)
@@ -304,11 +307,10 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerHardmode	= "Сложный режим"
+	TimerSpeedKill	= "Сиф-он (Hardmode)"
 }
 
 L:SetOptionLocalization{
-	TimerHardmode	= "Отсчет времени для сложного режима",
 	RangeFrame		= "Показывать окно проверки дистанции 10",
 	AnnounceFails	= "Объявлять игроков, попавших под $spell:312544, в рейд-чат\n(требуются права лидера или помощника)"
 }

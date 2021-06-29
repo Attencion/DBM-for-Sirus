@@ -27,7 +27,7 @@ end
 
 local warnShadowCrash			= mod:NewTargetAnnounce(312625, 1)
 local warnLeechLife				= mod:NewTargetAnnounce(312974, 4)
-local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2)  -- Всплеск
+local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2)	-- Всплеск
 
 local specwarnSearingFlames	    = mod:NewSpecialWarning("SpecWarnSearingFlames", canInterrupt)
 local specWarnShadowCrash		= mod:NewSpecialWarning("SpecialWarningShadowCrash")
@@ -75,7 +75,7 @@ function mod:SPELL_CAST_START(args)
         timerSearingFlamesCD:Start()
         specwarnSearingFlames:Show()
         specwarnSearingFlames:Play("kickcast")
-	elseif args:IsSpellID(62662, 312628, 312981) then  --Всплеск тьмы 
+	elseif args:IsSpellID(62662, 312628, 312981) then	--Всплеск тьмы 
 		specWarnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
         warnSurgeDarknessSoon:Schedule(57)
@@ -89,7 +89,7 @@ function mod:SPELL_INTERRUPT(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62662, 312628, 312981) then  --Всплекс тьмы
+	if args:IsSpellID(62662, 312628, 312981) then	--Всплекс тьмы
 		timerSurgeofDarkness:Start()
         specWarnSurgeDarkness:Show()
 		specWarnSurgeDarkness:Play("defensive")
@@ -97,9 +97,9 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(62662, 312628, 312981) then  --Всплекс тьмы
+	if args:IsSpellID(62662, 312628, 312981) then	--Всплекс тьмы
 		timerSurgeofDarkness:Stop()
-	elseif args:IsSpellID(63276, 312621, 312974) then  --Метка Безликого
+	elseif args:IsSpellID(63276, 312621, 312974) then	--Метка Безликого
         if self.Options.SetIconOnLifeLeach then
 			self:SetIcon(args.destName, 0)
 		end
@@ -147,7 +147,7 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(62660, 312978, 312625) then		--Темное сокрушение
+	if args:IsSpellID(62660, 312978, 312625) then	--Темное сокрушение
 		if self.Options.BypassLatencyCheck then
 			self:ScheduleMethod(0.1, "OldShadowCrashTarget")
 		else

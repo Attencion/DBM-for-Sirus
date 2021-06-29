@@ -17,28 +17,28 @@ mod:RegisterEvents(
 )
 
 local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
-local warnStormhammer			= mod:NewTargetAnnounce(312890, 2)  -- Оглушительный гром
-local warnLightningCharge		= mod:NewSpellAnnounce(312897, 2)   -- Разряд молнии
-local warnNova          		= mod:NewSpellAnnounce(312904, 2)   -- Нова
-local warnVolley          		= mod:NewSpellAnnounce(312902, 2)   -- Залп ледяных стрел
+local warnStormhammer			= mod:NewTargetAnnounce(312890, 2)	-- Оглушительный гром
+local warnLightningCharge		= mod:NewSpellAnnounce(312897, 2)	-- Разряд молнии
+local warnNova          		= mod:NewSpellAnnounce(312904, 2)	-- Нова
+local warnVolley          		= mod:NewSpellAnnounce(312902, 2)	-- Залп ледяных стрел
 local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 1, nil, "Tank|Healer")	-- Деформирующий удар
-local warningBomb				= mod:NewTargetAnnounce(312910, 3)  -- Взрыв руны
+local warningBomb				= mod:NewTargetAnnounce(312910, 3)	-- Взрыв руны
 
-local specWarnOrb				= mod:NewSpecialWarningMove(312892) -- Поражение громом
-local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 1, 2)  --дисбаланс
-local specWarnUnbalancingStrikelf = mod:NewSpecialWarningTaunt(312898, "Tank", nil, nil, 1, 2)  --дисбаланс
+local specWarnOrb				= mod:NewSpecialWarningMove(312892)	-- Поражение громом
+local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 1, 2)	--дисбаланс
+local specWarnUnbalancingStrikelf = mod:NewSpecialWarningTaunt(312898, "Tank", nil, nil, 1, 2)	--дисбаланс
 
 mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer			    = mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCDTimer(18, 312889, nil, nil, nil, 3)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 2)                               -- Разряд молнии
-local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)    -- Цепная молния
-local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)    -- нова
-local timerVolley               = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON)    -- залп
-local timerUnbalancingStrike	= mod:NewTargetTimer(15, 312898, nil, "Tank|Healer", nil, 3, nil, DBM_CORE_TANK_ICON)  -- дисбаланс
-local timerHardmode			    = mod:NewTimer(175, "TimerHardmode")
-local timerUnbalancingStrikeCD	= mod:NewCDTimer(20, 312898, nil, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON)      -- дисбаланс
+local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 2)	-- Разряд молнии
+local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)	-- Цепная молния
+local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)	-- нова
+local timerVolley               = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON)	-- залп
+local timerUnbalancingStrike	= mod:NewTargetTimer(15, 312898, nil, "Tank|Healer", nil, 3, nil, DBM_CORE_TANK_ICON)	-- дисбаланс
+local timerAchieve				= mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
+local timerUnbalancingStrikeCD	= mod:NewCDTimer(20, 312898, nil, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON)	-- дисбаланс
 
 local yellBomb		            = mod:NewYell(312910)
 
@@ -48,9 +48,9 @@ mod:AddBoolOption("RangeFrame")
 local lastcharge				= {} 
 
 function mod:OnCombatStart(delay)
-        DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
+	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
 	enrageTimer:Start()
-	timerHardmode:Start()
+	timerAchieve:Start()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(8)
 	end
@@ -83,9 +83,9 @@ function mod:OnCombatEnd()
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62042, 312890, 312536) then 					-- Молот бури
+	if args:IsSpellID(62042, 312890, 312536) then	-- Молот бури
 		warnStormhammer:Show(args.destName)
-	elseif args:IsSpellID(62130, 300664, 312545, 312898) then				-- Дисбалансирующий удар
+	elseif args:IsSpellID(62130, 300664, 312545, 312898) then	-- Дисбалансирующий удар
 		warnUnbalancingStrike:Show(args.destName)
 		timerUnbalancingStrike:Start(args.destName)
 		if args:IsPlayer() then
@@ -104,9 +104,9 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(62042, 312890, 312536) then 		-- Молот бури
+    if args:IsSpellID(62042, 312890, 312536) then	-- Молот бури
 		timerStormhammer:Start()
-	elseif args:IsSpellID(312895, 312542, 62131) then       -- Цепная молния
+	elseif args:IsSpellID(312895, 312542, 62131) then	-- Цепная молния
 	    timerLightningCharge2:Start()
 	end
 end	
@@ -114,13 +114,13 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(62130, 300664, 312545, 312898) then	-- Дисбалансирующий удар
 		timerUnbalancingStrikeCD:Start()
-    elseif args:IsSpellID(312902, 62604, 312549) then       -- Залп стрел
+    elseif args:IsSpellID(312902, 62604, 312549) then	-- Залп стрел
 	    warnVolley:Show()
         timerVolley:Start()
-	elseif args:IsSpellID(312904, 62605, 312551) then       -- Фростнова
+	elseif args:IsSpellID(312904, 62605, 312551) then	-- Фростнова
 	    warnNova:Show()
 	    timerNova:Start()
-    elseif args:IsSpellID(312896, 312543, 62279) then       -- Разряд молнии
+    elseif args:IsSpellID(312896, 312543, 62279) then	-- Разряд молнии
    	    warnLightningCharge:Show()
 		timerLightningCharge:Start()
 	end
@@ -128,14 +128,14 @@ end
 
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.YellPhase2 and mod:LatencyCheck() then		-- Bossfight (tank and spank)
+	if msg == L.YellPhase2 and mod:LatencyCheck() then	-- Bossfight (tank and spank)
 		self:SendSync("Phase2")
 	end
 end
 
 local spam = 0
 function mod:SPELL_DAMAGE(args)
-	if args:IsSpellID(62017, 312539, 312892) then  -- Поражение громом
+	if args:IsSpellID(62017, 312539, 312892) then	-- Поражение громом
 		if bit.band(args.destFlags, COMBATLOG_OBJECT_AFFILIATION_MINE) ~= 0
 		and bit.band(args.destFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0
 		and GetTime() - spam > 5 then
