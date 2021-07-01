@@ -49,7 +49,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(63472, 62680, 312727, 312374) then		--Огненная струя
+	if args:IsSpellID(63472, 62680, 312727, 312374) then	--Огненная струя
 		timerFlameJetsCast:Start()
 		warnFlameJetsCast:Show()
 		timerFlameJetsCooldown:Start()
@@ -79,14 +79,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.SlagPotIcon then
 			self:SetIcon(args.destName, 8, 10)
 		end
-	elseif args.spellId(62382, 312387, 312740, 312741) then       --Ломкость
+	elseif args.spellId(62382, 312387, 312740, 312741) then	--Ломкость
 		warnFlameBrittle:Show()
 		warnFlameBrittle:Play("killmob")
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(62717, 63477, 312378, 312731) then		--Ковш
+	if args:IsSpellID(62717, 63477, 312378, 312731) then	--Ковш
 		if self.Options.SlagPotIcon then
 			self:SetIcon(args.destName, 0)
 		end

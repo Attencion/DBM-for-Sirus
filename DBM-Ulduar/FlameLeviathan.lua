@@ -49,14 +49,14 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_SUMMON(args)
-	if args:IsSpellID(312355, 312708, 62907, 312363, 312716) then		--Защитники жизни(Creature id: 34275)
+	if args:IsSpellID(312355, 312708, 62907, 312363, 312716) then	--Защитники жизни(Creature id: 34275)
 		warnWardofLife:Show()
 		timerWardoflifeCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(312689, 62396) then		-- Дыхание
+	if args:IsSpellID(312689, 62396) then	-- Дыхание
 		timerFlameVents:Start()
 	elseif args:IsSpellID(312692, 62475, 312339) then	-- Перезагрузка
 		timerSystemOverload:Start()
@@ -70,7 +70,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if player == UnitName("player") then
 			pursueSpecWarn:Show()
 		end
-	elseif args:IsSpellID(312705, 62533, 312352) then		-- Ярость ходира (Person is frozen)
+	elseif args:IsSpellID(312705, 62533, 312352) then	-- Ярость ходира (Person is frozen)
 		warnHodirsFury:Show(args.destName)
 	end
 

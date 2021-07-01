@@ -13,7 +13,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED",
 	"SPELL_DAMAGE",
 	"SPELL_MISSED",
-        "UNIT_HEALTH"
+	"UNIT_HEALTH"
 )
 
 local warnLightBomb					= mod:NewTargetAnnounce(312941, 1)
@@ -21,9 +21,9 @@ local warnGravityBomb				= mod:NewTargetAnnounce(312943, 1)
 local warnPhase2					= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 
-local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941)  --свет
-local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943)  --бомба
-local specWarnConsumption			= mod:NewSpecialWarningMove(312948)   --Hard mode void zone
+local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941)	--свет
+local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943)	--бомба
+local specWarnConsumption			= mod:NewSpecialWarningMove(312948)	--Hard mode void zone
 
 local enrageTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrum			= mod:NewCastTimer(8, 312939, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
@@ -144,7 +144,7 @@ end
 do 
 	local lastConsumption = 0
 	function mod:SPELL_DAMAGE(args)
-		if args:IsSpellID(64206, 64208, 312596, 312949) and args:IsPlayer() and time() - lastConsumption > 2 then		-- Hard mode void zone
+		if args:IsSpellID(64206, 64208, 312596, 312949) and args:IsPlayer() and time() - lastConsumption > 2 then	-- Hard mode void zone
 			specWarnConsumption:Show()
 			lastConsumption = time()
 		end
