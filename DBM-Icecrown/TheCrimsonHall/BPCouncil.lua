@@ -43,11 +43,12 @@ local specWarnShadowPrison		= mod:NewSpecialWarningStack(72999, nil, 6, nil, nil
 
 local timerTargetSwitch			= mod:NewTimer(47, "TimerTargetSwitch", 70952)	-- every 46-47seconds
 local timerDarkNucleusCD		= mod:NewCDTimer(10, 71943, nil, false, nil, 5)	-- usually every 10 seconds but sometimes more
-local timerConjureFlamesCD		= mod:NewCDTimer(20, 71718, nil, nil, nil, 3) -- every 20-30 seconds but never more often than every 20sec
+local timerConjureFlamesCD		= mod:NewCDTimer(25, 71718, nil, nil, nil, 3) -- every 20-30 seconds but never more often than every 20sec
 local timerGlitteringSparksCD	= mod:NewCDTimer(20, 72798, nil, nil, nil, 2) -- This is pretty nasty on heroic
 local timerShockVortex			= mod:NewCDTimer(16.5, 72037, nil, nil, nil, 3) -- Seen a range from 16,8 - 21,6
 local timerKineticBombCD		= mod:NewCDTimer(18, 72053, nil, "Ranged", nil, 1) -- Might need tweaking
 local timerShadowPrison			= mod:NewBuffFadesTimer(10, 72999, nil, nil, nil, 5) -- Hard mode debuff
+local timerEmpoweredShockVortexCD		= mod:NewCDTimer(30, 72039, nil, nil, nil, 2, nil) --Могучий вихрь
 
 local berserkTimer				= mod:NewBerserkTimer(600)
 
@@ -55,7 +56,7 @@ mod:AddSetIconOption("EmpoweredFlameIcon", 72040, true, true, {7})
 mod:AddSetIconOption("ActivePrinceIcon", "ActivePrinceIcon", true, true, {8})
 mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("VortexArrow")
-mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
+mod:AddBoolOption("BypassLatencyCheck", false)	--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
 
 local activePrince
 local glitteringSparksTargets	= {}
@@ -152,6 +153,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnEmpoweredShockV:Show()
 		specWarnEmpoweredShockV:Play("scatter")
 		timerShockVortex:Start()
+		timerEmpoweredShockVortexCD:Start()
 	elseif args:IsSpellID(71718) then	-- Conjure Flames
 		warnConjureFlames:Show()
 		timerConjureFlamesCD:Start()

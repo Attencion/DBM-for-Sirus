@@ -17,7 +17,7 @@ mod:RegisterEvents(
 )
 
 local warnFrenzySoon		= mod:NewSoonAnnounce(72737, 2, nil, "Tank|Healer")
-local warnAddsSoon			= mod:NewPreWarnAnnounce(72173, 10, 3)
+local warnAddsSoon			= mod:NewPreWarnAnnounce(72173, 5, 3)
 local warnAdds				= mod:NewSpellAnnounce(72173, 4)
 local warnFrenzy			= mod:NewSpellAnnounce(72737, 2, nil, "Tank|Healer")
 local warnBloodNova			= mod:NewSpellAnnounce(73058, 2)
@@ -32,7 +32,7 @@ local timerCombatStart		= mod:NewCombatTimer(41)
 local timerRuneofBlood		= mod:NewNextTimer(20, 72410, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerBoilingBlood		= mod:NewNextTimer(15.5, 72441, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
 local timerBloodNova		= mod:NewNextTimer(20, 73058, nil, nil, nil, 2)
-local timerCallBloodBeast	= mod:NewNextTimer(40, 72173, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
+local timerCallBloodBeast	= mod:NewNextTimer(30, 72173, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 
 local enrageTimer			= mod:NewBerserkTimer(480)
 
@@ -67,7 +67,7 @@ function mod:OnCombatStart(delay)
 		enrageTimer:Start(360-delay)
 	end
 	timerCallBloodBeast:Start(-delay)
-	warnAddsSoon:Schedule(30-delay)
+	warnAddsSoon:Schedule(25-delay)
 	timerBloodNova:Start(-delay)
 	timerRuneofBlood:Start(-delay)
 	timerBoilingBlood:Start(19-delay)
@@ -144,7 +144,7 @@ do
 		if args:IsSpellID(72172, 72173) or args:IsSpellID(72356, 72357, 72358) then -- Summon Blood Beasts
 			if time() - lastBeast > 5 then
 				warnAdds:Show()
-				warnAddsSoon:Schedule(30)
+				warnAddsSoon:Schedule(25)
 				timerCallBloodBeast:Start()
 				lastBeast = time()
 				if self.Options.BeastIcons then
@@ -174,7 +174,7 @@ do
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(72293) then		-- Mark of the Fallen Champion
+	if args:IsSpellID(72293) then	-- Метка падшего воителя
 		self.vb.Mark = self.vb.Mark + 1
 		specwarnMark:Show(self.vb.Mark, args.destName)
 		specwarnMark:Show(args.destName)

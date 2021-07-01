@@ -232,6 +232,10 @@ local function MixinSharedMedia3(mediatype, mediatable)
 		soundsRegistered = true
 		--Embedded Sound Clip media
 		LSM:Register("sound", "Alarak: Krizal Tok Aran", [[Interface\AddOns\DBM-Core\sounds\SoundClips\Krizal_tok_aran.ogg]])
+		LSM:Register("sound", "Alarak: Battle Start", [[Interface\AddOns\DBM-Core\sounds\SoundClips\Alarak_battle_start.ogg]])
+		LSM:Register("sound", "Artanis: En Taro Zeratul", [[Interface\AddOns\DBM-Core\sounds\SoundClips\Artanis_En_Taro_Zeratul.ogg]])
+		LSM:Register("sound", "Kerrigan: Battle Start", [[Interface\AddOns\DBM-Core\sounds\SoundClips\Kerrigan_battle_start.ogg]])
+		LSM:Register("sound", "Jim Raynor: -", [[Interface\AddOns\DBM-Core\sounds\SoundClips\Jim Raynor_battle_start.ogg]])
 		LSM:Register("sound", "Tychus: It is high time", [[Interface\AddOns\DBM-Core\sounds\SoundClips\TychusStartGame.ogg]])
 		LSM:Register("sound", "AirHorn (DBM)", [[Interface\AddOns\DBM-Core\sounds\AirHorn.ogg]])
 		LSM:Register("sound", "Jaina: Beware", [[Interface\AddOns\DBM-Core\sounds\SoundClips\beware.ogg]])

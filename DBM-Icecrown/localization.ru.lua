@@ -38,7 +38,7 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	WarnMortalWound	= "%s на |3-5(>%s<) (%s)",		-- Mortal Wound on >args.destName< (args.amount)
-	SpecWarnTrap	= "Ловушка активирована! - приближаются Мстительные свежеватели"--creatureid 37038
+	SpecWarnTrap	= "Ловушка активирована!"--creatureid 37038
 }
 
 L:SetOptionLocalization{
@@ -509,10 +509,10 @@ L:SetWarningLocalization{
 	SpecWarnDefileCast		= "Осквернение на вас - ОТБЕГИТЕ",
 	SpecWarnDefileNear		= "Осквернение около вас - Остерегайтесь",
 	SpecWarnTrapNear		= "Теневая ловушка около вас - Остерегайтесь",
-	WarnNecroticPlagueJump	        = "Мертвящая чума перепрыгнула на |3-3(>%s<)",
+	WarnNecroticPlagueJump	= "Мертвящая чума перепрыгнула на |3-3(>%s<)",
 	SpecWarnPALGrabbed		= "Паладина лекаря |3-3(%s) схватили",
 	SpecWarnPRIGrabbed		= "Жреца лекаря |3-3(%s) схватили",
-	SpecWarnValkyrLow		= "У Валь'киры 55% ХП - СМЕНИ ЦЕЛЬ"
+	SpecWarnValkyrLow		= "У Валь'киры 55% ХП - СМЕНИТЕ ЦЕЛЬ"
 }
 
 L:SetTimerLocalization{
