@@ -132,9 +132,7 @@ function mod:SPELL_AURA_APPLIED(args)
         end
 
     elseif args:IsSpellID(310555) then	--Паралич
-        warnParalysis:Show()
         timerParalysis:Start()
-        timerParalysisCD:Start()
 
     elseif args:IsSpellID(310549) then	--Рвота
         timerPoisonous:Start(args.destName)
@@ -144,7 +142,10 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
     if args:IsSpellID(310548) then	--Клешня
-        timerStrongBeatCD:Start()        
+        timerStrongBeatCD:Start()
+	elseif args:IsSpellID(310555) then	--Паралич
+        warnParalysis:Show()
+        timerParalysisCD:Start()
     end
 end
 
