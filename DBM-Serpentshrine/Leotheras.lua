@@ -175,14 +175,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:UnscheduleMethod("WarnDemons")
 		self:ScheduleMethod(0.1, "WarnDemons")
 	elseif args:IsSpellID(310480) then --хм Рассеченая душа
-                warnRass:Show(args.destName, args.amount or 1)
-	        timerRass:Start(args.destName)
+		warnRass:Show(args.destName, args.amount or 1)
+		timerRass:Start(args.destName)
 	elseif args:IsSpellID(310502) then --хм Когти скверны
-                warnKogti:Show(args.destName, args.amount or 1)
+		warnKogti:Show(args.destName, args.amount or 1)
 		timerKogti:Start(args.destName)
 	elseif args:IsSpellID(310521) then --хм Вспышка
 		if self:IsTank() then
-                        warnVsp:Show(args.destName, args.amount or 1)
+		warnVsp:Show(args.destName, args.amount or 1)
 		end
 	elseif args:IsSpellID(310496) then --хм Клеймо
 		warnKlei:Show(args.destName)

@@ -2,7 +2,9 @@
 
 local L
 
---Hydross
+--------------------------
+-- Hydross the Unstable --
+--------------------------
 L = DBM:GetModLocalization("Hydross")
 
 L:SetGeneralLocalization{
@@ -47,7 +49,9 @@ L:SetMiscLocalization{
 }
 
 
---Tidewalker
+-------------------------
+-- Morogrim Tidewalker --
+-------------------------
 L = DBM:GetModLocalization("Tidewalker")
 
 L:SetGeneralLocalization{
@@ -77,7 +81,9 @@ L:SetMiscLocalization{
 	EmoteGlobes     = "%s призывает водяные шары!"
 }
 
---Leotheras
+-------------------------
+-- Leotheras the Blind --
+-------------------------
 L = DBM:GetModLocalization("Leotheras")
 
 L:SetGeneralLocalization{
@@ -116,7 +122,9 @@ L:SetMiscLocalization{
 	Klei		= "Клеймо {rt%d} установлено на %s"
 }
 
---LurkerBelow
+----------------------
+-- The Lurker Below --
+----------------------
 L = DBM:GetModLocalization("LurkerBelow")
 
 L:SetGeneralLocalization{
@@ -145,7 +153,9 @@ L:SetMiscLocalization{
 	EmoteSpout = "%s делает глубокий вдох."
 }
 
---Fathomlord
+----------------------------
+-- Fathom-Lord Karathress --
+----------------------------
 L = DBM:GetModLocalization("Fathomlord")
 
 L:SetGeneralLocalization{
@@ -158,34 +168,36 @@ L:SetTimerLocalization{
 
 L:SetWarningLocalization{
         specWarnCastHeala	= "Исцеление - ПРЕРВИТЕ",
-	WarnKaraTarget          = "Каратресс преследует %s",
-	SpecWarnKaraTarget      = "Вас преследует Каратресс - бегите"
+	WarnKaraTarget	= "Каратресс преследует %s",
+	SpecWarnKaraTarget	= "Вас преследует Каратресс - бегите"
 }
 
 L:SetOptionLocalization{
-        BossHealthFrame		= "Показывать здоровье боссов в фазе 1 (должны быть в цели или фокусе хотя бы у одного члена рейда)",
-        specWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
-        YellOnSvaz	        = "Кричать, когда на вас $spell:309262",
-        YellOnStrela	        = "Кричать, когда на вас $spell:309253",
-	WarnPhase2Soon		= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
-	SetIconOnSvazTargets    = "Устанавливать иконки на цели $spell:309262",
-	AnnounceSvaz		= "Объявлять игроков, на кого установлено $spell:309261, в рейд чат ",
-	WarnKaraTarget          = "Объявлять цели преследуемые Каратрессом",
-	SpecWarnKaraTarget      = "Спец. предупреждение для преследуемого Каратрессом",
-	TimerKaraTarget         = "Отсчет времени до смены цели Каратрессом"
+	BossHealthFrame	= "Показывать здоровье боссов в фазе 1 (должны быть в цели или фокусе хотя бы у одного члена рейда)",
+	specWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
+	YellOnSvaz	= "Кричать, когда на вас $spell:309262",
+	YellOnStrela	= "Кричать, когда на вас $spell:309253",
+	WarnPhase2Soon	= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
+	SetIconOnSvazTargets	= "Устанавливать иконки на цели $spell:309262",
+	AnnounceSvaz	= "Объявлять игроков, на кого установлено $spell:309261, в рейд чат ",
+	WarnKaraTarget	= "Объявлять цели преследуемые Каратрессом",
+	SpecWarnKaraTarget	= "Спец. предупреждение для преследуемого Каратрессом",
+	TimerKaraTarget	= "Отсчет времени до смены цели Каратрессом"
 }
 
 L:SetMiscLocalization{
-        Volniis		= "Волниис",
+	Volniis	= "Волниис",
 	Sharkkis	= "Шарккис",
-	Karibdis 	= "Карибдис",
-        Karatress 	= "Каратресс",
-	YellPull        = "Стража, к бою! У нас гости...",
+	Karibdis	= "Карибдис",
+	Karatress	= "Каратресс",
+	YellPull	= "Стража, к бою! У нас гости...",
 	SvazIcon	= "Пламенная свзь {rt%d} установлена на %s",
-	KaraTarget      = "смотрит на |3%-3%([%w\128-\255]+%)."
+	KaraTarget	= "смотрит на |3%-3%([%w\128-\255]+%)."
 }
 
---Vashj
+----------------
+-- Lady Vashj --
+----------------
 L = DBM:GetModLocalization("Vashj")
 
 L:SetGeneralLocalization{
@@ -207,20 +219,20 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-        AutoChangeLootToFFA   = "Смена режима добычи на Каждый за себя в фазе 2 (в обычке, для лидера рейда)",
-        YellOnStaticAnger     = "Кричать, когда на вас $spell:310636",
-        YellOnStaticAnger2    = "Кричать, когда на вас $spell:310659",
-	WarnCore              = "Объявить наличие порченой магмы",
-	WarnPhase             = "Объявлять о смене фазы",
-	Strider               = "Отсчет времени до следующего Странника",
-	TaintedElemental      = "Отсчет времени до следующего Нечистого элементаля",
-	Naga                  = "Отсчет времени до следующего Гвардейца",
-	WarnElemental         = "Объявлять о прибытии Нечистый элементаль",
-	Elem		      = "Показывать стрелку на Нечистого элементаля",
-	AnnounceStatic	      = "Объявлять игроков, на кого установлено $spell:310636, в рейд чат ",
-        AnnounceStatic2	      = "Объявлять игроков, на кого установлено $spell:310659, в рейд чат ",
-	SpecWarnStaticAngerNear	   = "Спец-предупреждение, когда $spell:310636 около вас",
-        SpecWarnStaticAngerNear2   = "Спец-предупреждение, когда $spell:310659 около вас"
+	AutoChangeLootToFFA	= "Смена режима добычи на Каждый за себя в фазе 2 (в обычке, для лидера рейда)",
+	YellOnStaticAnger	= "Кричать, когда на вас $spell:310636",
+	YellOnStaticAnger2	= "Кричать, когда на вас $spell:310659",
+	WarnCore	= "Объявить наличие порченой магмы",
+	WarnPhase	= "Объявлять о смене фазы",
+	Strider	= "Отсчет времени до следующего Странника",
+	TaintedElemental	= "Отсчет времени до следующего Нечистого элементаля",
+	Naga	= "Отсчет времени до следующего Гвардейца",
+	WarnElemental	= "Объявлять о прибытии Нечистый элементаль",
+	Elem	= "Показывать стрелку на Нечистого элементаля",
+	AnnounceStatic	= "Объявлять игроков, на кого установлено $spell:310636, в рейд чат ",
+	AnnounceStatic2	= "Объявлять игроков, на кого установлено $spell:310659, в рейд чат ",
+	SpecWarnStaticAngerNear	= "Спец-предупреждение, когда $spell:310636 около вас",
+	SpecWarnStaticAngerNear2	= "Спец-предупреждение, когда $spell:310659 около вас"
 }
 
 L:SetMiscLocalization{
@@ -228,10 +240,12 @@ L:SetMiscLocalization{
 	YellPhase3              = "Вам не пора прятаться?",
 	TaintedElemental        = "Нечистый элементаль",
 	StaticIcons	= "Статический заряд {rt%d} установлен на %s",
-        StaticIcons2	= "Статический заряд {rt%d} установлен на %s"
+	StaticIcons2	= "Статический заряд {rt%d} установлен на %s"
 }
 
---Gorelac
+-------------
+-- Gorelac --
+-------------
 L = DBM:GetModLocalization("Gorelac")
 
 L:SetGeneralLocalization{
@@ -243,31 +257,29 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-        specWarnParalysis               = "Медленный паралич - РАССЕЙТЕ",
-        warnPoisonousBlood		= "Ядовитая кровь >%d<",
-        warnRippingThorn	        = "Разрывающий шип >%d<",
-        specWarnShrillScreech	        = "Пронзительный визг - ПРЕРВИТЕ",
-        specWarnBattleRoar	        = "Боевой рев - ПРЕРВИТЕ"
+	warnPoisonousBlood	= "Ядовитая кровь >%d<",
+	warnRippingThorn	= "Разрывающий шип >%d<",
+	specWarnBattleRoar	= "Боевой рев - ПРЕРВИТЕ"
 }
 
 L:SetOptionLocalization{
-        specWarnParalysis               = "Спец-предупреждение об $spell:310555 (для диспела)",
-        WarnPoisonousBlood		= "Предупреждение о ваших стаках $spell:310546",
-        WarnRippingThorn	        = "Предупреждение о ваших стаках $spell:310547",
-        YellOnPowerfulShot              = "Кричать, когда на вас $spell:310564",
-        YellOnMassiveShell              = "Кричать, когда на вас $spell:310560",
-        specWarnShrillScreech	        = "Спец-предупреждение об $spell:310566 (для прерывания)",
-        specWarnBattleRoar	        = "Спец-предупреждение об $spell:310568 (для прерывания)",
-        SetIconOnMassiveShellTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310560),
-        SetIconOnPowerfulShotTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310564)
+	WarnPoisonousBlood	= "Предупреждение о ваших стаках $spell:310546",
+	WarnRippingThorn	= "Предупреждение о ваших стаках $spell:310547",
+	YellOnPowerfulShot	= "Кричать, когда на вас $spell:310564",
+	YellOnMassiveShell	= "Кричать, когда на вас $spell:310560",
+	specWarnBattleRoar	= "Спец-предупреждение об $spell:310568 (для прерывания)",
+	SetIconOnMassiveShellTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310560),
+	SetIconOnPowerfulShotTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310564)
 }
 
 L:SetMiscLocalization{
-        YellPowerfulShot	        = "Мощный выстрел летит в меня!",
-        YellMassiveShell	        = "Массированный обстрел по мне!"
+	YellPowerfulShot	= "Мощный выстрел летит в меня!",
+	YellMassiveShell	= "Массированный обстрел по мне!"
 }
 
---TrashMobs
+---------------
+-- TrashMobs --
+---------------
 L = DBM:GetModLocalization("TrashMobs")
 
 L:SetGeneralLocalization{

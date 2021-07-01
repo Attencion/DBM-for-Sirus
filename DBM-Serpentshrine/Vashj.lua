@@ -30,36 +30,36 @@ local specWarnCore       = mod:NewSpecialWarningYou(38132)
 local specWarnCharge     = mod:NewSpecialWarningRun(38280)
 
 local timerStrider       = mod:NewTimer(66, "Strider", "Interface\\Icons\\INV_Misc_Fish_13", nil, nil, 1)
-local timerElemental     = mod:NewTimer(53, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields", nil, nil, 1)
+local timerElemental     = mod:NewTimer(60, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields", nil, nil, 1)
 local timerNaga          = mod:NewTimer(47.5, "Naga", "Interface\\Icons\\INV_Misc_MonsterHead_02", nil, nil, 1)
 local timerCharge        = mod:NewTargetTimer(20, 38280, nil, nil, nil, 4)
 
 --------------------------------Героик--------------------------------
 
 
-local warnStaticAnger       	 = mod:NewTargetAnnounce(310636, 3) -- Статический заряд
-local warnStaticAnger2       	 = mod:NewTargetAnnounce(310659, 3) -- Статический заряд2
-local warnElemAnonce       	 = mod:NewSoonAnnounce(310635, 1) -- Скоро призыв элементалей хм
-local warnStartElem     	 = mod:NewSpellAnnounce(310635, 1) -- Призыв элемов хм
-local warnScat      		 = mod:NewSpellAnnounce(310657, 1) -- Призыв скатов хм
-local warnPhase2Soon	         = mod:NewPrePhaseAnnounce(2)
-local warnPhase3Soon		 = mod:NewPrePhaseAnnounce(3)
-local warnPhase2     		 = mod:NewPhaseAnnounce(2)
-local warnPhase3     	 	 = mod:NewPhaseAnnounce(3)
+local warnStaticAnger			= mod:NewTargetAnnounce(310636, 3) -- Статический заряд
+local warnStaticAnger2			= mod:NewTargetAnnounce(310659, 3) -- Статический заряд2
+local warnElemAnonce			= mod:NewSoonAnnounce(310635, 1) -- Скоро призыв элементалей хм
+local warnStartElem				= mod:NewSpellAnnounce(310635, 1) -- Призыв элемов хм
+local warnScat					= mod:NewSpellAnnounce(310657, 1) -- Призыв скатов хм
+local warnPhase2Soon			= mod:NewPrePhaseAnnounce(2)
+local warnPhase3Soon			= mod:NewPrePhaseAnnounce(3)
+local warnPhase2				= mod:NewPhaseAnnounce(2)
+local warnPhase3				= mod:NewPhaseAnnounce(3)
 
-local specWarnStaticAnger  	  = mod:NewSpecialWarningMove(310636, nil, nil, nil, 4, 5) -- Статический заряд на игроке
-local specWarnStaticAnger2 	  = mod:NewSpecialWarningMove(310659, nil, nil, nil, 4, 5) -- Статический заряд на игроке
-local specWarnStaticAngerNear	  = mod:NewSpecialWarning("SpecWarnStaticAngerNear", 310636, nil, nil, 1, 2) -- Статический заряд около игрока
-local specWarnStaticAngerNear2	  = mod:NewSpecialWarning("SpecWarnStaticAngerNear2", 310659, nil, nil, 1, 2) -- Статический заряд около игрока
+local specWarnStaticAnger		= mod:NewSpecialWarningMove(310636, nil, nil, nil, 4, 5) -- Статический заряд на игроке
+local specWarnStaticAnger2		= mod:NewSpecialWarningMove(310659, nil, nil, nil, 4, 5) -- Статический заряд на игроке
+local specWarnStaticAngerNear	= mod:NewSpecialWarning("SpecWarnStaticAngerNear", 310636, nil, nil, 1, 2) -- Статический заряд около игрока
+local specWarnStaticAngerNear2	= mod:NewSpecialWarning("SpecWarnStaticAngerNear2", 310659, nil, nil, 1, 2) -- Статический заряд около игрока
 
-local timerStaticAngerCD 	  = mod:NewCDTimer(15, 310636, nil, nil, nil, 3) -- Статический заряд
-local timerStaticAnger2CD 	  = mod:NewCDTimer(15, 310659, nil, nil, nil, 3) -- Статический заряд
-local timerElemCD     		  = mod:NewCDTimer(60, 310635, nil, nil, nil, 1) -- Элементали
-local timerStaticAnger     	  = mod:NewTargetTimer(8, 310636, nil, nil, nil, 3) -- Статический заряд на игроке
-local timerStaticAnger2     	  = mod:NewTargetTimer(8, 310659, nil, nil, nil, 3) -- Статический заряд на игроке
+local timerStaticAngerCD		= mod:NewCDTimer(15, 310636, nil, nil, nil, 3) -- Статический заряд
+local timerStaticAnger2CD		= mod:NewCDTimer(15, 310659, nil, nil, nil, 3) -- Статический заряд
+local timerElemCD				= mod:NewCDTimer(60, 310635, nil, nil, nil, 1) -- Элементали
+local timerStaticAnger			= mod:NewTargetTimer(8, 310636, nil, nil, nil, 3) -- Статический заряд на игроке
+local timerStaticAnger2			= mod:NewTargetTimer(8, 310659, nil, nil, nil, 3) -- Статический заряд на игроке
 
-local yellStaticAnger		= mod:NewYell(310636)
-local yellStaticAnger2		= mod:NewYell(310659)
+local yellStaticAnger			= mod:NewYell(310636)
+local yellStaticAnger2			= mod:NewYell(310659)
 
 mod:AddBoolOption("Elem")
 mod:AddBoolOption("AutoChangeLootToFFA", true)
@@ -190,7 +190,7 @@ function mod:OnCombatStart(delay)
 		DBM.RangeCheck:Show(20)
 		timerElemCD:Start(10)
 		timerStaticAngerCD:Start()
-	else -- Обычка
+	else	-- Обычка
 		if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
 		end
@@ -223,7 +223,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnCore:Show()
 		end
-	elseif spellId == 310636 then -- хм заряд
+	elseif spellId == 310636 then	-- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger:Show()
 			yellStaticAnger:Yell()
@@ -245,7 +245,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		StaticTargets[#StaticTargets + 1] = args.destName
 		self:UnscheduleMethod("StaticAngerIcons")
 		self:ScheduleMethod(0.1, "StaticAngerIcons")
-	elseif spellId == 310659 then -- хм заряд
+	elseif spellId == 310659 then	-- хм заряд
 		if args:IsPlayer() then
 			specWarnStaticAnger2:Show()
 			yellStaticAnger2:Yell()
@@ -271,11 +271,11 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(310636) then                 -- Заряд 1 фаза
+	if args:IsSpellID(310636) then	-- Заряд 1 фаза
 		if self.Options.StaticAngerIcons then
 			self:SetIcon(args.destName, 0)
                 end
-	elseif args:IsSpellID(310659) then            -- заряд 2 фаза
+	elseif args:IsSpellID(310659) then	-- заряд 2 фаза
 		if self.Options.StaticAngerIcons2 then
 			self:SetIcon(args.destName, 0)
 		end
@@ -300,9 +300,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			specWarnCharge:Show()
 		end
-	elseif spellId == 310636 then -- хм заряд1
+	elseif spellId == 310636 then	-- хм заряд1
 		timerStaticAngerCD:Start()
-	elseif spellId == 310659 then -- хм заряд2
+	elseif spellId == 310659 then	-- хм заряд2
 		timerStaticAnger2CD:Start()
 	end
 end
@@ -315,7 +315,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNaga:Start()
 		self:ScheduleMethod(66, "NextStrider")
 		self:ScheduleMethod(47.5, "NextNaga")
-		self:ScheduleMethod(48, "ElementalSoon")
+		self:ScheduleMethod(55, "ElementalSoon")
 	elseif msg == L.YellPhase3 then
 		warnPhase:Show(3)
 		timerStrider:Cancel()
@@ -329,7 +329,7 @@ end
 function mod:UNIT_DIED(args)
 	if args.destName == L.TaintedElemental then
 		timerElemental:Start()
-		self:ScheduleMethod(48, "ElementalSoon")
+		self:ScheduleMethod(55, "ElementalSoon")
 	end
 end
 
@@ -349,8 +349,8 @@ function mod:UNIT_HEALTH(uId)
 	if mod:IsDifficulty("heroic25") then
 		if self.vb.phase == 1 and not warned_preP2 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
 			warned_preP2 = true
-		        self.vb.phase = 2
-		        warnPhase2:Show()
+			self.vb.phase = 2
+			warnPhase2:Show()
 			timerStaticAnger2CD:Start()
 		end	
 	end 

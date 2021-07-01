@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("20210130153000")
 
 mod:SetCreatureID(21214)
-mod:RegisterCombat("yell", L.YellPull, 21966, 21965, 21964)
+mod:RegisterCombat("yell", L.YellPull, 21966, 21965, 21964, 21214)
 mod:SetUsedIcons(4, 5, 6, 7, 8)
 
 mod:RegisterEvents(
@@ -131,7 +131,7 @@ end
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21214, "Fathom-Lord Karathress", wipe)
 	DBM.RangeCheck:Hide()
-        DBM.BossHealth:Hide()
+    DBM.BossHealth:Clear()
 end
 
 function mod:SPELL_AURA_REMOVED(args)
