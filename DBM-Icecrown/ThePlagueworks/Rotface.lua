@@ -30,7 +30,7 @@ local warnVileGas				= mod:NewTargetAnnounce(72272, 3)
 local specWarnMutatedInfection	= mod:NewSpecialWarningYou(71224, nil, nil, nil, 1, 2)
 local specWarnStickyOoze		= mod:NewSpecialWarningMove(69774, nil, nil, nil, 1, 2)
 local specWarnOozeExplosion		= mod:NewSpecialWarningDodge(69839, nil, nil, nil, 1, 2)
-local specWarnSlimeSpray		= mod:NewSpecialWarningSpell(69508, false, nil, nil, 1, 2)--For people that need a bigger warning to move
+local specWarnSlimeSpray		= mod:NewSpecialWarningSpell(69508, false, nil, nil, 1, 2)	--For people that need a bigger warning to move
 local specWarnRadiatingOoze		= mod:NewSpecialWarningSpell(69760, "-Tank", nil, nil, 1, 2)
 local specWarnLittleOoze		= mod:NewSpecialWarning("SpecWarnLittleOoze", nil, nil, 1, 2)
 local specWarnVileGas			= mod:NewSpecialWarningYou(72272, nil, nil, nil, 1, 2)
@@ -38,8 +38,9 @@ local specWarnVileGas			= mod:NewSpecialWarningYou(72272, nil, nil, nil, 1, 2)
 local timerStickyOoze			= mod:NewNextTimer(16, 69774, nil, "Tank")
 local timerWallSlime			= mod:NewNextTimer(20, 69789)
 local timerSlimeSpray			= mod:NewNextTimer(21, 69508, nil, nil, nil, 3)
-local timerMutatedInfection		= mod:NewTargetTimer(12, 71224, nil, nil, nil, 3)
-local timerOozeExplosion		= mod:NewCastTimer(4, 69839, nil, nil, nil, 2)
+local timerMutatedInfection		= mod:NewTargetTimer(12, 71224, nil, "Healer", nil, 3, nil, DBM_CORE_HEALER_ICON)
+local timerMutatedInfectionCD	= mod:NewNextTimer(15, 71224, nil, "Healer", nil, 3, nil, DBM_CORE_HEALER_ICON)
+local timerOozeExplosion		= mod:NewCastTimer(4, 69839, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerVileGasCD			= mod:NewNextTimer(30, 72272, nil, nil, nil, 3)
 
 mod:AddBoolOption("RangeFrame", "Ranged")
@@ -57,12 +58,13 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 36627, "Rotface")
+	timerMutatedInfectionCD:Start(15-delay)
 	timerWallSlime:Start(25-delay)
 	self:ScheduleMethod(25-delay, "WallSlime")
 	InfectionIcon = 8
 	spamOoze = 0
 	if mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25") then
-		timerVileGasCD:Start(22-delay)
+		timerVileGasCD:Start(30-delay)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Show(8)
 		end
@@ -133,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				InfectionIcon = 8
 			end
 		end
-	elseif args:IsSpellID(72272, 72273) and args:IsDestTypePlayer() then	-- Vile Gas(Heroic Rotface only, 25 man spellid the same as 10?)
+	elseif args:IsSpellID(69240, 71218, 72272, 72273, 73020, 73019) and args:IsDestTypePlayer() then	-- Vile Gas(Heroic Rotface only, 25 man spellid the same as 10?)
 		RFVileGasTargets[#RFVileGasTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnVileGas:Show()
@@ -147,8 +149,10 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(72272, 72273) then
+	if args:IsSpellID(69240, 71218, 72272, 72273, 73020, 73019) then
 		timerVileGasCD:Start()
+	elseif args:IsSpellID(69674, 71224, 73022, 73023) then
+		timerMutatedInfectionCD:Start()
 	end
 end
 

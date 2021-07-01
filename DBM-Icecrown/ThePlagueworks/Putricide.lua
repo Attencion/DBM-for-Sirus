@@ -24,13 +24,13 @@ local warnUnstableExperiment		= mod:NewSpellAnnounce(70351, 4)
 local warnVolatileOozeAdhesive		= mod:NewTargetAnnounce(70447, 3)
 local warnGaseousBloat				= mod:NewTargetAnnounce(70672, 3)
 local warnPhase2Soon				= mod:NewPrePhaseAnnounce(2)
-local warnTearGas					= mod:NewSpellAnnounce(71617, 2)		-- Phase transition normal
-local warnVolatileExperiment		= mod:NewSpellAnnounce(72840, 4)		-- Phase transition heroic
+local warnTearGas					= mod:NewSpellAnnounce(71617, 2)	-- Phase transition normal
+local warnVolatileExperiment		= mod:NewSpellAnnounce(72840, 4)	-- Phase transition heroic
 local warnChokingGasBombSoon		= mod:NewPreWarnAnnounce(71255, 5, 3, nil, "Melee")
-local warnChokingGasBomb			= mod:NewSpellAnnounce(71255, 3, nil, "Melee")		-- Phase 2 ability
+local warnChokingGasBomb			= mod:NewSpellAnnounce(71255, 3, nil, "Melee")	-- Phase 2 ability
 local warnPhase3Soon				= mod:NewPrePhaseAnnounce(3)
-local warnMutatedPlague				= mod:NewStackAnnounce(72451, 2, nil, "Tank|Healer") -- Phase 3 ability
-local warnUnboundPlague				= mod:NewTargetAnnounce(72856, 3)			-- Heroic Ability
+local warnMutatedPlague				= mod:NewStackAnnounce(72451, 2, nil, "Tank|Healer")	-- Phase 3 ability
+local warnUnboundPlague				= mod:NewTargetAnnounce(72856, 3)	-- Heroic Ability
 
 local specWarnVolatileOozeAdhesive	= mod:NewSpecialWarningYou(70447, nil, nil, nil, 1, 2)
 local specWarnVolatileOozeAdhesiveT	= mod:NewSpecialWarningMoveTo(70447, nil, nil, nil, 1, 2)
@@ -41,26 +41,27 @@ local yellMalleableGoo				= mod:NewYell(72295)
 local specWarnMalleableGooNear		= mod:NewSpecialWarningClose(72295, nil, nil, nil, 1, 2)
 local specWarnChokingGasBomb		= mod:NewSpecialWarningMove(71255, "Tank", nil, nil, 1, 2)
 local specWarnMalleableGooCast		= mod:NewSpecialWarningSpell(72295, false, nil, nil, 2, 2)
-local specWarnOozeVariable			= mod:NewSpecialWarningYou(70352)		-- Heroic Ability
-local specWarnGasVariable			= mod:NewSpecialWarningYou(70353)		-- Heroic Ability
-local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856, nil, nil, nil, 1, 2)		-- Heroic Ability
+local specWarnOozeVariable			= mod:NewSpecialWarningYou(70352)	-- Heroic Ability
+local specWarnGasVariable			= mod:NewSpecialWarningYou(70353)	-- Heroic Ability
+local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856, nil, nil, nil, 1, 2)	-- Heroic Ability
 local specWarnMutatedPlague         = mod:NewSpecialWarningStack(72451, "Tank|Healer", 4, nil, nil, 1, 6)
 local yellUnboundPlague				= mod:NewYell(70911)
 
-local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3)			-- Duration of debuff
-local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)				-- Approx
-local timerUnstableExperimentCD		= mod:NewNextTimer(38, 70351, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)			-- Used every 38 seconds exactly except after phase changes
+local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3)	-- Duration of debuff
+local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)	-- Approx
+local timerUnstableExperimentCD		= mod:NewNextTimer(38, 70351, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)	-- Used every 38 seconds exactly except after phase changes
 local timerChokingGasBombCD			= mod:NewNextTimer(37.5, 71255, nil, nil, nil, 3)
 local timerMalleableGooCD			= mod:NewCDTimer(25, 72295, nil, nil, nil, 3)
 local timerTearGas					= mod:NewBuffFadesTimer(8, 71615, nil, nil, nil, 6)
 local timerPotions					= mod:NewBuffActiveTimer(30, 73122, nil, nil, nil, 6)
-local timerMutatedPlagueCD			= mod:NewCDTimer(10, 72451, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)				-- 10 to 11
-local timerUnboundPlagueCD			= mod:NewNextTimer(60, 72856, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON)
-local timerUnboundPlague			= mod:NewBuffActiveTimer(12, 72856, nil, nil, nil, 3)		-- Heroic Ability: we can't keep the debuff 60 seconds, so we have to switch at 12-15 seconds. Otherwise the debuff does to much damage!
+local timerMutatedPlagueCD			= mod:NewCDTimer(10, 72451, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)	-- 10 to 11
+local timerUnboundPlagueCD			= mod:NewNextTimer(60, 72856, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerUnboundPlague			= mod:NewBuffActiveTimer(12, 72856, nil, nil, nil, 3)	-- Heroic Ability: we can't keep the debuff 60 seconds, so we have to switch at 12-15 seconds. Otherwise the debuff does to much damage!
+
 
 -- buffs from "Drink Me"
 local timerMutatedSlash				= mod:NewTargetTimer(20, 70542, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerRegurgitatedOoze			= mod:NewTargetTimer(20, 70539, nil, nil, nil, 7, nil)
 
 local berserkTimer					= mod:NewBerserkTimer(600)
 mod:AddSetIconOption("OozeAdhesiveIcon", 70447, true, true, {8})
@@ -68,7 +69,7 @@ mod:AddSetIconOption("GaseousBloatIcon", 70672, true, true, {7})
 mod:AddSetIconOption("MalleableGooIcon", 72295, true, true, {6})
 mod:AddSetIconOption("UnboundPlagueIcon", 72856, true, true, {5})
 mod:AddBoolOption("GooArrow")
-mod:AddBoolOption("BypassLatencyCheck", false)--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
+mod:AddBoolOption("BypassLatencyCheck", false)	--Use old scan method without syncing or latency check (less reliable but not dependant on other DBM users in raid)
 
 mod.vb.warned_preP2 = false
 mod.vb.warned_preP3 = false
@@ -84,7 +85,7 @@ function mod:OnCombatStart(delay)
 	self.vb.warned_preP3 = false
 	self.vb.phase = 1
 	if self:IsDifficulty("heroic10", "heroic25") then
-		timerUnboundPlagueCD:Start(10-delay)
+		timerUnboundPlagueCD:Start(20-delay)
 	end
 end
 
