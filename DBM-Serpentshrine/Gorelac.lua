@@ -28,31 +28,33 @@ do
         or class == "DEATHKNIGHT"
 end
 
-local warnStrongBeat			= mod:NewStackAnnounce(310548, 1, nil, "Tank|Healer")	--Клешня
-local warnPoisonous				= mod:NewSpellAnnounce(310549, 1)	--Ядовитая рвота
-local warnMassiveShell			= mod:NewTargetAnnounce(310560, 1)	--Обстрел
-local warnPowerfulShot			= mod:NewTargetAnnounce(310564, 2)	--Мощный выстрел
-local warnCallGuardians			= mod:NewSpellAnnounce(310557, 1)	--Вызов треша
-local warnParalysis				= mod:NewSpellAnnounce(310555, 2)	--Паралич
-local warnCallGuardiansSoon		= mod:NewPreWarnAnnounce(310557, 5, 1)	--Вызов треша
-local warnShrillScreech			= mod:NewSpellAnnounce(310566, 1)	--Пронзительный визг
+local warnStrongBeat			= mod:NewStackAnnounce(310548, 1, nil, "Tank|Healer") --Клешня
+local warnPoisonous				= mod:NewSpellAnnounce(310549, 1) --Ядовитая рвота
+local warnMassiveShell			= mod:NewTargetAnnounce(310560, 1) --Обстрел
+local warnPowerfulShot			= mod:NewTargetAnnounce(310564, 2) --Мощный выстрел
+local warnCallGuardians			= mod:NewSpellAnnounce(310557, 1) --Вызов треша
+local warnParalysis				= mod:NewSpellAnnounce(310555, 2) --Паралич
+local warnCallGuardiansSoon		= mod:NewPreWarnAnnounce(310557, 5, 1) --Вызов треша
+local warnShrillScreech			= mod:NewSpellAnnounce(310566, 1) --Пронзительный визг
 
-local specwarnCallGuardians		= mod:NewSpecialWarningSwitch(310557, "Dps", nil, nil, 1, 2)	--Треш
-local specWarnRippingThorn		= mod:NewSpecialWarningStack(310546, nil, 7, nil, nil, 1, 6)
-local specWarnPoisonousBlood	= mod:NewSpecialWarningStack(310547, nil, 7, nil, nil, 1, 6)
-local specWarnPoisonous			= mod:NewSpecialWarningYou(310549, nil, nil, nil, 1, 2)	--Рвота
-local specWarnStrongBeat		= mod:NewSpecialWarningYou(310548, nil, nil, nil, 1, 2)	--Клешня
+local specwarnCallGuardians		= mod:NewSpecialWarningSwitch(310557, "Dps", nil, nil, 1, 2) --Треш
+local specWarnRippingThorn		= mod:NewSpecialWarningStack(310546, "Melee", 7)
+local specWarnPoisonousBlood	= mod:NewSpecialWarningStack(310547, "SpellCaster", 7)
+local specWarnPoisonous			= mod:NewSpecialWarningYou(310549, nil, nil, nil, 2, 2) --Рвота
+local specWarnStrongBeat		= mod:NewSpecialWarningYou(310548, nil, nil, nil, 2, 2) --Клешня
+local specWarnShrillScreech		= mod:NewSpecialWarningYou(310566, nil, nil, nil, 1, 2) --визг
  
 
 local timerParalysis			= mod:NewBuffFadesTimer(10, 310555, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON)
 local timerParalysisCD			= mod:NewCDTimer(20, 310555, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON)
 local timerStrongBeat			= mod:NewBuffFadesTimer(30, 310548, nil, "Tank|Healer", nil, 5, nil)
 local timerPoisonous			= mod:NewBuffFadesTimer(30, 310549, nil, "Tank|Healer", nil, 5, nil)
+local timerShrillScreech		= mod:NewBuffFadesTimer(6, 310566, nil, nil, nil, 5, nil, DBM_CORE_INTERRUPT_ICON)
 local timerPoisonousCD			= mod:NewCDTimer(25, 310549, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON)
-local timerStrongBeatCD			= mod:NewCDTimer(25, 310548, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON) 
+local timerStrongBeatCD			= mod:NewCDTimer(25, 310548, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) 
 local timerCallGuardiansCD		= mod:NewNextTimer(45, 310557, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)
-local timerRippingThorn			= mod:NewBuffFadesTimer(12, 310546, nil, nil, nil, 5)
-local timerPoisonousBlood		= mod:NewBuffFadesTimer(6, 310547, nil, nil, nil, 5)
+local timerRippingThorn			= mod:NewBuffFadesTimer(6, 310546, nil, nil, nil, 5)
+local timerPoisonousBlood		= mod:NewBuffFadesTimer(12, 310547, nil, nil, nil, 5)
 
 local enrageTimer				= mod:NewBerserkTimer(750)
 
@@ -67,7 +69,7 @@ function mod:OnCombatStart(delay)
     enrageTimer:Start(-delay)
     timerCallGuardians:Start(45-delay)
     warnCallGuardiansSoon:Schedule(40-delay)
-    combattime = GetTime()
+	DBM.RangeCheck:Show(6)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -77,12 +79,12 @@ end
 
 
 function mod:SPELL_CAST_START(args)
-    if args:IsSpellID(310566) then	--Пронзительный визг
+    if args:IsSpellID(310566) then --Пронзительный визг
 		warnShrillScreech:Show()
-    elseif args:IsSpellID(310549) then	--Рвота
+    elseif args:IsSpellID(310549) then --Рвота
         warnPoisonous:Show()
         timerPoisonousCD:Start() 
-    elseif args:IsSpellID(310564, 310565) then	--Мощный выстрел
+    elseif args:IsSpellID(310564, 310565) then --Мощный выстрел
 		warnPowerfulShot:Show(args.destName)
         PlaySoundFile("sound\\creature\\kiljaeden\\kiljaeden02.wav")
         if self.Options.SetIconOnPowerfulShotTarget then
@@ -91,7 +93,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.YellOnPowerfulShot and args:IsPlayer() then
 			SendChatMessage(L.YellPowerfulShot, "SAY")
 		end
-    elseif args:IsSpellID(310560, 310561, 310562, 310563) then	--Обстрел
+    elseif args:IsSpellID(310560, 310561, 310562, 310563) then --Обстрел
 		warnMassiveShell:Show()
 		if self.Options.SetIconOnMassiveShellTarget then
 			self:SetIcon(args.destName, 7, 10)
@@ -99,7 +101,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.YellOnMassiveShell and args:IsPlayer() then
 			SendChatMessage(L.YellMassiveShell, "SAY")
 		end
-    elseif args:IsSpellID(310557) then	--Призыв охранителей
+    elseif args:IsSpellID(310557) then --Призыв охранителей
         warnCallGuardians:Show()
 		specwarnCallGuardians:Show()
         specwarnCallGuardians:Play("killmob")
@@ -110,71 +112,77 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-    if args:IsSpellID(310546) then	--Шип
+    if args:IsSpellID(310546) then --Шип
 		timerRippingThorn:Start()
 		if args:IsPlayer() and (args.amount or 1) >= 7 then
 		specWarnRippingThorn:Show(args.amount)
-		specWarnRippingThorn:Play("stackhigh")
         end
 
-    elseif args:IsSpellID(310547) then	--Кровь
+    elseif args:IsSpellID(310547) then --Кровь
 		timerPoisonousBlood:Start()
 		if args:IsPlayer() and (args.amount or 1) >= 7 then
 			specWarnPoisonousBlood:Show(args.amount)
-			specWarnPoisonousBlood:Play("stackhigh")
         end
 
-    elseif args:IsSpellID(310548) then	--Клешня
+    elseif args:IsSpellID(310548) then --Клешня
         warnStrongBeat:Show(args.destName, args.amount or 1)
         if args:IsPlayer() then
             specWarnStrongBeat:Show()
             timerStrongBeat:Start(args.destName)
         end
 
-    elseif args:IsSpellID(310555) then	--Паралич
-        timerParalysis:Start()
-
-    elseif args:IsSpellID(310549) then	--Рвота
+    elseif args:IsSpellID(310555) then --Паралич
+		warnParalysis:Show()
+		timerParalysisCD:Start()
+		if args:IsPlayer() then
+			timerParalysis:Start()
+		end
+		
+    elseif args:IsSpellID(310549) then --Рвота
         timerPoisonous:Start(args.destName)
-        specWarnPoisonous:Show()
+		if args:IsPlayer() then
+			specWarnPoisonous:Show()
+		end
+	elseif args:IsSpellID(310566) then --визг
+		timerShrillScreech:Start()
+		if args:IsPlayer() then
+			specWarnShrillScreech:Show()
+		end
     end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-    if args:IsSpellID(310548) then	--Клешня
+    if args:IsSpellID(310548) then --Клешня
         timerStrongBeatCD:Start()
-	elseif args:IsSpellID(310555) then	--Паралич
-        warnParalysis:Show()
-        timerParalysisCD:Start()
     end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-    if args:IsSpellID(310564) then	--Мощный выстрел
+    if args:IsSpellID(310564) then --Мощный выстрел
         if self.Options.SetIconOnPowerfulShotTarget then
 		self:SetIcon(args.destName, 0)
 		end
-    elseif args:IsSpellID(310549) then	--Рвота
+    elseif args:IsSpellID(310549) then --Рвота
         if args:IsPlayer() then
 		timerPoisonous:Cancel()       
 		end
-    elseif args:IsSpellID(310548) then	--Клешня
+    elseif args:IsSpellID(310548) then --Клешня
         if args:IsPlayer() then
 		timerStrongBeat:Cancel()       
 		end
-    elseif args:IsSpellID(310555) then	--Паралич
+    elseif args:IsSpellID(310555) then --Паралич
         if args:IsPlayer() then
            timerParalysis:Cancel()       
 		end
-    elseif args:IsSpellID(310560) then	--Обстрел
+    elseif args:IsSpellID(310560) then --Обстрел
         if self.Options.SetIconOnMassiveShellTarget then
 		self:SetIcon(args.destName, 0)
 		end
-    elseif args:IsSpellID(310547) then	--Кровь
+    elseif args:IsSpellID(310547) then --Кровь
 		if args:IsPlayer() then
 		timerPoisonousBlood:Cancel()
         end
-    elseif args:IsSpellID(310546) then	--Шип
+    elseif args:IsSpellID(310546) then --Шип
 		if args:IsPlayer() then
 		timerRippingThorn:Cancel()
 		end

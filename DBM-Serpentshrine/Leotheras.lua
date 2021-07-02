@@ -38,8 +38,9 @@ local warnKogti		        = mod:NewStackAnnounce(310502, 5, nil, "Tank|Healer") -
 local warnNat    	        = mod:NewTargetAnnounce(310478, 3) -- Натиск
 local warnChardg	     	= mod:NewTargetAnnounce(310481, 3) -- Рывок
 local warnPepels  	     	= mod:NewTargetAnnounce(310514, 3) -- Испепеление
-local warnKlei                  = mod:NewTargetAnnounce(310496, 4) -- Клеймо
-local warnMeta		        = mod:NewSpellAnnounce(310484, 3) --Мета
+local warnKlei				= mod:NewTargetAnnounce(310496, 4) -- Клеймо
+local warnMeta		        = mod:NewSpellAnnounce(310484, 3) --Метаморфоза
+local warnElf		        = mod:NewSpellAnnounce(310506, 3) --Эльф
 local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
 local warnVsp		        = mod:NewStackAnnounce(310521, 1, nil, "Tank|Healer") --Вспышка
 local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
@@ -49,21 +50,22 @@ local warnPhase2     		= mod:NewPhaseAnnounce(2)
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
 local specWarnKlei          = mod:NewSpecialWarningYou(310496, nil, nil, nil, 1, 2)
 local specWarnObstrel       = mod:NewSpecialWarningRun(310510, nil, nil, nil, 2, 2)
-local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 3, 2)
-local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 3, 2)
+local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 2, 2)
+local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 2, 2)
 local specWarnVost          = mod:NewSpecialWarningSoak(310503, nil, nil, nil, 1, 2)
 local specWarnPechat        = mod:NewSpecialWarningSoak(310487, nil, nil, nil, 1, 2)
 local specWarnPepel         = mod:NewSpecialWarningYou(310514, nil, nil, nil, 1, 4)
 
-local timerRass	            = mod:NewTargetTimer(40, 310480, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
-local timerKogti	    = mod:NewTargetTimer(40, 310502, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
-local timerKlei	    	    = mod:NewTargetTimer(30, 310496, nil, nil, nil, 3) -- Клеймо
-local timerAnigCast	    = mod:NewCastTimer(10, 310508, nil, nil, nil, 2) -- Анигиляция
-local timerVzgCast	    = mod:NewCastTimer(5, 310516, nil, nil, nil, 2) -- Взгляд
-local timerChardgCast	    = mod:NewCastTimer(3, 310481, nil, nil, nil, 3) -- Рывок
-local timerMetaCast	    = mod:NewCastTimer(3, 310484, nil, nil, nil, 3) -- Мета
-local timerNatCast	    = mod:NewCastTimer(3, 310478, nil, nil, nil, 3) -- Натиск
-local timerPepelCast	    = mod:NewCastTimer(3, 310514, nil, nil, nil, 3) -- Испепел
+local timerRass				= mod:NewTargetTimer(40, 310480, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Рассеченая душа
+local timerKogti			= mod:NewTargetTimer(40, 310502, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Когти
+local timerKlei				= mod:NewTargetTimer(30, 310496, nil, nil, nil, 3) -- Клеймо
+local timerAnigCast			= mod:NewCastTimer(10, 310508, nil, nil, nil, 2) -- Анигиляция
+local timerVzgCast			= mod:NewCastTimer(5, 310516, nil, nil, nil, 2) -- Взгляд
+local timerChardgCast		= mod:NewCastTimer(3, 310481, nil, nil, nil, 3) -- Рывок
+local timerMetaCast			= mod:NewCastTimer(3, 310484, nil, nil, nil, 3) -- Мета
+local timerElfCast			= mod:NewCastTimer(3, 310506, nil, nil, nil, 3) -- Эльф
+local timerNatCast			= mod:NewCastTimer(3, 310478, nil, nil, nil, 3) -- Натиск
+local timerPepelCast		= mod:NewCastTimer(3, 310514, nil, nil, nil, 3) -- Испепел
 
 local yellKlei		    = mod:NewYell(310496)
 local yellPepels	    = mod:NewYell(310514)
@@ -149,16 +151,25 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			specWarnChardg:Show()
 		end
-	elseif args:IsSpellID(310484) then
+	elseif args:IsSpellID(310484) then --демон
 	warnMeta:Show()
 	timerMetaCast:Start()
-	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_13.wav")
+	elseif args:IsSpellID(310506) then --эльф
+	warnElf:Show()
+	timerElfCast:Start()
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_07.wav")
+	elseif args:IsSpellID(310514) then --испепеление
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_18.wav")
+	elseif args:IsSpellID(310496) then --клеймо
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
 	elseif args:IsSpellID(310478) then
 	warnNat:Show(args.destName)
 	timerNatCast:Start()
 	elseif args:IsSpellID(310516) then
-		specWarnVzg:Show()
-		timerVzgCast:Start()
+	specWarnVzg:Show()
+	timerVzgCast:Start()
+	PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
 	end
 end
 
@@ -174,13 +185,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		self:UnscheduleMethod("WarnDemons")
 		self:ScheduleMethod(0.1, "WarnDemons")
-	elseif args:IsSpellID(310480) then --хм Рассеченая душа
+	elseif args:IsSpellID(310480) and args.auraType == "DEBUFF" then --хм Рассеченая душа
 		warnRass:Show(args.destName, args.amount or 1)
 		timerRass:Start(args.destName)
-	elseif args:IsSpellID(310502) then --хм Когти скверны
+	elseif args:IsSpellID(310502) and args.auraType == "DEBUFF" then --хм Когти скверны
 		warnKogti:Show(args.destName, args.amount or 1)
 		timerKogti:Start(args.destName)
-	elseif args:IsSpellID(310521) then --хм Вспышка
+	elseif args:IsSpellID(310521) and args.auraType == "DEBUFF" then --хм Вспышка
 		if self:IsTank() then
 		warnVsp:Show(args.destName, args.amount or 1)
 		end
@@ -228,6 +239,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args:IsSpellID(310508) then
 		specWarnAnig:Show()
 		timerAnigCast:Start()
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
 	elseif args:IsSpellID(310503) then
 		specWarnVost:Show()
 	elseif args:IsSpellID(310487) then
