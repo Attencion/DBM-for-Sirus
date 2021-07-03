@@ -54,7 +54,7 @@ local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 
 local timerSvazCD	        = mod:NewCDTimer(25, 309262, nil, nil, nil, 3) -- связь
 local timerOkoCD	        = mod:NewCDTimer(16, 309258, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) -- Око шторма
-local timerCastHeala	    = mod:NewCDTimer(29, 309256, nil, nil, nil, 4) -- хил
+local timerCastHeala	    = mod:NewCDTimer(29, 309256, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON) -- хил
 local timerPhaseCast        = mod:NewCastTimer(60, 309292, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) -- Скользящий натиск
 local timerPhaseCastCD	    = mod:NewCDTimer(150, 309292, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) -- Скользящий натиск
 local timerStrelaCast	    = mod:NewCastTimer(6, 309253) -- Стрела катаклизма

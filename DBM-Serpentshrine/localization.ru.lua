@@ -25,8 +25,6 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-        YellOnSklep             = "Кричать, когда на вас $spell:309046",
-        YellOnKor               = "Кричать, когда на вас $spell:309065",
 	TimerMarkOfHydross      = DBM_CORE_AUTO_TIMER_OPTIONS.next:format(38215, GetSpellInfo(38215) or "unknown"),
 	TimerMarkOfCorruption   = DBM_CORE_AUTO_TIMER_OPTIONS.next:format(38219, GetSpellInfo(38219) or "unknown"),
 	WarnMarkOfHydross       = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38215, GetSpellInfo(38215) or "unknown"),
@@ -101,12 +99,11 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-        YellOnPepell	        = "Кричать, когда на вас $spell:310514",
-        YellOnKlei	        = "Кричать, когда на вас $spell:310496",
+	PlaySoundOnSpell		= "Звуковой сигнал при применении способностей",
 	TimerDemon              = "Отсчет времени до превращения в демона",
 	TimerNormal             = "Отсчет времени до конца формы демона",
 	TimerInnerDemons        = DBM_CORE_AUTO_TIMER_OPTIONS.active:format(37676, GetSpellInfo(37676) or "unknown"),
-	KleiIcon		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310496),
+	KleiIcon				= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310496),
 	SetIconOnDemonTargets   = "Устанавливать иконки на цели демонов",
 	SetIconOnPepelTargets   = "Устанавливать иконки на цели испепеления",
 	WarnPhase2Soon		= "Предупреждать заранее о переходе в фазу 2 (на ~37%)",
@@ -167,15 +164,14 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-        specWarnCastHeala	= "Исцеление - ПРЕРВИТЕ",
+	specWarnCastHeala	= "Исцеление - ПРЕРВИТЕ КАСТ",
 	WarnKaraTarget	= "Каратресс преследует %s",
-	SpecWarnKaraTarget	= "Вас преследует Каратресс - бегите"
+	SpecWarnKaraTarget	= "Вас преследует Каратресс - БЕГИТЕ"
 }
 
 L:SetOptionLocalization{
 	BossHealthFrame	= "Показывать здоровье боссов в фазе 1 (должны быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
-	YellOnSvaz	= "Кричать, когда на вас $spell:309262",
 	YellOnStrela	= "Кричать, когда на вас $spell:309253",
 	WarnPhase2Soon	= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
 	SetIconOnSvazTargets	= "Устанавливать иконки на цели $spell:309262",
@@ -215,7 +211,7 @@ L:SetWarningLocalization{
 	WarnPhase            = "Фаза %d",
 	WarnElemental        = "Нечистый элементаль на подходе",
 	SpecWarnStaticAngerNear	   = "Статический заряд рядом - ОТОЙДИТЕ.",
-        SpecWarnStaticAngerNear2   = "Статический заряд рядом - ОТОЙДИТЕ."
+	SpecWarnStaticAngerNear2   = "Статический заряд рядом - ОТОЙДИТЕ."
 }
 
 L:SetOptionLocalization{
