@@ -164,14 +164,14 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	specWarnCastHeala	= "Исцеление - ПРЕРВИТЕ КАСТ",
+	SpecWarnCastHeala	= "Исцеление - ПРЕРВИТЕ КАСТ",
 	WarnKaraTarget	= "Каратресс преследует %s",
 	SpecWarnKaraTarget	= "Вас преследует Каратресс - БЕГИТЕ"
 }
 
 L:SetOptionLocalization{
 	BossHealthFrame	= "Показывать здоровье боссов в фазе 1 (должны быть в цели или фокусе хотя бы у одного члена рейда)",
-	specWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
+	SpecWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
 	YellOnStrela	= "Кричать, когда на вас $spell:309253",
 	WarnPhase2Soon	= "Предупреждать заранее о переходе в фазу 2 (на ~52%)",
 	SetIconOnSvazTargets	= "Устанавливать иконки на цели $spell:309262",
@@ -253,17 +253,12 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	warnPoisonousBlood	= "Ядовитая кровь >%d<",
-	warnRippingThorn	= "Разрывающий шип >%d<",
-	specWarnBattleRoar	= "Боевой рев - ПРЕРВИТЕ"
+
 }
 
 L:SetOptionLocalization{
-	WarnPoisonousBlood	= "Предупреждение о ваших стаках $spell:310546",
-	WarnRippingThorn	= "Предупреждение о ваших стаках $spell:310547",
 	YellOnPowerfulShot	= "Кричать, когда на вас $spell:310564",
 	YellOnMassiveShell	= "Кричать, когда на вас $spell:310560",
-	specWarnBattleRoar	= "Спец-предупреждение об $spell:310568 (для прерывания)",
 	SetIconOnMassiveShellTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310560),
 	SetIconOnPowerfulShotTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310564)
 }

@@ -12,6 +12,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
+	WarnVortex        	= "Воронка",
 	WarningSpark		= "Искра мощи",
 	WarningBreathSoon	= "Скоро Дыхание чар", 
 	WarningBreath		= "Дыхание чар"
@@ -24,6 +25,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
+	WarnVortex			= "Предупреждение о применении $spell:55853",
 	WarningSpark		= "Предупреждение для Искры мощи",
 	WarningBreathSoon	= "Предупреждать заранее о $spell:60072",
 	WarningBreath		= "Предупреждение для $spell:60072",

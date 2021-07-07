@@ -15,7 +15,7 @@ mod:RegisterEvents(
 )
 
 local warnSpark			= mod:NewAnnounce("WarningSpark", 2, 59381)
-local warnVortex		= mod:NewSpellAnnounce(55853, 3)
+local warnVortex		= mod:NewSpellAnnounce(56105, 3)
 local warnBreathInc		= mod:NewAnnounce("WarningBreathSoon", 3, 60072)
 local warnBreath		= mod:NewAnnounce("WarningBreath", 4, 60072)
 local warnSurge			= mod:NewTargetAnnounce(60936, 3)
@@ -28,7 +28,7 @@ local specWarnStaticFieldNear	= mod:NewSpecialWarningClose(57430)	--Электр
 
 local enrageTimer		= mod:NewBerserkTimer(615)
 local timerSpark		= mod:NewTimer(30, "TimerSpark", 59381, nil, nil, 7, nil)
-local timerVortexCD		= mod:NewNextTimer(87, 55853, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
+local timerVortexCD		= mod:NewNextTimer(87, 56105, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerBreathCD		= mod:NewTimer(59, "timerBreathCD", 60072, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerBreath		= mod:NewBuffActiveTimer(8, 60072, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerStaticFieldCD	= mod:NewCDTimer(15.5, 57430, nil, nil, nil, 3)
@@ -82,10 +82,17 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 57430 then
+	if args:IsSpellID(57430) then
 		self:ScheduleMethod(0.1, "StaticFieldTarget")
 --		warnStaticField:Show()
 		timerStaticFieldCD:Start()
+	elseif args:IsSpellID(56105) then
+		timerVortexCD:Start()
+		warnVortex:Show()
+		timerBreathCD:Stop()
+		if timerSpark:GetTime() < 11 and timerSpark:IsStarted() then
+			timerSpark:Update(18, 30)
+		end
 	end
 end
 
@@ -138,18 +145,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			if target == UnitName("player") then
 				specWarnSurge:Show()
 			end
-		end
-	elseif args:IsSpellID(55853) then
-		timerVortexCD:Start()
-		warnVortex:Show()
-		timerBreathCD:Stop()
-		if event == "Phase2" then
-			timerBreathCD:Start(59)
-		else
-			timerBreathCD:Start(20)
-		end
-		if timerSpark:GetTime()	<= 12 and timerSpark:IsStarted() then
-			timerSpark:Update(18, 30)
 		end
 	end
 end

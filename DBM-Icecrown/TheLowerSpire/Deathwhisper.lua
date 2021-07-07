@@ -26,20 +26,20 @@ do
 		or class == "WARRIOR"
 		or class == "ROGUE"
 		or class == "MAGE"
-                or class == "DEATHKNIGHT"
+		or class == "DEATHKNIGHT"
 end
 
-local warnAddsSoon			= mod:NewAnnounce("WarnAddsSoon", 2)
+local warnAddsSoon				= mod:NewAnnounce("WarnAddsSoon", 2)
 local warnDominateMind			= mod:NewTargetAnnounce(71289, 3)
 local warnDeathDecay			= mod:NewSpellAnnounce(72108, 2)
 local warnSummonSpirit			= mod:NewSpellAnnounce(71426, 2)
 local warnReanimating			= mod:NewAnnounce("WarnReanimating", 3)
-local warnDarkTransformation		= mod:NewSpellAnnounce(70900, 4)
+local warnDarkTransformation	= mod:NewSpellAnnounce(70900, 4)
 local warnDarkEmpowerment		= mod:NewSpellAnnounce(70901, 4)
-local warnPhase2			= mod:NewPhaseAnnounce(2, 1)
-local warnTouchInsignificance		= mod:NewStackAnnounce(71204, 2, nil, "Tank|Healer")
+local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
+local warnTouchInsignificance	= mod:NewStackAnnounce(71204, 2, nil, "Tank|Healer")
 local warnDarkMartyrdom			= mod:NewSpellAnnounce(72499, 4)
-local warnSound				= mod:NewSoundAnnounce()
+local warnSound					= mod:NewSoundAnnounce()
 
 local specWarnCurseTorpor		= mod:NewSpecialWarningYou(71237, nil, nil, nil, 1, 2)
 local specWarnDeathDecay		= mod:NewSpecialWarningMove(72108, nil, nil, nil, 1, 2)
@@ -49,14 +49,14 @@ local specWarnDarkMartyrdom		= mod:NewSpecialWarningRun(72499, "Melee", nil, nil
 local specWarnFrostbolt			= mod:NewSpecialWarning("specWarnFrostbolt", canInterrupt)  -- TODO: HasInterrupt
 local specWarnVengefulShade		= mod:NewSpecialWarning("SpecWarnVengefulShade", "-Tank")
 
-local timerAdds				= mod:NewTimer(60, "TimerAdds", 61131, nil, nil, 1, DBM_CORE_TANK_ICON)
+local timerAdds					= mod:NewTimer(60, "TimerAdds", 61131, nil, nil, 1, DBM_CORE_TANK_ICON)
 local timerDominateMind			= mod:NewBuffActiveTimer(12, 71289)
 local timerDominateMindCD		= mod:NewCDTimer(40, 71289, nil, nil, nil, 3)
 local timerSummonSpiritCD		= mod:NewCDTimer(10, 71426, nil, nil, nil, 7, DBM_CORE_HEROIC_ICON)
 local timerFrostboltCast		= mod:NewCastTimer(4, 72007)
-local timerTouchInsignificance		= mod:NewTargetTimer(30, 71204, nil, "Tank|Healer", nil, 5)
+local timerTouchInsignificance	= mod:NewTargetTimer(30, 71204, nil, "Tank|Healer", nil, 5)
 
-local berserkTimer			= mod:NewBerserkTimer(600)
+local berserkTimer				= mod:NewBerserkTimer(600)
 
 mod:AddSetIconOption("SetIconOnDominateMind", 71289, true, true, {6, 5, 4})
 mod:AddSetIconOption("SetIconOnDeformedFanatic", 70900, true, true, {5, 6, 7, 8})

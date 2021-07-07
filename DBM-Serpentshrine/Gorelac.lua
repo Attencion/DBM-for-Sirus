@@ -20,13 +20,6 @@ mod:RegisterEvents(
 	"SWING_DAMAGE"
 )
 
-local canInterrupt
-do
-	local class = select(2, UnitClass("player"))
-	canInterrupt = class == "WARRIOR"
-		or class == "ROGUE"
-        or class == "DEATHKNIGHT"
-end
 
 local warnStrongBeat			= mod:NewStackAnnounce(310548, 1, nil, "Tank|Healer") --Клешня
 local warnPoisonous				= mod:NewSpellAnnounce(310549, 1) --Ядовитая рвота
@@ -35,7 +28,7 @@ local warnPowerfulShot			= mod:NewTargetAnnounce(310564, 2) --Мощный вы�
 local warnCallGuardians			= mod:NewSpellAnnounce(310557, 1) --Вызов треша
 local warnParalysis				= mod:NewSpellAnnounce(310555, 2) --Паралич
 local warnCallGuardiansSoon		= mod:NewPreWarnAnnounce(310557, 5, 1) --Вызов треша
-local warnShrillScreech			= mod:NewSpellAnnounce(310566, 1) --Пронзительный визг
+local warnShrillScreech			= mod:NewSpellAnnounce(310566, 4) --Пронзительный визг
 
 local specwarnCallGuardians		= mod:NewSpecialWarningSwitch(310557, "Dps", nil, nil, 1, 2) --Треш
 local specWarnRippingThorn		= mod:NewSpecialWarningStack(310546, "Melee", 7)
@@ -114,12 +107,14 @@ end
 function mod:SPELL_AURA_APPLIED(args)
     if args:IsSpellID(310546) then --Шип
 		timerRippingThorn:Start()
+		local amount = args.amount or 1
 		if args:IsPlayer() and (args.amount or 1) >= 7 then
 		specWarnRippingThorn:Show(args.amount)
         end
 
     elseif args:IsSpellID(310547) then --Кровь
 		timerPoisonousBlood:Start()
+		local amount = args.amount or 1
 		if args:IsPlayer() and (args.amount or 1) >= 7 then
 			specWarnPoisonousBlood:Show(args.amount)
         end

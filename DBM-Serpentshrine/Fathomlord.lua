@@ -48,7 +48,7 @@ local berserkTimer       = mod:NewBerserkTimer(600)
 local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
 local warnP2    	        = mod:NewPhaseAnnounce(2, 2)
 local warnStrela            = mod:NewTargetAnnounce(309253, 3) -- Стрела катаклизма
-local specWarnCastHeala     = mod:NewSpecialWarning("specWarnCastHeala", canInterrupt) -- Хил
+local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) -- Хил
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253)
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 
@@ -140,7 +140,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	    warnP2:Show()
 		berserkTimerhm:Cancel()
 		berserkTimerhm:Start()
-		timerPhaseCastCD:Start(96)
+		timerPhaseCastCD:Start(95)
 	end
 end
 

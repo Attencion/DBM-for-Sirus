@@ -39,8 +39,9 @@ local warnNat    	        = mod:NewTargetAnnounce(310478, 3) --Натиск
 local warnChardg	     	= mod:NewTargetAnnounce(310481, 3) --Рывок
 local warnPepels  	     	= mod:NewTargetAnnounce(310514, 3) --Испепеление
 local warnKlei				= mod:NewTargetAnnounce(310496, 4) --Клеймо
-local warnMeta		        = mod:NewSpellAnnounce(310484, 3) --Метаморфоза
-local warnElf		        = mod:NewSpellAnnounce(310506, 3) --Эльф
+local warnMeta		        = mod:NewSpellAnnounce(310484, 2) --Метаморфоза
+local warnMeta2		        = mod:NewSpellAnnounce(310518, 2) --Мета2
+local warnElf		        = mod:NewSpellAnnounce(310506, 2) --Эльф
 local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
 local warnVsp		        = mod:NewStackAnnounce(310521, 1, nil, "Tank|Healer") --Вспышка
 local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
@@ -179,7 +180,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	specWarnVzg:Show()
 	timerVzgCast:Start()
 	if self.Options.PlaySoundOnSpell then
-		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_19.wav")
 		end
 	end
 end
@@ -196,13 +197,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		self:UnscheduleMethod("WarnDemons")
 		self:ScheduleMethod(0.1, "WarnDemons")
-	elseif args:IsSpellID(310480) and args.auraType == "DEBUFF" then --хм Рассеченая душа
+	elseif args:IsSpellID(310480) then --хм Рассеченая душа
 		warnRass:Show(args.destName, args.amount or 1)
 		timerRass:Start(args.destName)
-	elseif args:IsSpellID(310502) and args.auraType == "DEBUFF" then --хм Когти скверны
+	elseif args:IsSpellID(310502) then --хм Когти скверны
 		warnKogti:Show(args.destName, args.amount or 1)
 		timerKogti:Start(args.destName)
-	elseif args:IsSpellID(310521) and args.auraType == "DEBUFF" then --хм Вспышка
+	elseif args:IsSpellID(310521) then --хм Вспышка
 		if self:IsTank() then
 		warnVsp:Show(args.destName, args.amount or 1)
 		end
@@ -245,18 +246,29 @@ end
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(37676) then
 		timerInnerDemons:Start()
-	elseif args:IsSpellID(310510) then
+	elseif args:IsSpellID(310510) then --обстрел
 		specWarnObstrel:Show()
-	elseif args:IsSpellID(310508) then
+	if self.Options.PlaySoundOnSpell then
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_12.wav")
+	end	
+	elseif args:IsSpellID(310518) then --мета2
+		warnMeta2:Show()
+	if self.Options.PlaySoundOnSpell then
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_08.wav")
+	end	
+	elseif args:IsSpellID(310508) then --аннигиляция
 		specWarnAnig:Show()
 		timerAnigCast:Start()
 	if self.Options.PlaySoundOnSpell then
-		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_19.wav")
 	end	
 	elseif args:IsSpellID(310503) then
 		specWarnVost:Show()
-	elseif args:IsSpellID(310487) then
+	elseif args:IsSpellID(310487) then --печати
 		specWarnPechat:Show()
+	if self.Options.PlaySoundOnSpell then
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
+	end	
 	elseif args:IsSpellID(310514) then
 		timerPepelCast:Start(2)
 		warnPepel:Show()
