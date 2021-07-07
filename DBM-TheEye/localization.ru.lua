@@ -135,7 +135,7 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-        specWarnBattleRoar  = "Боевой крик - ПРЕРВИТЕ",
+	specWarnBattleRoar = "Боевой крик - ПРЕРВИТЕ",
 	WarnNextAdd = "%s на подходе",
 	WarnPhase = "%s",
 	WarnTalaTarget = "Таладред преследует %s",
@@ -143,7 +143,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-        specWarnBattleRoar    = "Спец-предупреждение об $spell:308733 (для кика)",
+	specWarnBattleRoar = "Спец-предупреждение об $spell:308733 (для кика)",
 	WarnNextAdd = "Объявление о скорой активации следующего помощника",
 	TimerNextAdd = "Отсчет времени до следующего помощника",
 	WarnPhase = "Анонс перехода на след. фазу",
@@ -156,7 +156,7 @@ L:SetOptionLocalization{
 	RemoveWeaponOnMindControl   = "Убирать оружие на МК.",
 	SetIconOnMC = "Устанавливать иконки на цели заклинания $spell:36797",
 	VzrivIcon = DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(308797),
-	AnnounceVzriv			= "Объявлять игроков, на кого установлен взрыв, в рейд чат"
+	AnnounceVzriv = "Объявлять игроков, на кого установлен $spell:308797, в рейд чат"
 }
 
 L:SetMiscLocalization{
@@ -177,7 +177,7 @@ L:SetMiscLocalization{
 	TalaTarget = "смотрит на |3%-3%([%w\128-\255]+%).",
 	Axe = "Сокрушение",
 	Kel = "Кель'тас Солнечный Скиталец",
-	Vzriv		= "Взрыв {rt%d} установлен на %s"
+	Vzriv = "Взрыв {rt%d} установлен на %s"
 }
 
 

@@ -26,24 +26,26 @@ do
 end
 
 local warnShadowCrash			= mod:NewTargetAnnounce(312625, 1)
-local warnLeechLife				= mod:NewTargetAnnounce(312974, 4)
-local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2) -- Всплеск
+local warnLeechLife				= mod:NewTargetAnnounce(312974, 1)
+local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2) --Всплеск
+local warnSurgeDarkness			= mod:NewSpellAnnounce(312981, 1) --сплеск
 
 local specwarnSearingFlames	    = mod:NewSpecialWarning("SpecWarnSearingFlames", canInterrupt)
 local specWarnShadowCrash		= mod:NewSpecialWarning("SpecialWarningShadowCrash")
 local specWarnShadowCrashNear	= mod:NewSpecialWarning("SpecialWarningShadowCrashNear")
-local specWarnSurgeDarkness	    = mod:NewSpecialWarningDefensive(312981, "Tank")
-local specWarnLifeLeechYou		= mod:NewSpecialWarningYou(312974, nil, nil, nil, 1, 2)
+local specWarnSurgeDarkness	    = mod:NewSpecialWarningDefensive(312981, "Tank", nil, nil, 2, 2)
+local specWarnLifeLeechYou		= mod:NewSpecialWarningYou(312974, nil, nil, nil, 4, 2)
 local specWarnLifeLeechNear 	= mod:NewSpecialWarning("SpecialWarningLLNear", true)
 
 local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
-local timerSearingFlamesCD      = mod:NewCDTimer(16, 312977, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSearingFlamesCD      = mod:NewNextTimer(16, 312977, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 local timerSurgeofDarkness	    = mod:NewBuffActiveTimer(10, 312981, nil, nil, nil, 6, nil)
 local timerNextSurgeofDarkness	= mod:NewCDTimer(62, 312981, nil, nil, nil, 6, nil, DBM_CORE_TANK_ICON)
+local timerSaroniteVapors		= mod:NewNextTimer(30, 63322, nil, nil, nil, 5)
 local timerLifeLeech	        = mod:NewTargetTimer(10, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerLeech		        = mod:NewNextTimer(37, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
-local timerAchieve		        = mod:NewTimer(190, "TimerHardmode")
+local timerAchieve				= mod:NewAchievementTimer(190, 6783, "TimerHardmode")
 
 local yellShadowCrash		    = mod:NewYell(312625)
 
@@ -74,10 +76,12 @@ function mod:SPELL_CAST_START(args)
         timerSearingFlamesCD:Start()
         specwarnSearingFlames:Show()
         specwarnSearingFlames:Play("kickcast")
-	elseif args:IsSpellID(62662, 312628, 312981) then --Всплеск тьмы 
-		specWarnSurgeDarkness:Show()
+	elseif args:IsSpellID(62662, 312628, 312981) then --Всплеск тьмы
+		warnSurgeDarkness:Show()
 		timerNextSurgeofDarkness:Start()
         warnSurgeDarknessSoon:Schedule(57)
+		specWarnSurgeDarkness:Show()
+		specWarnSurgeDarkness:Play("defensive")
 	end
 end
 
@@ -90,8 +94,6 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(62662, 312628, 312981) then --Всплекс тьмы
 		timerSurgeofDarkness:Start()
-        specWarnSurgeDarkness:Show()
-		specWarnSurgeDarkness:Play("defensive")
 	end
 end
 
@@ -204,5 +206,11 @@ function mod:OnSync(msg, target)
 				end
 			end
 		end
+	end
+end
+
+function mod:RAID_BOSS_EMOTE(emote)
+	if emote == L.EmoteSaroniteVapors or emote:find(L.EmoteSaroniteVapors) then
+		timerSaroniteVapors:Start()
 	end
 end

@@ -21,9 +21,9 @@ local warnGravityBomb				= mod:NewTargetAnnounce(312943, 1)
 local warnPhase2					= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 
-local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941) --свет
-local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943) --бомба
-local specWarnConsumption			= mod:NewSpecialWarningMove(312948) --Hard mode void zone
+local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941, nil, nil, nil, 1, 2) --свет
+local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943, nil, nil, nil, 1, 2) --бомба
+local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2) --Hard mode void zone
 
 local enrageTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrum			= mod:NewCastTimer(8, 312939, nil, nil, nil, 2, nil)
@@ -40,6 +40,7 @@ local yellLightBomb		       		= mod:NewYell(312941)
 mod:AddSetIconOption("SetIconOnGravityBombTarget", 312943, true, false, {8})
 mod:AddSetIconOption("SetIconOnLightBombTarget", 312588, true, false, {7})
 mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("PlaySoundOnSpell", true)
 
 mod.vb.phase = 0
 
@@ -72,16 +73,14 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(62776, 312586, 312939) then --Раскаты ярости
 		timerTympanicTantrum:Start()
 		timerTympanicTantrumCD:Stop()
-		PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
+		if self.Options.PlaySoundOnSpell then
+			PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
+		end
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(62775, 312587, 312940) and args.auraType == "DEBUFF" then --Раскаты ярости
-		timerTympanicTantrumCD:Start()
-		timerTympanicTantrum:Start()
-
-	elseif args:IsSpellID(63018, 65121, 312588, 312941) then --Опаляющий свет
+	if args:IsSpellID(63018, 65121, 312588, 312941) then --Опаляющий свет
 		warnLightBomb:Show(args.destName)
 		timerLightBomb:Start(args.destName)
 		timerLightBombCD:Start()
@@ -101,7 +100,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnGravityBomb:Show()
 			yellGravityBomb:Yell()
 			DBM.RangeCheck:Show(20)
+			if self.Options.PlaySoundOnSpell then
 			PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
+			end
 		elseif self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 8, 9)
 		end

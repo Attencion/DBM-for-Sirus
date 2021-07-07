@@ -96,12 +96,12 @@ function mod:OnCombatStart(delay)
 	       self.vb.phase = 1
 	       timerAdds:Start()
 	       warnAddsSoon:Schedule(52)
+		   table.wipe(warnedValkyrGUIDs)
 	elseif mod:IsDifficulty("heroic25") then
 	       timerNextHelp:Start(39)
 	       timerNextGates:Start(20)
 	       timerNextWrathH:Start()
 	       self.vb.phase = 1
-		   table.wipe(warnedValkyrGUIDs)
 	end
 end
 
@@ -299,7 +299,7 @@ function mod:UNIT_HEALTH(uId)
 		        warnPhase2:Show()
 		end
 	end
-	if mod:IsDifficulty("heroic25") and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedValkyrGUIDs[UnitGUID(uId)] then
+	if (mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25")) and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedValkyrGUIDs[UnitGUID(uId)] then
 		warnedValkyrGUIDs[UnitGUID(uId)] = true
 		specWarnValkyrLow:Show()
 		specWarnValkyrLow:Play("stopattack")

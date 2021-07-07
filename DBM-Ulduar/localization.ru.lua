@@ -63,11 +63,10 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-    WarningArmorfire		    = "Плавящийся доспех на |3-5(>%s<) - cтак %d",	
 	warnTurretsReadySoon		= "Гарпунные пушки будут собраны через 20 секунд",
 	warnTurretsReady			= "Гарпунные пушки собраны",
 	SpecWarnDevouringFlameCast	= "Лавовая бомба на вас",
-	WarnDevouringFlameCast		= "Лавовая бомба на |3-5(>%s<)" 
+	WarnDevouringFlameCast		= "Лавовая бомба на |3-5(>%s<)"
 }
 
 L:SetTimerLocalization{
@@ -80,7 +79,6 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	PlaySoundOnDevouringFlame	= "Звуковой сигнал, когда на вас $spell:64733",
-	WarningArmorfire		= "Объявлять цели заклинания $spell:312721",
 	warnTurretsReadySoon		= "Пред-предупреждение для пушек",
 	warnTurretsReady			= "Предупреждение для пушек",
 	SpecWarnDevouringFlameCast	= "Спец-предупреждение, когда $spell:64733 применяется на вас",
@@ -118,7 +116,8 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnPhase2Soon			= "Предупреждать заранее о фазе 2",
+	PlaySoundOnSpell			= "Звуковой сигнал при применении способностей",
+	WarnPhase2Soon				= "Предупреждать заранее о фазе 2",
     RangeFrame		            = "Показывать игроков  в окне проверки дистанции (8-20)",
 	SetIconOnLightBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312941),
 	SetIconOnGravityBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312943)
@@ -140,17 +139,15 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    YellOnOverwhelmingPower	        = "Кричать, когда на вас $spell:312772",
 	PlaySoundLightningTendrils	= "Звуковой сигнал при $spell:312786",
 	SetIconOnOverwhelmingPower	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312772),
 	SetIconOnStaticDisruption	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312770),
-	AlwaysWarnOnOverload		= "Всегда предупреждать при $spell:312781\n(иначе, только когда босс в цели)",
-	PlaySoundOnOverload			= "Звуковой сигнал при $spell:312781",
+	AlwaysWarnOnOverload		= "Всегда предупреждать при $spell:312782\n(иначе, только когда босс в цели)",
+	PlaySoundOnOverload			= "Звуковой сигнал при $spell:312782",
 	PlaySoundDeathRune			= "Звуковой сигнал при $spell:312777"
 }
 
 L:SetMiscLocalization{
-    YellOverwhelmingPower	= "Мощь переполняет! Держите меня семеро!",
 	Steelbreaker		= "Сталелом",
 	RunemasterMolgeim	= "Мастер рун Молгейм",
 	StormcallerBrundir 	= "Буревестник Брундир"
@@ -179,10 +176,10 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-    WarningPhasePunch		= "Объявлять цели заклинания $spell:313033",
+	WarningPhasePunch		= "Объявлять цели заклинания Фазовый удар",
 	NextCollapsingStar		= "Отсчет времени до появления Вспыхивающей звезды",
-	WarningCosmicSmash 		= "Предупреждение для $spell:313037",
-	PossibleNextCosmicSmash	= "Отсчет времени до следующей $spell:313037",
+	WarningCosmicSmash 		= "Предупреждение для Кары небесной",
+	PossibleNextCosmicSmash	= "Отсчет времени до следующей Кары небесной",
 	TimerCombatStart		= "Отсчет времени до начала боя",
 	WarnPhase2Soon			= "Предупреждать заранее о фазе 2 (на ~23%)",
 	warnStarLow				= "Спец-предупреждение, когда у Вспыхивающей звезды мало здоровья (на ~25%)"
@@ -215,20 +212,20 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-    YellOnGrip	                = "Кричать, когда на вас $spell:312757",
 	timerLeftArm			= "Отсчет времени до Возрождения левой руки",
 	timerRightArm			= "Отсчет времени до Возрождения правой руки",
 	achievementDisarmed		= "Отсчет времени для достижения Обезоружен",
 	SetIconOnGripTarget		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312757),
 	SetIconOnEyebeamTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312765),
 	PlaySoundOnEyebeam		= "Звуковой сигнал при $spell:312765",
-	YellOnBeam				= "Кричать, когда на вас $spell:312765"
+	YellOnBeam				= "Кричать, когда на вас $spell:312765",
+	YellOnGrip	            = "Кричать, когда на вас $spell:312757"
 }
 
 L:SetMiscLocalization{
-    YellGrip               	= "Он схватил меня! ПОМОГИТЕ!",
 	Yell_Trigger_arm_left	= "Царапина...",
 	Yell_Trigger_arm_right	= "Всего лишь плоть!",
+	YellPull 				= "Вы не должен пройти!",
 	Health_Body				= "Кологарн",
 	Health_Right_Arm		= "Правая рука",
 	Health_Left_Arm			= "Левая рука",
@@ -257,7 +254,7 @@ L:SetTimerLocalization{
 L:SetWarningLocalization{
 	SpecWarnBlast	= "Удар часового - прерывание",
 	WarnCatDied		= "Дикий эащитник погибает (осталось %d жизней)",
-	WarnCatDiedOne	= "Дикий эащитник погибает (осталась 1 жизнь)"
+	WarnCatDiedOne	= "Дикий эащитник погибает (осталась 1 жизнь)",
 }
 
 L:SetOptionLocalization{
@@ -285,13 +282,11 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	PlaySoundOnFlashFreeze	= "Звуковой сигнал при применении $spell:312818",
-	YellOnStormCloud		= "Кричать, когда на вас $spell:312831",
 	SetIconOnStormCloud		= "Устанавливать метки на цели заклинания $spell:312831"
 }
 
 L:SetMiscLocalization{
-	YellKill	= "Наконец-то я... свободен от его оков…",
-	YellCloud	= "На мне Грозовая Туча! ВСЕ СЮДА!"
+	YellKill	= "Наконец-то я... свободен от его оков…"
 }
 
 --------------
@@ -307,11 +302,11 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerSpeedKill	= "Сиф-он (Hardmode)"
+	TimerSpeedKill	= "Сиф-он"
 }
 
 L:SetOptionLocalization{
-	RangeFrame		= "Показывать окно проверки дистанции 10",
+	RangeFrame		= "Показывать окно проверки дистанции 8",
 	AnnounceFails	= "Объявлять игроков, попавших под $spell:312544, в рейд-чат\n(требуются права лидера или помощника)"
 }
 
@@ -333,27 +328,38 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	SpawnYell          = "Помогите мне, дети мои!",
-	SpawnYelll         = "Вас захлестнет сила стихий!",	
-	WaterSpirit        = "Древний дух воды",
-	Snaplasher         = "Хватоплет",
-	StormLasher        = "Грозовой плеточник",
-	YellKill           = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
-	TrashRespawnTimer  = "Возрождение монстров"
+	YellRoots			= "На мне корни! Помогите!",
+	SpawnYell			= "Помогите мне, дети мои!",
+	SpawnYelll			= "Вас захлестнет сила стихий!",	
+	WaterSpirit			= "Древний дух воды",
+	Snaplasher			= "Хватоплет",
+	StormLasher			= "Грозовой плеточник",
+	YellKill			= "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
+	TrashRespawnTimer	= "Возрождение монстров"
 }
 
 L:SetWarningLocalization{
-	WarnSimulKill	= "Первый помощник погиб - воскрешение через ~12 сек."
+	WarningDarEonar		= "Дар Эонар",
+	SpecWarnSparkWhip	= "Искрящаяся плеть - ПРЕРВИТЕ КАСТ",
+	WarnSimulKill		= "Первый помощник погиб - воскрешение через ~12 сек."
 }
 
 L:SetTimerLocalization{
-	TimerSimulKill	= "Воскрешение"
+	TimerSimulKill		= "Воскрешение"
 }
 
 L:SetOptionLocalization{
-	WarnSimulKill	= "Объявлять, когда первый монстр погибает",
-	PlaySoundOnFury = "Звуковой сигнал, когда на вас $spell:312880",
-	TimerSimulKill	= "Отсчет времени до воскрешения монстров"
+	WarningDarEonar		= "Предупреждение для Дара Эонар",
+	SpecWarnSparkWhip	= "Спец-предупреждение об $spell:312875 (для кика)",
+	FuryIcon			= "Устанавливать метки на цели заклинания $spell:312880",
+	RootsIcon			= "Устанавливать метки на цели заклинания $spell:312860",
+	YellOnRoots			= "Кричать, когда на вас $spell:312860",
+	WarnSimulKill		= "Объявлять, когда первый монстр погибает",
+	TimerSimulKill		= "Отсчет времени до воскрешения монстров"
+}
+
+L:SetMiscLocalization{
+	EmoteDar			= "Дар Хранительницы жизни начинает расти!"
 }
 
 ----------------------
@@ -388,36 +394,35 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	MagneticCore		= "Магнитное ядро у |3-1(>%s<)",
-	WarningShockBlast	= "Шоковый удар - бегите",
+	WarningShockBlast	= "Шоковый удар - БЕГИТЕ",
 	WarnBombSpawn		= "Бомбот"
 }
 
 L:SetTimerLocalization{
-	TimerHardmode	= "Сложный режим - Самоуничтожение",
+	TimerHardmode	= "Самоуничтожение",
 	TimeToPhase2	= "Фаза 2",
 	TimeToPhase3	= "Фаза 3",
 	TimeToPhase4	= "Фаза 4"
 }
 
 L:SetOptionLocalization{
-	TimeToPhase2			= "Отсчет времени для фазы 2",
-	TimeToPhase3			= "Отсчет времени для фазы 3",
-	TimeToPhase4			= "Отсчет времени для фазы 4",
-	MagneticCore			= "Объявлять подобравших Магнитное ядро",
-	HealthFramePhase4		= "Отображать индикатор здоровья в фазе 4",
-	AutoChangeLootToFFA		= "Смена режима добычи на Каждый за себя в фазе 3",
-	WarnBombSpawn			= "Предупреждение о Бомботах",
-	TimerHardmode			= "Отсчет времени для сложного режима",
-	PlaySoundOnShockBlast	= "Звуковой сигнал при $spell:312792",
-	PlaySoundOnDarkGlare	= "Звуковой сигнал при $spell:312794",
+	YellOnshellWarn		= "Кричать, когда на вас $spell:312788",
+	TimeToPhase2		= "Отсчет времени для фазы 2",
+	TimeToPhase3		= "Отсчет времени для фазы 3",
+	TimeToPhase4		= "Отсчет времени для фазы 4",
+	MagneticCore		= "Объявлять подобравших Магнитное ядро",
+	HealthFramePhase4	= "Отображать индикатор здоровья в фазе 4",
+	AutoChangeLootToFFA	= "Смена режима добычи на Каждый за себя в фазе 3",
+	WarnBombSpawn		= "Предупреждение о Бомботах",
 	ShockBlastWarningInP1	= "Спец-предупреждение для $spell:312792 в фазе 1",
 	ShockBlastWarningInP4	= "Спец-предупреждение для $spell:312792 в фазе 4",
-	RangeFrame				= "Показывать окно проверки дистанции в фазе 1 (6 м)",
-	SetIconOnNapalm			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312788),
+	RangeFrame			= "Показывать окно проверки дистанции в фазе 1 (6 м)",
+	SetIconOnNapalm		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312788),
 	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312790)
 }
 
 L:SetMiscLocalization{
+	YellshellWarn	= "Заряд напалма на мне! Прохильте!",
 	MobPhase1		= "Левиафан II",
 	MobPhase2		= "VX-001 <Противопехотная пушка>",
 	MobPhase3		= "Воздушное судно",
@@ -451,13 +456,10 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
     SpecWarnSearingFlames	        = "Спец-предупреждение об $spell:312977 (для прерывания)",
-	SetIconOnShadowCrash			= "Устанавливать метки на цели заклинания $spell:312625 (крест)",
-	SetIconOnLifeLeach				= "Устанавливать метки на цели заклинания $spell:312974 (череп)",
 	SpecialWarningShadowCrash		= "Спец-предупреждение для $spell:312625\n(должен быть в цели или фокусе хотя бы у одного члена рейда)",
 	SpecialWarningShadowCrashNear	= "Спец-предупреждение о $spell:312625 около вас",
 	SpecialWarningLLNear			= "Спец-предупреждение о $spell:312974 около вас",
 	YellOnLifeLeech					= "Кричать, когда на вас $spell:312974",
-	TimerHardmode					= "Отсчет времени до появления Саронитового врага (сложный режим)",
 	CrashArrow						= "Показывать стрелку, когда $spell:312625 около вас",
 	BypassLatencyCheck				= "Отключить синхр-цию для $spell:312625\n(используйте только в случае возникновения проблем)"
 }
@@ -480,6 +482,7 @@ L:SetMiscLocalization{
 	YellPull 			= "Скоро мы сразимся с главарем этих извергов! Обратите гнев и ненависть против его прислужников!",
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
+	Mozg				= "Мозг Йог-Сарона",
 	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
 }
 
@@ -490,15 +493,15 @@ L:SetWarningLocalization{
 	SpecWarnSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnGuardianLow				= "Прекратите атаковать этого Стража",
 	SpecWarnMadnessOutNow			= "Доведение до помешательства заканчивается - выбегайте",
-	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",	
+	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",
 	SpecWarnFervor					= "Рвение Сары на вас",
 	SpecWarnFervorCast				= "Рвение Сары накладывается на вас",
-	SpecWarnMaladyNear				= "Душевная болезнь на |3-5(%s) около вас",
 	specWarnBrainPortalSoon			= "Скоро Провал Безумия"
 }
 
 L:SetTimerLocalization{
-	NextPortal	= "Провал Безумия"
+	NextPortal	= "Провал Безумия",
+	NextPortal2 = "Перезарядка Портала"
 }
 
 L:SetOptionLocalization{
@@ -509,15 +512,9 @@ L:SetOptionLocalization{
 	SpecWarnGuardianLow				= "Спец-предупреждение, когда у Стража (в фазе 1) мало здоровья (для бойцов)",
 	WarnBrainPortalSoon				= "Предупреждать заранее о Провале Безумия",
 	SpecWarnMadnessOutNow			= "Спец-предупреждение незадолго до окончания $spell:313003",
-	SetIconOnFearTarget				= "Устанавливать метки на цели заклинания $spell:312993",
 	SpecWarnFervorCast				= "Спец-предупреждение, когда на вас накладывается $spell:312989\n(должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnBrainPortalSoon			= "Спец-предупреждение о следующем Провале Безумия",
-	WarningSqueeze					= "Кричать, когда на вас Выдавливание",
 	NextPortal						= "Отсчет времени до следующего Провала Безумия",
-	SetIconOnFervorTarget			= "Устанавливать метки на цели заклинания $spell:312989",
-	ShowSaraHealth					= "Показывать здоровье Сары в фазе 1 (должна быть в цели или фокусе хотя бы у одного члена рейда)",
-	SpecWarnMaladyNear				= "Спец-предупреждение о $spell:312993 около вас",
-	SetIconOnBrainLinkTarget		= "Устанавливать метки на цели заклинания $spell:312994",
-	MaladyArrow						= "Показывать стрелку, когда $spell:312993 около вас"
+	MaladyArrow						= "Показывать стрелку, когда $spell:313029 около вас",
 }
 

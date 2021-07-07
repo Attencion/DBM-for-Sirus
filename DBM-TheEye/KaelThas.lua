@@ -152,10 +152,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		    timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
 		elseif msg == L.YellCaper then
 			timerRoarCD:Cancel()
+			timerBombhmCD:Start(42)
 			warnNextAdd:Show(L.NamesAdds["Capernian"])
 			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
 			DBM.RangeCheck:Show(10)
 		elseif msg == L.YellTelon then
+			timerBombhmCD:Cancel()
 			DBM.RangeCheck:Hide()
 			warnConflagrateSoon:Cancel()
 			timerConflagrateCD:Cancel()
@@ -168,15 +170,21 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			timerRoarCD:Start()
 			warnBombSoon:Schedule(10)
 			timerBombCD:Start(15)
+			timerBombhmCD:Start()
 			DBM.RangeCheck:Show(10)
 		elseif msg == L.YellPhase4  then
 			self.vb.phase = 4
 			warnPhase:Show(L.WarnPhase4)
 			timerPhase4:Cancel()
+			timerCataCD:Start(60)
 			DBM.RangeCheck:Hide()
 		elseif msg == L.YellPhase5  then
 			self.vb.phase = 5
 			warnPhase:Show(L.WarnPhase5)
+			timerCataCD:Cancel()
+			timerCataCD:Start(90)
+			timerGravityHCD:Start(120)
+			timerVzrivCD:Start(80)
 		end
 	else
 		if msg == L.YellSang then
@@ -289,9 +297,9 @@ function mod:SPELL_CAST_START(args)
 	    timerShadowCD:Start()
 		warnShadow:Schedule(0)
     elseif args:IsSpellID(308790) then --катаклизм
-	        timerCataCD:Start()
+		timerCataCD:Start()
 		timerCataCast:Start()
-	    specWarnCata:Show()
+		specWarnCata:Show()
 		DBM.RangeCheck:Show(40, GetRaidTargetIndex)
 		self:ScheduleMethod(10, "Timer")
 	end
@@ -365,7 +373,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBombhmCD:Start()
 		warnBombhm:Show(args.destName)
 		if args:IsPlayer() then
-                        yellBombhm:Yell()
+			yellBombhm:Yell()
 		end
 	elseif args:IsSpellID(308756) then --хм искрящий удар
 		warnIsc:Show(args.destName, args.amount or 1)
@@ -379,7 +387,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(36797) then
 		self:SetIcon(args.destName, 0)
-	elseif args:IsSpellID(35941) then --падение
+	elseif args:IsSpellID(308969, 308970, 39432, 34480, 44227, 44224) then --падение
 		timerGravity:Stop()
 		timerGravityH:Stop()
 	end

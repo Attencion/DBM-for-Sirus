@@ -19,14 +19,14 @@ mod:RegisterEvents(
 local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
 local warnStormhammer			= mod:NewTargetAnnounce(312890, 2) --Оглушительный гром
 local warnLightningCharge		= mod:NewSpellAnnounce(312897, 2) --Разряд молнии
-local warnNova          		= mod:NewSpellAnnounce(312904, 2) --Нова
 local warnVolley          		= mod:NewSpellAnnounce(312902, 2) --Залп ледяных стрел
 local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 1, nil, "Tank|Healer") --Деформирующий удар
 local warningBomb				= mod:NewTargetAnnounce(312910, 3) --Взрыв руны
 
 local specWarnOrb				= mod:NewSpecialWarningMove(312892) --Поражение громом
-local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 1, 2) --дисбаланс
+local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 2, 2) --дисбаланс
 local specWarnUnbalancingStrikelf = mod:NewSpecialWarningTaunt(312898, "Tank", nil, nil, 1, 2) --дисбаланс
+local specWarnNova				= mod:NewSpecialWarningYou(312904, nil, nil, nil, 2, 2) --Нова
 
 mod:AddBoolOption("AnnounceFails", false, "announce")
 
@@ -37,8 +37,8 @@ local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 2, nil
 local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON) --нова
 local timerVolley               = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON) --залп
 local timerUnbalancingStrike	= mod:NewTargetTimer(15, 312898, nil, "Tank|Healer", nil, 3, nil, DBM_CORE_TANK_ICON) --дисбаланс
-local timerAchieve				= mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
 local timerUnbalancingStrikeCD	= mod:NewCDTimer(20, 312898, nil, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON)	--дисбаланс
+local timerAchieve				= mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
 
 local yellBomb		            = mod:NewYell(312910)
 
@@ -89,7 +89,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerUnbalancingStrike:Start(args.destName)
 		if args:IsPlayer() then
 		    specWarnUnbalancingStrike:Show()
-		elseif self:IsTank() then
+		else
 		    specWarnUnbalancingStrikelf:Show(args.destName)
 			specWarnUnbalancingStrikelf:Play("tauntboss")
 		end
@@ -99,6 +99,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 8, 5)
             yellBomb:Yell()
         end
+	elseif args:IsSpellID(312904, 62605, 312551) then --Фростнова
+	    timerNova:Start()
+		if args:IsPlayer() then
+		    specWarnNova:Show()
+		end
 	end
 end
 
@@ -116,9 +121,6 @@ function mod:SPELL_CAST_SUCCESS(args)
     elseif args:IsSpellID(312902, 62604, 312549) then --Залп стрел
 	    warnVolley:Show()
         timerVolley:Start()
-	elseif args:IsSpellID(312904, 62605, 312551) then --Фростнова
-	    warnNova:Show()
-	    timerNova:Start()
     elseif args:IsSpellID(312896, 312543, 62279) then --Разряд молнии
    	    warnLightningCharge:Show()
 		timerLightningCharge:Start()
@@ -151,7 +153,7 @@ function mod:OnSync(event, arg)
 	if event == "Phase2" then
 		warnPhase2:Show()
 		enrageTimer:Stop()
-		timerHardmode:Stop()
+		timerAchieve:Stop()
 		enrageTimer:Start(300)
 		timerLightningCharge:Start(24)
 		timerUnbalancingStrike:Start(26)

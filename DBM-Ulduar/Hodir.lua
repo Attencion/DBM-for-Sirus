@@ -26,13 +26,15 @@ local specWarnBitingCold	= mod:NewSpecialWarningMove(312819, true) --треск�
 
 local enrageTimer			= mod:NewBerserkTimer(475)
 local timerFlashFreeze		= mod:NewCastTimer(9, 312818, nil, nil, nil, 6, nil)
-local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 312462, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFlashFrCD		= mod:NewCDTimer(60, 312818, nil, nil, nil, 6, nil)
+local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 312462, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerFrozenBlowsCD	= mod:NewCDTimer(50, 312462, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerAchieve			= mod:NewAchievementTimer(179, 6766, "TimerSpeedKill")
+
+local yellStormCloud		= mod:NewYell(312831)
 
 mod:AddBoolOption("PlaySoundOnFlashFreeze", true)
 mod:AddSetIconOption("SetIconOnStormCloud", 312831, true, false, {8, 7})
-mod:AddBoolOption("YellOnStormCloud", true)
 
 mod.vb.stormCloudIcon = 8
 
@@ -40,7 +42,8 @@ function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32845, "Hodir")
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	timerFlashFrCD:Start(70-delay)
+	timerFlashFrCD:Start(-delay)
+	timerFrozenBlowsCD:Start(60-delay)
 end
 
 function mod:OnCombatEnd(wipe)
@@ -66,6 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(65123, 65133, 312478, 312831) then --Грозовая туча
 		if args:IsPlayer() then
 			specWarnStormCloud:Show()
+			yellStormCloud:Yell()
 		else
 			warnStormCloud:Show(args.destName)
 		end
