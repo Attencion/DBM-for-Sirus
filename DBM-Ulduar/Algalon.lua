@@ -46,11 +46,13 @@ local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, "Tank|Healer", ni
 
 local warned_preP2 = false
 local warned_star = false
+local combattime = 0
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32871, "Algalon")
 	warned_preP2 = false
 	warned_star = false
+	combattime = GetTime()
 	local text = select(3, GetWorldStateUIInfo(1))
 	local _, _, time = string.find(text, L.PullCheck)
 	if not time then
@@ -99,22 +101,35 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerCDCosmicSmash:Start()
 		announceCosmicSmash:Show()
 		specWarnCosmicSmash:Show()
+	elseif args:IsSpellID(313033, 312680, 64412) then --Фазовый удар
+		timerNextPhasePunch:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(313033, 312680, 64412) then --Фазовый удар
-		timerNextPhasePunch:Start()
 		local amount = args.amount or 1
-		if args:IsPlayer() and amount >= 3 then
-			specWarnPhasePunch:Show(args.amount)
-			specWarnPhasePunch:Play("stackhigh")
+        if amount >= 3 then
+            if args:IsPlayer() then
+                specWarnPhasePunch:Show(args.amount)
+                specWarnPhasePunch:Play("stackhigh")
+            else
+				local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", args.spellName)
+				local remaining
+				if expireTime then
+					remaining = expireTime-GetTime()
+				end
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+					specWarnPhasePunchlf:Show(args.destName)
+					specWarnPhasePunchlf:Play("tauntboss")
+				else
+					warnPhasePunch:Show(args.destName, amount)
+				end
+			end
 		else
-		    specWarnPhasePunchlf:Show(args.destName)
-			specWarnPhasePunchlf:Play("tauntboss")
+			warnPhasePunch:Show(args.destName, amount)
+			timerPhasePunch:Start(args.destName)
 		end
-		timerPhasePunch:Start(args.destName)
-		warnPhasePunch:Show(args.destName, amount)
 	end
 end
 
