@@ -30,7 +30,7 @@ local specWarnCore       = mod:NewSpecialWarningYou(38132)
 local specWarnCharge     = mod:NewSpecialWarningRun(38280)
 
 local timerStrider       = mod:NewTimer(66, "Strider", "Interface\\Icons\\INV_Misc_Fish_13", nil, nil, 1)
-local timerElemental     = mod:NewTimer(60, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields", nil, nil, 1)
+local timerElemental     = mod:NewTimer(40, "TaintedElemental", "Interface\\Icons\\Spell_Nature_ElementalShields", nil, nil, 1)
 local timerNaga          = mod:NewTimer(47.5, "Naga", "Interface\\Icons\\INV_Misc_MonsterHead_02", nil, nil, 1)
 local timerCharge        = mod:NewTargetTimer(20, 38280, nil, nil, nil, 4)
 
@@ -311,11 +311,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellPhase2 then
 		warnPhase:Show(2)
 		timerStrider:Start()
-		timerElemental:Start()
+		timerElemental:Start(40)
 		timerNaga:Start()
 		self:ScheduleMethod(66, "NextStrider")
 		self:ScheduleMethod(47.5, "NextNaga")
-		self:ScheduleMethod(55, "ElementalSoon")
+		self:ScheduleMethod(35, "ElementalSoon")
 	elseif msg == L.YellPhase3 then
 		warnPhase:Show(3)
 		timerStrider:Cancel()
@@ -329,7 +329,7 @@ end
 function mod:UNIT_DIED(args)
 	if args.destName == L.TaintedElemental then
 		timerElemental:Start()
-		self:ScheduleMethod(55, "ElementalSoon")
+		self:ScheduleMethod(35, "ElementalSoon")
 	end
 end
 

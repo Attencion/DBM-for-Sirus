@@ -20,28 +20,28 @@ local warnMurlocksSoon  = mod:NewAnnounce("WarnMurlocksSoon", 3, "Interface\\Ico
 local warnGraves        = mod:NewTargetAnnounce(37850, 3)
 local warnGlobes        = mod:NewAnnounce("WarnGlobes", 3)
 
-local timerMurlocks     = mod:NewTimer(50, "TimerMurlocks", "Interface\\Icons\\INV_Misc_MonsterHead_02")
-local timerGravesCD     = mod:NewCDTimer(30, 37850)
+local timerMurlocks     = mod:NewTimer(50, "TimerMurlocks", "Interface\\Icons\\INV_Misc_MonsterHead_02", nil, nil, 1, nil)
+local timerGravesCD     = mod:NewCDTimer(30, 37850, nil, nil, nil, 3, nil)
 
 local berserkTimer      = mod:NewBerserkTimer(720)
 
 -----------ХМ-------------
 
 local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank|Healer") -- Взгляд
-local warnZemla           = mod:NewSoonAnnounce(310152, 2) -- Землетрясение
+local warnZemla           = mod:NewSoonAnnounce(310152, 1) -- Землетрясение
 local warnHwat            = mod:NewTargetAnnounce(310144, 3) -- Хватка
 local warnSuh             = mod:NewTargetAnnounce(310155, 3) -- Обезвоживание
-local warnKrik            = mod:NewSpellAnnounce(310151, 2) -- Земля
+local warnKrik            = mod:NewSpellAnnounce(310151, 1) -- Земля
 local warnTop             = mod:NewSpellAnnounce(310140, 2) -- Топот
 local warnMon             = mod:NewSpellAnnounce(310137, 4) -- Топот
 local warnPhase2Soon   	  = mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 
 local specWarnZemla       = mod:NewSpecialWarningMoveAway(310152, nil, nil, nil, 3, 5) -- Землетрясение
-local warnKrik2           = mod:NewSpecialWarningCast(310151, "SpellCaster")
-local specWarnSuh	  = mod:NewSpecialWarningYou(310155)
+local warnKrik2           = mod:NewSpecialWarningCast(310151, "SpellCaster", nil, nil, 2, 2)
+local specWarnSuh		= mod:NewSpecialWarningYou(310155)
 
-local timerVzglad	  = mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
+local timerVzglad		= mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
 local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3) -- хватка
 local timerHwat           = mod:NewTargetTimer(3, 310144, nil, nil, nil, 3)
 local timerZemlaCast      = mod:NewCastTimer(8, 310152, nil, nil, nil, 1) -- Землетрясение
@@ -54,7 +54,7 @@ local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 3)
 
 local berserkTimerhm      = mod:NewBerserkTimer(360)
 
-local yellSuh		  = mod:NewYell(310155)
+local yellSuh			= mod:NewYell(310155)
 
 mod:AddSetIconOption("SetIconOnSuhTargets", 310155, true, true, {8, 7, 6, 5, 4})
 mod:AddBoolOption("AnnounceSuh", false)
@@ -108,7 +108,7 @@ function mod:OnCombatStart()
 	self.vb.phase = 1
 	warned_preP1 = false
 	warned_preP2 = false
-	DBM.RangeCheck:Show(6)
+	DBM.RangeCheck:Show(8)
 	else
 	warnMurlocksSoon:Schedule(37)
 	timerMurlocks:Start(42)
@@ -144,13 +144,12 @@ function mod:SPELL_CAST_START(args)
 		timerZemlaCast:Start()
 		timerZemlaCD:Start()
 		specWarnZemla:Show()
-		DBM.RangeCheck:Show(6)
+		DBM.RangeCheck:Show(8)
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
 	elseif args:IsSpellID(310151) then -- призывной рёв
 		warnKrik:Show()
 		warnKrik2:Show()
 		timerKrikCD:Start()
-		PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
 	end
 end
 
@@ -170,7 +169,7 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		timerHwat:Start(args.destName)
 		timerHwatCD:Start()
 		warnHwat:Show(args.destName)
-	elseif args:IsSpellID(310155) then       -- Осушение
+	elseif args:IsSpellID(310155) then --Осушение
 		SuhTargets[#SuhTargets + 1] = args.destName
 		self:ScheduleMethod(0.1, "SetSuhIcons")
 		timerSuhCD:Start()
@@ -183,6 +182,7 @@ function mod:SPELL_AURA_APPLIED(args) -- все хм --
 		warnMon:Show()
 	elseif args:IsSpellID(37850, 38023, 38024, 38025, 38049) then -- ОБЫЧКА
 		graveTargets[#graveTargets + 1] = args.destName
+		timerGravesCD:Start()
 	end
 end
 

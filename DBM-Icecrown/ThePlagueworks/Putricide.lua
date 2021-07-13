@@ -47,7 +47,7 @@ local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856, nil, nil, nil, 1
 local specWarnMutatedPlague         = mod:NewSpecialWarningStack(72451, "Tank|Healer", 4, nil, nil, 1, 6)
 local yellUnboundPlague				= mod:NewYell(70911)
 
-local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3)	-- Duration of debuff
+local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)	-- Duration of debuff
 local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)	-- Approx
 local timerUnstableExperimentCD		= mod:NewNextTimer(38, 70351, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)	-- Used every 38 seconds exactly except after phase changes
 local timerChokingGasBombCD			= mod:NewNextTimer(37.5, 71255, nil, nil, nil, 3)

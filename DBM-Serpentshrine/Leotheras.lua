@@ -59,12 +59,13 @@ local specWarnPepel         = mod:NewSpecialWarningYou(310514, nil, nil, nil, 1,
 
 local timerRass				= mod:NewTargetTimer(40, 310480, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) --Рассеченая душа
 local timerKogti			= mod:NewTargetTimer(40, 310502, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) --Когти
-local timerKlei				= mod:NewTargetTimer(30, 310496, nil, nil, nil, 3) --Клеймо
-local timerAnigCast			= mod:NewCastTimer(10, 310508, nil, nil, nil, 2) --Анигиляция
-local timerVzgCast			= mod:NewCastTimer(5, 310516, nil, nil, nil, 2) --Взгляд
+local timerKlei				= mod:NewTargetTimer(30, 310496, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) --Клеймо
+local timerAnigCast			= mod:NewCastTimer(10, 310508, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Анигиляция
+local timerVzgCast			= mod:NewCastTimer(5, 310516, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Взгляд
 local timerChardgCast		= mod:NewCastTimer(3, 310481, nil, nil, nil, 3) --Рывок
 local timerMetaCast			= mod:NewCastTimer(3, 310484, nil, nil, nil, 3) --Мета
 local timerElfCast			= mod:NewCastTimer(3, 310506, nil, nil, nil, 3) --Эльф
+local timerMeta2			= mod:NewCastTimer(5, 310518, nil, nil, nil, 7) --Мета2
 local timerNatCast			= mod:NewCastTimer(3, 310478, nil, nil, nil, 3) --Натиск
 local timerPepelCast		= mod:NewCastTimer(3, 310514, nil, nil, nil, 3) --Испепел
 
@@ -147,7 +148,7 @@ end
 
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(310481) then
+	if args:IsSpellID(310481) then --рывок
 	timerChardgCast:Start()
 	warnChardg:Show(args.destName)
 		if args:IsPlayer() then
@@ -165,18 +166,20 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if self.Options.PlaySoundOnSpell then
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_07.wav")
 	end
-	elseif args:IsSpellID(310514) then --испепеление
-	if self.Options.PlaySoundOnSpell then
-		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_18.wav")
-	end
 	elseif args:IsSpellID(310496) then --клеймо
 	if self.Options.PlaySoundOnSpell then
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
 	end
-	elseif args:IsSpellID(310478) then
+	elseif args:IsSpellID(310518) then --мета2
+		warnMeta2:Show()
+		timerMeta2:Start()
+	if self.Options.PlaySoundOnSpell then
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_08.wav")
+	end
+	elseif args:IsSpellID(310478) then --Натиск
 	warnNat:Show(args.destName)
 	timerNatCast:Start()
-	elseif args:IsSpellID(310516) then
+	elseif args:IsSpellID(310516) then --Пронзающий взгляд
 	specWarnVzg:Show()
 	timerVzgCast:Start()
 	if self.Options.PlaySoundOnSpell then
@@ -234,34 +237,40 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(37676) then
+	if args:IsSpellID(37676) then --демоны
+		if self.Options.SetIconOnDemonTargets then
 		self:SetIcon(args.destName, 0)
-	elseif args:IsSpellID(310514) then
+		end
+	elseif args:IsSpellID(310514) then --Испепеление
+		if self.Options.SetIconOnPepelTargets then
 		self:SetIcon(args.destName, 0)
-	elseif args:IsSpellID(310496) then
+		end
+	elseif args:IsSpellID(310496) then --Клеймо
+		timerKlei:Stop()
+		if self.Options.KleiIcon then
 		self:SetIcon(args.destName, 0)
+		end
 	end
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(37676) then
+	if args:IsSpellID(37676) then --демоны
 		timerInnerDemons:Start()
 	elseif args:IsSpellID(310510) then --обстрел
 		specWarnObstrel:Show()
 	if self.Options.PlaySoundOnSpell then
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_12.wav")
 	end	
-	elseif args:IsSpellID(310518) then --мета2
-		warnMeta2:Show()
-	if self.Options.PlaySoundOnSpell then
-		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_08.wav")
-	end	
 	elseif args:IsSpellID(310508) then --аннигиляция
 		specWarnAnig:Show()
 		timerAnigCast:Start()
 	if self.Options.PlaySoundOnSpell then
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_19.wav")
-	end	
+	end
+	elseif args:IsSpellID(310514) then --испепеление
+	if self.Options.PlaySoundOnSpell then
+		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_18.wav")
+	end
 	elseif args:IsSpellID(310503) then
 		specWarnVost:Show()
 	elseif args:IsSpellID(310487) then --печати

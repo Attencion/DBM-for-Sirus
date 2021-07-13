@@ -33,6 +33,7 @@ local timerFreezing 		= mod:NewTimer(6, "TimerFreezing", 306523, nil, nil, 3)
 local timerFire  	     	= mod:NewTargetTimer(10, 306504, nil, "Tank", nil, 4, nil, DBM_CORE_TANK_ICON)
 
 local warnNextPhase         = mod:NewAnnounce("WarnNextPhase", 1)
+local warnPhase2			= mod:NewSpellAnnounce(306483, 1)
 local warnUnstableMagicSoon = mod:NewSoonAnnounce(306468, 2)
 local warnArcaneStormSoon   = mod:NewSoonAnnounce(306464, 2)
 local warnIceWrath          = mod:NewSoonAnnounce(306549, 4)
@@ -47,6 +48,7 @@ local warnFire              = mod:NewStackAnnounce(306504, 3, nil, "Tank")
 local specWarnArcaneStorm   = mod:NewSpecialWarningMoveAway(306464, nil, nil, nil, 3, 5) --шторм разбегитесь
 local specWarnUnstableMagic = mod:NewSpecialWarningYou(306468, nil, nil, nil, 2, 2) --нестабильная магия
 local specWarnRays          = mod:NewSpecialWarningSpell(306485, nil, nil, nil, 2, 2)
+local specwarnPhase2		= mod:NewSpecialWarning("SpecWarnPhase2", nil, nil, nil, 3, 2)
 local specWarnExplosive     = mod:NewSpecialWarningRun(306487, nil, nil, nil, 4, 5)-- взрывоопасный пламень
 local specWarnWildFlame     = mod:NewSpecialWarningMove(306502, nil, nil, nil, 4, 5)--Дикое пламя
 local specWarnWildFlameNear = mod:NewSpecialWarning("SpecWarnWildFlameNear", 306545, nil, nil, 1, 2)
@@ -134,6 +136,8 @@ function mod:SPELL_CAST_START(args)
 		timerUnstableMagicCD:Cancel()
 		warnArcaneStormSoon:Cancel()
 		warnUnstableMagicSoon:Cancel()
+		warnPhase2:Show()
+		specwarnPhase2:Show()
 		timerRaysCD:Start(17)
 		timerMeteorCD:Start(29)
 		timerFirewhirlCD:Start(60)

@@ -178,7 +178,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarningPhasePunch		= "Объявлять цели заклинания Фазовый удар",
 	NextCollapsingStar		= "Отсчет времени до появления Вспыхивающей звезды",
-	WarningCosmicSmash 		= "Предупреждение для Кары небесной",
+	WarningCosmicSmash 		= "Предупреждение для $spell:64598",
 	PossibleNextCosmicSmash	= "Отсчет времени до следующей Кары небесной",
 	TimerCombatStart		= "Отсчет времени до начала боя",
 	WarnPhase2Soon			= "Предупреждать заранее о фазе 2 (на ~23%)",
@@ -212,6 +212,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
+	YellOnGrip				= "Кричать, когда на вас $spell:312757",
 	timerLeftArm			= "Отсчет времени до Возрождения левой руки",
 	timerRightArm			= "Отсчет времени до Возрождения правой руки",
 	achievementDisarmed		= "Отсчет времени для достижения Обезоружен",
@@ -223,9 +224,10 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
+	YellGrip				= "Он схватил меня! Помогите!",
 	Yell_Trigger_arm_left	= "Царапина...",
 	Yell_Trigger_arm_right	= "Всего лишь плоть!",
-	YellPull 				= "Вы не должен пройти!",
+	YellPull 				= "Вам не пройти!",
 	Health_Body				= "Кологарн",
 	Health_Right_Arm		= "Правая рука",
 	Health_Left_Arm			= "Левая рука",
@@ -394,7 +396,8 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization{
 	MagneticCore		= "Магнитное ядро у |3-1(>%s<)",
-	WarningShockBlast	= "Шоковый удар - БЕГИТЕ",
+	WarningShockBlast	= "Шоковый удар - бегите",
+	WarningSpinUp       = "Обстрел - бегите",
 	WarnBombSpawn		= "Бомбот"
 }
 
@@ -406,23 +409,26 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	YellOnshellWarn		= "Кричать, когда на вас $spell:312788",
-	TimeToPhase2		= "Отсчет времени для фазы 2",
-	TimeToPhase3		= "Отсчет времени для фазы 3",
-	TimeToPhase4		= "Отсчет времени для фазы 4",
-	MagneticCore		= "Объявлять подобравших Магнитное ядро",
-	HealthFramePhase4	= "Отображать индикатор здоровья в фазе 4",
-	AutoChangeLootToFFA	= "Смена режима добычи на Каждый за себя в фазе 3",
-	WarnBombSpawn		= "Предупреждение о Бомботах",
+	YellOnblastWarn         = "Кричать, когда на вас $spell:312790",
+    YellOnshellWarn         = "Кричать, когда на вас $spell:312435",
+	TimeToPhase2			= "Отсчет времени для фазы 2",
+	TimeToPhase3			= "Отсчет времени для фазы 3",
+	TimeToPhase4			= "Отсчет времени для фазы 4",
+	MagneticCore			= "Объявлять подобравших Магнитное ядро",
+	HealthFramePhase4		= "Отображать индикатор здоровья в фазе 4",
+	AutoChangeLootToFFA		= "Смена режима добычи на Каждый за себя в фазе 3",
+	WarnBombSpawn			= "Предупреждение о Бомботах",
+	TimerHardmode			= "Отсчет времени для сложного режима",
+	PlaySoundOnShockBlast	= "Звуковой сигнал при $spell:312792",
+	PlaySoundOnDarkGlare	= "Звуковой сигнал при $spell:312794",
 	ShockBlastWarningInP1	= "Спец-предупреждение для $spell:312792 в фазе 1",
 	ShockBlastWarningInP4	= "Спец-предупреждение для $spell:312792 в фазе 4",
-	RangeFrame			= "Показывать окно проверки дистанции в фазе 1 (6 м)",
-	SetIconOnNapalm		= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312788),
+	RangeFrame				= "Показывать окно проверки дистанции в фазе 1 (6 м)",
+	SetIconOnNapalm			= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312435),
 	SetIconOnPlasmaBlast	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312790)
 }
 
 L:SetMiscLocalization{
-	YellshellWarn	= "Заряд напалма на мне! Прохильте!",
 	MobPhase1		= "Левиафан II",
 	MobPhase2		= "VX-001 <Противопехотная пушка>",
 	MobPhase3		= "Воздушное судно",

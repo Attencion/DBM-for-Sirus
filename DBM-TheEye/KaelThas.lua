@@ -34,6 +34,7 @@ local warnConflagrateSoon   = mod:NewSoonAnnounce(37018, 2)
 local warnConflagrate       = mod:NewTargetAnnounce(37018, 4)
 local warnBombSoon          = mod:NewSoonAnnounce(37036, 2)
 local warnBarrierSoon       = mod:NewSoonAnnounce(36815, 2)
+local warnBarrier			= mod:NewSpellAnnounce(36815, 2)
 local warnPhoenixSoon       = mod:NewSoonAnnounce(36723, 2)
 local warnMCSoon            = mod:NewSoonAnnounce(36797, 2)
 local warnMC                = mod:NewTargetAnnounce(36797, 3)
@@ -320,6 +321,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnPhoenixSoon:Schedule(55)
 	elseif args:IsSpellID(36815) then
 		timerBarrierCD:Start()
+		warnBarrier:Show()
 		warnBarrierSoon:Schedule(65)
 	elseif args:IsSpellID(36731) then
 		timerFlameStrike:Start()
@@ -387,7 +389,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(36797) then
 		self:SetIcon(args.destName, 0)
-	elseif args:IsSpellID(308969, 308970, 39432, 34480, 44227, 44224) then --падение
+	elseif args:IsSpellID(308969, 308970, 34480) then --падение
 		timerGravity:Stop()
 		timerGravityH:Stop()
 	end

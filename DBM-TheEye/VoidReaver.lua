@@ -16,7 +16,7 @@ mod:RegisterEvents(
 )
 
 -----обычка-----
-local timerNextPounding         = mod:NewCDTimer(14, 34162, nil, nil, nil, 1)
+local timerNextPounding         = mod:NewCDTimer(14, 34162, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)
 local timerNextKnockback        = mod:NewCDTimer(30, 25778, nil, "Healer", nil, 5, DBM_CORE_HEALER_ICON)
 ------героик------
 
@@ -30,11 +30,8 @@ local warnSign          = mod:NewTargetAnnounce(308471, 4) -- Знак
 --local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 --local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
-local specWarnSign      = mod:NewSpecialWarningRun(308471, nil, nil, nil, 3, 4) -- Знак
+local specWarnSign      = mod:NewSpecialWarningMoveAway(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet    = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
-
-
-
 
 local timerOrbCD		= mod:NewCDTimer(30, 308466, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Таймер чародейской сферы
 local timerLoadCD		= mod:NewCDTimer(60, 308465, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON) -- Таймер 1 фазы
@@ -99,9 +96,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19516, "Void Reaver", wipe)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
+	DBM.RangeCheck:Hide()
 end
 
 ----------------------об--------------------------------------
@@ -129,6 +124,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		SignTargets[#SignTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnSign:Show()
+			specWarnSign:Play("moveaway")
 			yellSign:Yell()
 		end
 		self:UnscheduleMethod("SetSignIcons")
@@ -151,12 +147,12 @@ function mod:Magnet()
 	table.wipe(MagnetTargets)
 end
 
---[[function mod:SPELL_AURA_REMOVED(args)
-	if args:IsSpellID(308469) and args:IsPlayer() then
-		if args:IsPlayer() then
-
+function mod:SPELL_AURA_REMOVED(args)
+	if args:IsSpellID(308471) then
+		if self.Options.SetIconOnSignTargets then
+		self:SetIcon(args.destName, 0)
 		end
 	end
-end]]
+end
 
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

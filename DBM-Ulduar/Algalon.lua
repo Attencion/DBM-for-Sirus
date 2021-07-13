@@ -20,7 +20,7 @@ mod:RegisterEvents(
 )
 
 local warnPhasePunch		    = mod:NewStackAnnounce(313033, 1, nil, "Tank|Healer")
-local announceBigBang			= mod:NewSpellAnnounce(313034, 3)
+local announceBigBang			= mod:NewSpellAnnounce(313034, 1)
 local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
 local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 5, 3)
@@ -30,18 +30,18 @@ local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 313036)
 local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)
 local specWarnPhasePunch		= mod:NewSpecialWarningStack(313033, nil, 3, nil, nil, 1, 6)
 local specWarnPhasePunchlf		= mod:NewSpecialWarningTaunt(313033, "Tank", nil, nil, 1, 2)
-local specWarnBigBang			= mod:NewSpecialWarningDefensive(313034, nil, nil, nil, 1, 2)
+local specWarnBigBang			= mod:NewSpecialWarningDefensive(313034, nil, nil, nil, 3, 2)
 local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(313036, nil, nil, nil, 2, 2)
 
 local timerCombatStart		    = mod:NewTimer(7, "TimerCombatStart", 2457)
 local enrageTimer				= mod:NewBerserkTimer(360)
 local timerNextBigBang			= mod:NewNextTimer(90.5, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerBigBangCast			= mod:NewCastTimer(8, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
-local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar")
-local timerCDCosmicSmash		= mod:NewTimer(25, "PossibleNextCosmicSmash")
-local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 313036, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
-local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, "Tank|Healer", nil, 5, nil)
-local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, "Tank|Healer", nil, 5, nil)
+local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar", nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerCDCosmicSmash		= mod:NewCDTimer(25, 64598, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
+local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 64598, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, "Tank", nil, 5, nil)
+local timerNextPhasePunch		= mod:NewNextTimer(16, 313033, nil, "Tank", nil, 5, nil)
 
 
 local warned_preP2 = false
@@ -96,7 +96,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(313039, 64122, 65108, 312686) then --Взрыв чёрной дыры
 		announceBlackHole:Show()
 		warned_star = false
-	elseif args:IsSpellID(64598, 62301, 313036, 312683, 62304) then	--Кара небесная
+	elseif args:IsSpellID(64598, 62301, 313036, 312683, 62304, 64597) then	--Кара небесная
 		timerCastCosmicSmash:Start()
 		timerCDCosmicSmash:Start()
 		announceCosmicSmash:Show()

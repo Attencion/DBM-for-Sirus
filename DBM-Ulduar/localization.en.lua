@@ -214,6 +214,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
+	YellPull 				= "None shall pass!",
 	Yell_Trigger_arm_left	= "Just a scratch!",
 	Yell_Trigger_arm_right	= "Only a flesh wound!",
 	Health_Body				= "Kologarn Body",

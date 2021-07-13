@@ -35,7 +35,7 @@ local warnAddsSoon		= mod:NewAnnounce("WarnAddsSoon", 3, 55342)
 local specWarnWrathN	        = mod:NewSpecialWarningRun(42783, nil, nil, nil, 1, 2)
 
 local timerAdds			= mod:NewTimer(90, "TimerAdds", 55342, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON)
-local timerPriestsN		= mod:NewTimer(20, "TimerPriests", 47788)
+local timerPriestsN		= mod:NewTimer(15, "TimerPriests", 47788)
 local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, nil, nil, 7, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
 local timerNextWrathN	        = mod:NewCDTimer(20, 42783, nil, nil, nil, 7, nil, DBM_CORE_ENRAGE_ICON)
 
@@ -127,7 +127,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.YellAdds and mod:IsDifficulty("normal25") then
 		timerPriestsN:Start()
-		timerNextWrathN:Start()
+		timerNextWrathN:Stop()
+		timerNextWrathN:Start(25)
 	elseif msg == L.YellPriests  then
 		priestsN = true
 		timerAdds:Start()

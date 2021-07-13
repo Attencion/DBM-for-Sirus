@@ -575,6 +575,7 @@ L:SetGeneralLocalization({
 L:SetWarningLocalization({
 	WarnNextPhase		= "Фаза %s",
 	SpecWarnIceWrath	= "Купол - бегите на край.",
+	SpecWarnPhase2		= "Защититесь от огня Щитом Света!",
 	SpecWarnWildFlameNear	= "Дикое пламя рядом - ОТОЙДИТЕ."
 })
 
@@ -587,6 +588,7 @@ L:SetOptionLocalization({
 	TimerCombatStart		= "Отсчет времени до начала боя",
 	WarnNextPhase			= "Предупреждать о переходе на следующую фазу",
 	SpecWarnIceWrath		= "Спец-предупреждение о фазе купола",
+	SpecWarnPhase2			= "Спец-предупреждение о $spell:306484",
 	SpecWarnWildFlameNear		= "Спец-предупреждение, когда $spell:306502 около вас",
 	TimerFreezing			= "Отсчет времени до заморозки $spell:306523",
 	SetIconOnExplosiveTargets	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(306487),
