@@ -14,7 +14,7 @@ mod:RegisterEvents(
 	"SPELL_SUMMON"
 )
 
-local warnHodirsFury		= mod:NewTargetAnnounce(312705)
+local warnHodirsFury		= mod:NewTargetAnnounce(312705, 3)
 local pursueTargetWarn		= mod:NewAnnounce("PursueWarn", 2, 62374)
 local warnNextPursueSoon	= mod:NewAnnounce("warnNextPursueSoon", 3, 62374)
 

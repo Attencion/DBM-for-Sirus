@@ -37,22 +37,22 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 local warnSklep         = mod:NewTargetAnnounce(309046, 4) -- лужа
 local warnKor           = mod:NewTargetAnnounce(309065, 4) -- коррозия
 
-local specWarnArrow     = mod:NewSpecialWarningMove(309052, 2) -- залп вод
-local specWarnAya       = mod:NewSpecialWarningMove(309069, 2) -- залп яда
+local specWarnArrow     = mod:NewSpecialWarningMove(309052, 3) -- залп вод
+local specWarnAya       = mod:NewSpecialWarningMove(309069, 3) -- залп яда
 local specWarnYad       = mod:NewSpecialWarning("Yad", 309072, nil, nil, 1, 6) -- Перефаза яда
 local specWarnChis      = mod:NewSpecialWarning("Chis", 309055, nil, nil, 1, 6) -- Перефаза чист
 
 local specWarnSklep     = mod:NewSpecialWarningRun(309046, nil, nil, nil, 1, 4) -- лужа
 local specWarnKor       = mod:NewSpecialWarningRun(309065, nil, nil, nil, 1, 4) -- коррозия
 
-local timerSklepCD	= mod:NewCDTimer(32, 309046, nil, nil, nil, 3) -- лужа
-local timerKorCD	= mod:NewCDTimer(32, 309065, nil, nil, nil, 3) -- коррозия
-local timerArrowCD	= mod:NewCDTimer(25, 309052, nil, nil, nil, 3) -- залп вод
-local timerAyaCD	= mod:NewCDTimer(25, 309069, nil, nil, nil, 3) -- залп яда
-local timerArrowCast	= mod:NewCastTimer(1.5, 309052, nil, nil, nil, 3) -- залп  вод каст
-local timerAyaCast  	= mod:NewCastTimer(1.5, 309069, nil, nil, nil, 3) -- залп  яда каст
-local timerYadCast	= mod:NewCastTimer(25, 309072, nil, nil, nil, 6) -- яд
-local timerChisCast	= mod:NewCastTimer(20, 309055, nil, nil, nil, 6) -- чистота
+local timerSklepCD	= mod:NewCDTimer(32, 309046, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON) -- лужа
+local timerKorCD	= mod:NewCDTimer(32, 309065, nil, nil, nil, 3, nil, DBM_CORE_DISEASE_ICON) -- коррозия
+local timerArrowCD	= mod:NewCDTimer(25, 309052, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп вод
+local timerAyaCD	= mod:NewCDTimer(25, 309069, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп яда
+local timerArrowCast	= mod:NewCastTimer(1.5, 309052, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп  вод каст
+local timerAyaCast  	= mod:NewCastTimer(1.5, 309069, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп  яда каст
+local timerYadCast	= mod:NewCastTimer(25, 309072, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) -- яд
+local timerChisCast	= mod:NewCastTimer(20, 309055, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) -- чистота
 
 local yellSklep		= mod:NewYell(309046)
 local yellKor		= mod:NewYell(309065)

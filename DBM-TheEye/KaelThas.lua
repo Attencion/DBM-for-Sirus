@@ -66,7 +66,7 @@ local warnJustice	= mod:NewStackAnnounce(308741, 2, nil, "Tank|Healer") -- пр�
 local warnIsc		= mod:NewStackAnnounce(308756, 2, nil, "Tank|Healer") -- Искрящий
 local warnShadow        = mod:NewSoonAnnounce(308742, 2) -- освященеи тенью (лужа)
 local warnBombhm        = mod:NewTargetAnnounce(308750, 2) -- бомба
-local warnVzriv         = mod:NewTargetAnnounce(308797, 2) -- лужа
+local warnVzriv         = mod:NewTargetAnnounce(308797, 3) -- лужа
 
 local specWarnCata      = mod:NewSpecialWarningRun(308790, nil, nil, nil, 4, 2)
 local specWarnVzriv     = mod:NewSpecialWarningRun(308797, nil, nil, nil, 3, 3)

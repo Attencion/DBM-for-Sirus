@@ -21,8 +21,8 @@ mod:RegisterEvents(
 
 local warnTurretsReadySoon			= mod:NewAnnounce("warnTurretsReadySoon", 1, 48642)
 local warnTurretsReady				= mod:NewAnnounce("warnTurretsReady", 3, 48642)
-local warnFlame						= mod:NewTargetAnnounce(62660, 2, nil, false)
-local warnFuseArmor					= mod:NewStackAnnounce(64771, 2, nil, "Tank")
+local warnFlame						= mod:NewTargetAnnounce(64733, 2, nil, false)
+local warnFuseArmor					= mod:NewStackAnnounce(64771, 3, nil, "Tank")
 
 local specWarnDevouringFlame		= mod:NewSpecialWarningMove(64733, nil, nil, nil, 1, 2)
 local specWarnDevouringFlameYou		= mod:NewSpecialWarningYou(64733, false, nil, nil, 1, 2)

@@ -36,14 +36,14 @@ local specWarnWrathN	        = mod:NewSpecialWarningRun(42783, nil, nil, nil, 1,
 
 local timerAdds			= mod:NewTimer(90, "TimerAdds", 55342, "RemoveEnrage", nil, 5, nil, DBM_CORE_ENRAGE_ICON)
 local timerPriestsN		= mod:NewTimer(15, "TimerPriests", 47788)
-local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, nil, nil, 7, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
-local timerNextWrathN	        = mod:NewCDTimer(20, 42783, nil, nil, nil, 7, nil, DBM_CORE_ENRAGE_ICON)
+local timerWrathN		= mod:NewTargetTimer(6, 42783, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
+local timerNextWrathN	        = mod:NewCDTimer(20, 42783, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 
 --------------------------героик--------------------------
-local warnRing			= mod:NewSpellAnnounce(308562, 1)
-local warnStar			= mod:NewSpellAnnounce(308565, 1)
+local warnRing			= mod:NewSpellAnnounce(308562, 2)
+local warnStar			= mod:NewSpellAnnounce(308565, 2)
 local warnHelp			= mod:NewSoonAnnounce(308558, 3) -- Призыв помощников
 local warnWrathH		= mod:NewTargetAnnounce(308550, 4) -- Гнев звездочета
 local warnKol    		= mod:NewTargetAnnounce(308563, 2) -- Кольцо
@@ -63,11 +63,11 @@ local specWarnValkyrLow	 = mod:NewSpecialWarning("SpecWarnValkyrLow", nil, nil, 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, nil, nil, 1, DBM_CORE_INTERRUPT_ICON)
 local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, nil, nil, 3)
 local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, nil, nil, 7)
-local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5)
+local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, nil, DBM_CORE_MAGIC_ICON)
 local timerNextHelp		= mod:NewTimer(120, "TimerNextHelp", 308558, nil, nil, 1, DBM_CORE_TANK_ICON)
-local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON, nil, 1, 5)
-local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, nil, nil, 1, nil, DBM_CORE_ENRAGE_ICON)
-local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, nil, nil, 7, nil, DBM_CORE_HEROIC_ICON)
+local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
+local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)
+local timerFlashVoid    = mod:NewCDTimer(75, 308585, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 
 local yellWrathH		= mod:NewYell(308548)
 local yellWrathN		= mod:NewYell(42783)

@@ -20,11 +20,11 @@ mod:RegisterEvents(
 )
 
 local warnPhasePunch		    = mod:NewStackAnnounce(313033, 1, nil, "Tank|Healer")
-local announceBigBang			= mod:NewSpellAnnounce(313034, 1)
+local announceBigBang			= mod:NewSpellAnnounce(313034, 4)
 local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
 local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 5, 3)
-local announceBlackHole			= mod:NewSpellAnnounce(313039, 2)
+local announceBlackHole			= mod:NewSpellAnnounce(313039, 3)
 local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 313036)
 
 local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)

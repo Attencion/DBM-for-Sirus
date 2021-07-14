@@ -27,23 +27,25 @@ mod:SetBossHealthInfo(
 
 local warnFocusedEyebeam		= mod:NewTargetAnnounce(312765, 3)
 local warnGrip					= mod:NewTargetAnnounce(312757, 1)
-local warnCrunchArmor			= mod:NewTargetAnnounce(312748, 2, nil, "Tank|Healer")
+local warnCrunchArmor			= mod:NewStackAnnounce(312748, 2, nil, "Tank|Healer")
 
 local specWarnCrunchArmor2		= mod:NewSpecialWarningStack(312748, nil, 2, nil, 2, 1, 6)
 local specWarnEyebeam			= mod:NewSpecialWarningYou(312765, nil, nil, nil, 4, 2)
 local specWarnCrunchArmorlf		= mod:NewSpecialWarningTaunt(312748, "Tank", nil, nil, 1, 2)
 
-local timerCrunch10             = mod:NewTargetTimer(6, 312395, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
-local timerNextSmash			= mod:NewCDTimer(20.4, 64003, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerCrunch10             = mod:NewTargetTimer(45, 312395, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerNextSmash			= mod:NewCDTimer(20.4, 312750, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerNextShockwave		= mod:NewCDTimer(18, 312752, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerNextEyebeam			= mod:NewCDTimer(18.2, 312765, nil, nil, nil, 3)
-local timerEyebeam              = mod:NewCastTimer(10, 312765)
+local timerEyebeam              = mod:NewCastTimer(10, 312765, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerNextGrip				= mod:NewCDTimer(20, 64292, nil, nil, nil, 3)
 local timerRespawnLeftArm		= mod:NewTimer(48, "timerLeftArm", nil, nil, nil, 1)
 local timerRespawnRightArm		= mod:NewTimer(48, "timerRightArm", nil, nil, nil, 1)
 local timerTimeForDisarmed		= mod:NewTimer(10, "achievementDisarmed")	-- 10 HC / 12 nonHC
 
 local yellBeam					= mod:NewYell(63346)
+
+local combattime = 0
 
 mod:AddBoolOption("HealthFrame", true)
 mod:AddSetIconOption("SetIconOnGripTarget", 312757, true, false, {7, 6, 5})
@@ -59,6 +61,7 @@ end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32930, "Kologarn")
+	combattime = GetTime()
 	timerNextSmash:Start(10-delay)
 	timerNextEyebeam:Start(11-delay)
 	timerNextShockwave:Start(15.7-delay)
@@ -70,7 +73,7 @@ function mod:OnCombatEnd(wipe)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 64003 then --подзатыльник
+	if args:IsSpellID(64003, 312750, 312397, 64006, 63573) then --подзатыльник
 		timerNextSmash:Start()
 	end
 end
@@ -86,6 +89,7 @@ function mod:UNIT_DIED(args)
 		end
 	elseif self:GetCIDFromGUID(args.destGUID) == 32933 then --Левая рука
 		timerRespawnLeftArm:Start()
+		timerNextShockwave:Cancel()
 		if not self.vb.disarmActive then
 			self.vb.disarmActive = true
 			timerTimeForDisarmed:Start(12)
@@ -121,7 +125,7 @@ function mod:OnSync(msg, target)
 			end
 		end
 		if self.Options.SetIconOnEyebeamTarget then
-			self:SetIcon(target, 5, 8)
+			self:SetIcon(target, 8, 8)
 		end
 	end
 end
@@ -148,21 +152,27 @@ function mod:SPELL_AURA_APPLIED(args)
 			SendChatMessage(L.YellGrip , "SAY")
 		end
 	elseif args:IsSpellID(64002, 63355, 312395, 312748) then --Хруст доспеха
-        warnCrunchArmor:Show(args.destName)
-		if mod:IsDifficulty("heroic10") then
-            timerCrunch10:Start(args.destName)  -- We track duration timer only in 10-man since it's only 6sec and tanks don't switch.
-		end
-	elseif args:IsSpellID(64002, 63355, 312395, 312748) then --Хруст доспеха
 		local amount = args.amount or 1
-		if args.amount >= 2 then
+		if amount >= 2 then
 			if args:IsPlayer() then
-				specWarnCrunchArmor2:Show(amount)
+				specWarnCrunchArmor2:Show(args.amount)
 				specWarnCrunchArmor2:Play("stackhigh")
-			else
-				warnCrunchArmor:Show(args.destName, amount)
+            else
+				local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", args.spellName)
+				local remaining
+				if expireTime then
+					remaining = expireTime-GetTime()
+				end
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+					specWarnCrunchArmorlf:Show(args.destName)
+					specWarnCrunchArmorlf:Play("tauntboss")
+				else
+					warnCrunchArmor:Show(args.destName, amount)
+				end
 			end
 		else
 			warnCrunchArmor:Show(args.destName, amount)
+			timerCrunch10:Start(args.destName)
 		end
 	end
 end

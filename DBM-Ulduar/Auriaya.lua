@@ -15,7 +15,7 @@ mod:RegisterEvents(
 )
 
 local warnSwarm 		= mod:NewTargetAnnounce(312956, 2)
-local warnFearSoon	 	= mod:NewSoonAnnounce(312955, 1)
+local warnFearSoon	 	= mod:NewSoonAnnounce(312955, 3)
 local warnCatDied 		= mod:NewAnnounce("WarnCatDied", 3, 312972)
 local warnCatDiedOne	= mod:NewAnnounce("WarnCatDiedOne", 3, 312972)
 

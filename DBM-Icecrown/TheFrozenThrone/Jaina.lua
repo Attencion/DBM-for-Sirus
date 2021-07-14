@@ -20,11 +20,11 @@ mod:RegisterEvents(
 
 local timerCombatStart		= mod:NewTimer(54, "TimerCombatStart", 2457, nil, nil, 6)
 local timerSummonElemenCD	= mod:NewCDTimer(46, 306454, nil, nil, nil, 1, nil, DBM_CORE_TANK_ICON) --1я фаза элементали
-local timerArcaneStormCD	= mod:NewCDTimer(72, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм кд
-local timerArcaneStorm 		= mod:NewCastTimer(10, 306464, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON) --шторм каст
+local timerArcaneStormCD	= mod:NewCDTimer(72, 306464, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --шторм кд
+local timerArcaneStorm 		= mod:NewCastTimer(10, 306464, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --шторм каст
 local timerUnstableMagicCD	= mod:NewCDTimer(22, 306468, nil, nil, nil, 4, nil, DBM_CORE_DISEASE_ICON)--нестабилка коректить
-local timerRaysCD	        = mod:NewCDTimer(28, 306485, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON) --лучи
-local timerMeteorCD	        = mod:NewCDTimer(35, 306491, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON)--метеор
+local timerRaysCD	        = mod:NewCDTimer(28, 306485, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --лучи
+local timerMeteorCD	        = mod:NewCDTimer(35, 306491, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)--метеор
 local timerFirewhirlCD	    = mod:NewCDTimer(65, 306495, nil, nil, nil, 3, nil)
 local timerCollapse 		= mod:NewCastTimer(20, 306500, nil, nil, nil, 2, nil) --коллапс
 local timerPhase2 		    = mod:NewCastTimer(10, 306483, nil, nil, nil, 6, nil) --фаза 2
@@ -33,7 +33,7 @@ local timerFreezing 		= mod:NewTimer(6, "TimerFreezing", 306523, nil, nil, 3)
 local timerFire  	     	= mod:NewTargetTimer(10, 306504, nil, "Tank", nil, 4, nil, DBM_CORE_TANK_ICON)
 
 local warnNextPhase         = mod:NewAnnounce("WarnNextPhase", 1)
-local warnPhase2			= mod:NewSpellAnnounce(306483, 1)
+local warnPhase2			= mod:NewSpellAnnounce(306483, 4)
 local warnUnstableMagicSoon = mod:NewSoonAnnounce(306468, 2)
 local warnArcaneStormSoon   = mod:NewSoonAnnounce(306464, 2)
 local warnIceWrath          = mod:NewSoonAnnounce(306549, 4)

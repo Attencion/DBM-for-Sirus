@@ -16,8 +16,8 @@ mod:RegisterEvents(
 	"UNIT_HEALTH"
 )
 
-local warnLightBomb					= mod:NewTargetAnnounce(312941, 1)
-local warnGravityBomb				= mod:NewTargetAnnounce(312943, 1)
+local warnLightBomb					= mod:NewTargetAnnounce(312941, 3)
+local warnGravityBomb				= mod:NewTargetAnnounce(312943, 4)
 local warnPhase2					= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 

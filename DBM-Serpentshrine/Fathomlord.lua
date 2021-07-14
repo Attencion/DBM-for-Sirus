@@ -35,24 +35,30 @@ do
         or class == "DEATHKNIGHT"
 end
 
-local warnNovaSoon       = mod:NewSoonAnnounce(38445, 3) --Огненная звезда
-local specWarnNova       = mod:NewSpecialWarningSpell(38445) --Огненная звезда
+local warnNovaSoon		= mod:NewPreWarnAnnounce(38445, 5, 4) --Огненная звезда
+local warnWrathSoon		= mod:NewPreWarnAnnounce(38358, 5, 4) --Гнев прилива
+local warnSpitfireSoon	= mod:NewPreWarnAnnounce(38236, 5, 2) --тотем
+local warnSpitfire		= mod:NewSpellAnnounce(38236, 3) --тотем
 
-local timerNovaCD        = mod:NewCDTimer(26, 38445)
-local timerSpitfireCD    = mod:NewCDTimer(60, 38236)
+local specWarnWrath		= mod:NewSpecialWarningSpell(38358, "Melee", nil, nil, 2, 2) --Гнев прилива
+local specWarnNova		= mod:NewSpecialWarningSpell(38445, "Melee", nil, nil, 2, 2) --Огненная звезда
+
+local timerNovaCD		= mod:NewCDTimer(26, 38445, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerWrathCD		= mod:NewCDTimer(20, 38358, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerSpitfireCD	= mod:NewCDTimer(60, 38236, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 
 local berserkTimer       = mod:NewBerserkTimer(600)
 
 ------------------------ХМ-------------------------
 
 local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
-local warnP2    	        = mod:NewPhaseAnnounce(2, 2)
 local warnStrela            = mod:NewTargetAnnounce(309253, 1) --Стрела катаклизма
-local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2) --стрела
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
+local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
+local warnP2    	        = mod:NewPhaseAnnounce(2, 2)
 
-local timerSvazCD	        = mod:NewCDTimer(25, 309262, nil, nil, nil, 3) -- связь
+local timerSvazCD	        = mod:NewCDTimer(25, 309262, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- связь
 local timerOkoCD	        = mod:NewCDTimer(16, 309258, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Око шторма
 local timerCastHeala	    = mod:NewCDTimer(29, 309256, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON) --хил
 local timerPhaseCast        = mod:NewCastTimer(60, 309292, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) --Скользящий натиск
@@ -128,7 +134,10 @@ function mod:OnCombatStart()
 		berserkTimer:Start()
 		timerNovaCD:Start()
 		timerSpitfireCD:Start()
-		warnNovaSoon:Show(23)
+		timerWrathCD:Start()
+		warnNovaSoon:Schedule(18)
+		warnSpitfireSoon:Schedule(55)
+		warnWrathSoon:Schedule(15)
 	end
 end
 
@@ -150,8 +159,8 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(38445) then --Обычка
-		warnNovaSoon:Show(23)
+	if args:IsSpellID(38445) then --Огненная звезда
+		warnNovaSoon:Schedule(18)
 		specWarnNova:Show()
 		timerNovaCD:Start()
 	elseif args:IsSpellID(309256) then --Хил
@@ -174,11 +183,17 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(38236) then --Обычка
+	if args:IsSpellID(38236) then --Тотем
 		timerSpitfireCD:Start()
+		specWarnSpitfire:Show()
+		warnSpitfireSoon:Schedule(55)
 	elseif args:IsSpellID(309258) then --Око шторма
 		warnOko:Show()
 		timerOkoCD:Start()
+	elseif args:IsSpellID(38358) then --Гнев прилива
+		specWarnWrath:Show()
+		timerWrathCD:Start()
+		warnWrathSoon:Schedule(15)
 	elseif args:IsSpellID(309262) then --Связь
 		timerSvazCD:Start()
 	end

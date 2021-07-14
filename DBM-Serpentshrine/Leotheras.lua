@@ -35,11 +35,11 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 local warnRass	           	= mod:NewStackAnnounce(310480, 5, nil, "Tank|Healer") --Рассеченая душа
 local warnKogti		        = mod:NewStackAnnounce(310502, 5, nil, "Tank|Healer") --Когти
-local warnNat    	        = mod:NewTargetAnnounce(310478, 3) --Натиск
+local warnNat    	        = mod:NewTargetAnnounce(310478, 2) --Натиск
 local warnChardg	     	= mod:NewTargetAnnounce(310481, 3) --Рывок
 local warnPepels  	     	= mod:NewTargetAnnounce(310514, 3) --Испепеление
 local warnKlei				= mod:NewTargetAnnounce(310496, 4) --Клеймо
-local warnMeta		        = mod:NewSpellAnnounce(310484, 2) --Метаморфоза
+local warnMeta		        = mod:NewSpellAnnounce(310484, 3) --Метаморфоза
 local warnMeta2		        = mod:NewSpellAnnounce(310518, 2) --Мета2
 local warnElf		        = mod:NewSpellAnnounce(310506, 2) --Эльф
 local warnPepel		        = mod:NewSpellAnnounce(310514, 3) --пепел
@@ -48,6 +48,11 @@ local warnPhase2Soon   		= mod:NewPrePhaseAnnounce(2)
 local warnPhase2     		= mod:NewPhaseAnnounce(2)
 
 
+local specWarnKogti			= mod:NewSpecialWarningStack(310502, nil, 5, nil, nil, 1, 6) --когти
+local specWarnRass			= mod:NewSpecialWarningStack(310480, nil, 1, nil, nil, 1, 6) --рассечение
+local specWarnKogtilf		= mod:NewSpecialWarningTaunt(310502, "Tank", nil, nil, 1, 2) --когти
+local specWarnRasslf		= mod:NewSpecialWarningTaunt(310480, "Tank", nil, nil, 1, 2) --рассечение
+local specWarnVsp			= mod:NewSpecialWarningStack(310521, nil, 7, nil, nil, 1, 6) --Вспышка
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
 local specWarnKlei          = mod:NewSpecialWarningYou(310496, nil, nil, nil, 1, 2)
 local specWarnObstrel       = mod:NewSpecialWarningRun(310510, nil, nil, nil, 2, 2)
@@ -85,6 +90,7 @@ local warned_preP1 = false
 local warned_preP2 = false
 local PepelTargets = {}
 local KleiIcons = 8
+local combattime = 0
 
 do
 	local function sort_by_group(v1, v2)
@@ -133,6 +139,7 @@ function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21215, "Leotheras the Blind")
 	table.wipe(demonTargets)
 	self.vb.phase = 1
+	combattime = GetTime()
 	if mod:IsDifficulty("heroic25") then
 	else
 		berserkTimer:Start()
@@ -201,14 +208,64 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:UnscheduleMethod("WarnDemons")
 		self:ScheduleMethod(0.1, "WarnDemons")
 	elseif args:IsSpellID(310480) then --хм Рассеченая душа
-		warnRass:Show(args.destName, args.amount or 1)
-		timerRass:Start(args.destName)
+		local amount = args.amount or 1
+        if amount >= 1 then
+            if args:IsPlayer() then
+                specWarnRass:Show(args.amount)
+                specWarnRass:Play("stackhigh")
+            else
+				local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", args.spellName)
+				local remaining
+				if expireTime then
+					remaining = expireTime-GetTime()
+				end
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+					specWarnRasslf:Show(args.destName)
+					specWarnRasslf:Play("tauntboss")
+				else
+					warnRass:Show(args.destName, amount)
+				end
+			end
+		else
+			warnRass:Show(args.destName, amount)
+			timerRass:Start(args.destName)
+		end
 	elseif args:IsSpellID(310502) then --хм Когти скверны
-		warnKogti:Show(args.destName, args.amount or 1)
-		timerKogti:Start(args.destName)
+		local amount = args.amount or 1
+        if amount >= 5 then
+            if args:IsPlayer() then
+                specWarnKogti:Show(args.amount)
+                specWarnKogti:Play("stackhigh")
+            else
+				local _, _, _, _, _, expireTime = DBM:UnitDebuff("player", args.spellName)
+				local remaining
+				if expireTime then
+					remaining = expireTime-GetTime()
+				end
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+					specWarnKogtilf:Show(args.destName)
+					specWarnKogtilf:Play("tauntboss")
+				else
+					warnKogti:Show(args.destName, amount)
+				end
+			end
+		else
+			warnKogti:Show(args.destName, amount)
+			timerKogti:Start(args.destName)
+		end
 	elseif args:IsSpellID(310521) then --хм Вспышка
-		if self:IsTank() then
-		warnVsp:Show(args.destName, args.amount or 1)
+		local amount = args.amount or 1
+		if amount >= 7 then
+			if args:IsPlayer() then
+				specWarnVsp:Show(args.amount)
+				specWarnVsp:Play("stackhigh")
+			end
+		else
+			if self:IsTank() then
+				specWarnVsp:Show(args.amount)
+				specWarnVsp:Play("stackhigh")
+				warnVsp:Show(args.destName, amount)
+			end
 		end
 	elseif args:IsSpellID(310496) then --хм Клеймо
 		warnKlei:Show(args.destName)
@@ -230,7 +287,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		PepelTargets[#PepelTargets + 1] = args.destName
 		if args:IsPlayer() then
 			specWarnPepel:Show()
-		        yellPepels:Yell()
+			yellPepels:Yell()
 		end
 		self:ScheduleMethod(0.1, "SetPepelIcons")
 	end

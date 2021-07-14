@@ -25,10 +25,10 @@ do
         or class == "DEATHKNIGHT"
 end
 
-local warnShadowCrash			= mod:NewTargetAnnounce(312625, 1)
-local warnLeechLife				= mod:NewTargetAnnounce(312974, 1)
+local warnShadowCrash			= mod:NewTargetAnnounce(312625, 3)
+local warnLeechLife				= mod:NewTargetAnnounce(312974, 4)
 local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2) --Всплеск
-local warnSurgeDarkness			= mod:NewSpellAnnounce(312981, 1) --сплеск
+local warnSurgeDarkness			= mod:NewSpellAnnounce(312981, 3) --сплеск
 
 local specwarnSearingFlames	    = mod:NewSpecialWarning("SpecWarnSearingFlames", canInterrupt)
 local specWarnShadowCrash		= mod:NewSpecialWarning("SpecialWarningShadowCrash")

@@ -18,10 +18,10 @@ mod:RegisterEvents(
 
 local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
 local warnStormhammer			= mod:NewTargetAnnounce(312890, 2) --Оглушительный гром
-local warnLightningCharge		= mod:NewSpellAnnounce(312897, 2) --Разряд молнии
-local warnVolley          		= mod:NewSpellAnnounce(312902, 2) --Залп ледяных стрел
-local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 1, nil, "Tank|Healer") --Деформирующий удар
-local warningBomb				= mod:NewTargetAnnounce(312910, 3) --Взрыв руны
+local warnLightningCharge		= mod:NewSpellAnnounce(312897, 3) --Разряд молнии
+local warnVolley          		= mod:NewSpellAnnounce(312902, 4) --Залп ледяных стрел
+local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 3, nil, "Tank|Healer") --Деформирующий удар
+local warningBomb				= mod:NewTargetAnnounce(312910, 4) --Взрыв руны
 
 local specWarnOrb				= mod:NewSpecialWarningMove(312892) --Поражение громом
 local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 2, 2) --дисбаланс

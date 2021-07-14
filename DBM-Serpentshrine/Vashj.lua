@@ -37,8 +37,8 @@ local timerCharge        = mod:NewTargetTimer(20, 38280, nil, nil, nil, 4)
 --------------------------------Героик--------------------------------
 
 
-local warnStaticAnger			= mod:NewTargetAnnounce(310636, 3) -- Статический заряд
-local warnStaticAnger2			= mod:NewTargetAnnounce(310659, 3) -- Статический заряд2
+local warnStaticAnger			= mod:NewTargetAnnounce(310636, 4) -- Статический заряд
+local warnStaticAnger2			= mod:NewTargetAnnounce(310659, 4) -- Статический заряд2
 local warnElemAnonce			= mod:NewSoonAnnounce(310635, 1) -- Скоро призыв элементалей хм
 local warnStartElem				= mod:NewSpellAnnounce(310635, 1) -- Призыв элемов хм
 local warnScat					= mod:NewSpellAnnounce(310657, 1) -- Призыв скатов хм
@@ -52,11 +52,11 @@ local specWarnStaticAnger2		= mod:NewSpecialWarningMove(310659, nil, nil, nil, 4
 local specWarnStaticAngerNear	= mod:NewSpecialWarning("SpecWarnStaticAngerNear", 310636, nil, nil, 1, 2) -- Статический заряд около игрока
 local specWarnStaticAngerNear2	= mod:NewSpecialWarning("SpecWarnStaticAngerNear2", 310659, nil, nil, 1, 2) -- Статический заряд около игрока
 
-local timerStaticAngerCD		= mod:NewCDTimer(15, 310636, nil, nil, nil, 3) -- Статический заряд
-local timerStaticAnger2CD		= mod:NewCDTimer(15, 310659, nil, nil, nil, 3) -- Статический заряд
-local timerElemCD				= mod:NewCDTimer(60, 310635, nil, nil, nil, 1) -- Элементали
-local timerStaticAnger			= mod:NewTargetTimer(8, 310636, nil, nil, nil, 3) -- Статический заряд на игроке
-local timerStaticAnger2			= mod:NewTargetTimer(8, 310659, nil, nil, nil, 3) -- Статический заряд на игроке
+local timerStaticAngerCD		= mod:NewCDTimer(15, 310636, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Статический заряд
+local timerStaticAnger2CD		= mod:NewCDTimer(15, 310659, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Статический заряд
+local timerElemCD				= mod:NewCDTimer(60, 310635, nil, nil, nil, 1, nil, DBM_CORE_HEALER_ICON) -- Элементали
+local timerStaticAnger			= mod:NewTargetTimer(8, 310636, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Статический заряд на игроке
+local timerStaticAnger2			= mod:NewTargetTimer(8, 310659, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Статический заряд на игроке
 
 local yellStaticAnger			= mod:NewYell(310636)
 local yellStaticAnger2			= mod:NewYell(310659)

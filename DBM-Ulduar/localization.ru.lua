@@ -212,7 +212,6 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	YellOnGrip				= "Кричать, когда на вас $spell:312757",
 	timerLeftArm			= "Отсчет времени до Возрождения левой руки",
 	timerRightArm			= "Отсчет времени до Возрождения правой руки",
 	achievementDisarmed		= "Отсчет времени для достижения Обезоружен",

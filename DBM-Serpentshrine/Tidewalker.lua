@@ -28,12 +28,12 @@ local berserkTimer      = mod:NewBerserkTimer(720)
 -----------ХМ-------------
 
 local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank|Healer") -- Взгляд
-local warnZemla           = mod:NewSoonAnnounce(310152, 1) -- Землетрясение
+local warnZemla           = mod:NewSoonAnnounce(310152, 4) -- Землетрясение
 local warnHwat            = mod:NewTargetAnnounce(310144, 3) -- Хватка
 local warnSuh             = mod:NewTargetAnnounce(310155, 3) -- Обезвоживание
-local warnKrik            = mod:NewSpellAnnounce(310151, 1) -- Земля
+local warnKrik            = mod:NewSpellAnnounce(310151, 3) -- Земля
 local warnTop             = mod:NewSpellAnnounce(310140, 2) -- Топот
-local warnMon             = mod:NewSpellAnnounce(310137, 4) -- Топот
+local warnMon             = mod:NewSpellAnnounce(310137, 3) -- Топот
 local warnPhase2Soon   	  = mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 
@@ -42,15 +42,15 @@ local warnKrik2           = mod:NewSpecialWarningCast(310151, "SpellCaster", nil
 local specWarnSuh		= mod:NewSpecialWarningYou(310155)
 
 local timerVzglad		= mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
-local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3) -- хватка
+local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON) -- хватка
 local timerHwat           = mod:NewTargetTimer(3, 310144, nil, nil, nil, 3)
-local timerZemlaCast      = mod:NewCastTimer(8, 310152, nil, nil, nil, 1) -- Землетрясение
-local timerZemlaCD        = mod:NewCDTimer(45, 310152, nil, nil, nil, 1) -- Землетрясение
-local timerTopCast        = mod:NewCastTimer(3, 310140, nil, nil, nil, 2) -- Топот
-local timerTopCD          = mod:NewCDTimer(20, 310140, nil, nil, nil, 2)
-local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4)
-local timerKrikCD         = mod:NewCDTimer(28, 310151, nil, nil, nil, 2)
-local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 3)
+local timerZemlaCast      = mod:NewCastTimer(8, 310152, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Землетрясение
+local timerZemlaCD        = mod:NewCDTimer(45, 310152, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) -- Землетрясение
+local timerTopCast        = mod:NewCastTimer(3, 310140, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON) -- Топот
+local timerTopCD          = mod:NewCDTimer(20, 310140, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
+local timerMonCD          = mod:NewCDTimer(12, 310137, nil, nil, nil, 4, nil, DBM_CORE_TANK_ICON)
+local timerKrikCD         = mod:NewCDTimer(28, 310151, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSuhCD          = mod:NewCDTimer(20, 310155, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 
 local berserkTimerhm      = mod:NewBerserkTimer(360)
 
