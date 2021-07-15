@@ -219,7 +219,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				if expireTime then
 					remaining = expireTime-GetTime()
 				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 1) then
 					specWarnRasslf:Show(args.destName)
 					specWarnRasslf:Play("tauntboss")
 				else
@@ -242,7 +242,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				if expireTime then
 					remaining = expireTime-GetTime()
 				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 5) then
 					specWarnKogtilf:Show(args.destName)
 					specWarnKogtilf:Play("tauntboss")
 				else
