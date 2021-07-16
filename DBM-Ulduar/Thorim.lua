@@ -97,8 +97,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		warningBomb:Show(args.destName)
 		if self.Options.SetIconOnBomb then
 			self:SetIcon(args.destName, 8, 5)
-            yellBomb:Yell()
         end
+		if args:IsPlayer() then
+			yellBomb:Yell()
+		end
 	elseif args:IsSpellID(312904, 62605, 312551) then --Фростнова
 	    timerNova:Start()
 		if args:IsPlayer() then

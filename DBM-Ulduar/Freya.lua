@@ -9,6 +9,7 @@ mod:RegisterKill("yell", L.YellKill)
 mod:SetUsedIcons(6, 7, 8)
 
 mod:RegisterEvents(
+	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"SPELL_CAST_START",
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED",
@@ -35,9 +36,10 @@ end
 
 local warnPhase2			= mod:NewPhaseAnnounce(2, 3)
 local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
-local warnFury				= mod:NewTargetAnnounce(312880, 2)
-local warnRoots				= mod:NewTargetAnnounce(312860, 2)
-local warnAlliesOfNature	= mod:NewSpellAnnounce(62678, 1)
+local warnFury				= mod:NewTargetAnnounce(312880, 3)
+local warnRoots				= mod:NewTargetAnnounce(312860, 3)
+local warnAlliesOfNature	= mod:NewSpellAnnounce(62678, 4)
+local warnDarEonar			= mod:NewAnnounce("WarningDarEonar", 1, 62528)
 
 local specWarnSparkWhip     = mod:NewSpecialWarning("SpecWarnSparkWhip", canInterrupt) -- Хил
 local specWarnFury			= mod:NewSpecialWarningYou(312880, nil, nil, nil, 1, 2)
@@ -49,6 +51,7 @@ local timerAlliesOfNature	= mod:NewCDTimer(60, 62678, "Призыв союзни
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill")
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 3, nil)
 local timerTremorCD			= mod:NewCDTimer(35, 312842, nil, nil, nil, 7, nil)
+local timerDarEonarCD		= mod:NewCDTimer(40, 62528, "Дар Эонар", nil, nil, 1)
 
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("YellOnRoots", true)
@@ -134,6 +137,13 @@ function mod:SPELL_AURA_REMOVED(args)
 		iconId = iconId + 1
     elseif args:IsSpellID(63571, 62589, 312527, 312880) then --Гнев природы
         DBM.RangeCheck:Hide()
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg == L.EmoteDar then
+		warnDarEonar:Show()
+		timerDarEonarCD:Start()
 	end
 end
 

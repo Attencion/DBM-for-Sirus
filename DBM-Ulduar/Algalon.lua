@@ -119,7 +119,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				if expireTime then
 					remaining = expireTime-GetTime()
 				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 12) then
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 45) then
 					specWarnPhasePunchlf:Show(args.destName)
 					specWarnPhasePunchlf:Play("tauntboss")
 				else

@@ -49,10 +49,10 @@ local warnPhase2     		= mod:NewPhaseAnnounce(2)
 
 
 local specWarnKogti			= mod:NewSpecialWarningStack(310502, nil, 5, nil, nil, 1, 6) --когти
-local specWarnRass			= mod:NewSpecialWarningStack(310480, nil, 1, nil, nil, 1, 6) --рассечение
+local specWarnRass			= mod:NewSpecialWarningStack(310480, nil, 2, nil, nil, 1, 6) --рассечение
+local specWarnVsp			= mod:NewSpecialWarningStack(310521, nil, 7, nil, nil, 1, 6) --Вспышка
 local specWarnKogtilf		= mod:NewSpecialWarningTaunt(310502, "Tank", nil, nil, 1, 2) --когти
 local specWarnRasslf		= mod:NewSpecialWarningTaunt(310480, "Tank", nil, nil, 1, 2) --рассечение
-local specWarnVsp			= mod:NewSpecialWarningStack(310521, nil, 7, nil, nil, 1, 6) --Вспышка
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
 local specWarnKlei          = mod:NewSpecialWarningYou(310496, nil, nil, nil, 1, 2)
 local specWarnObstrel       = mod:NewSpecialWarningRun(310510, nil, nil, nil, 2, 2)
@@ -209,7 +209,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:ScheduleMethod(0.1, "WarnDemons")
 	elseif args:IsSpellID(310480) then --хм Рассеченая душа
 		local amount = args.amount or 1
-        if amount >= 1 then
+        if amount >= 2 then
             if args:IsPlayer() then
                 specWarnRass:Show(args.amount)
                 specWarnRass:Play("stackhigh")
@@ -219,7 +219,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				if expireTime then
 					remaining = expireTime-GetTime()
 				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 1) then
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 40) then
 					specWarnRasslf:Show(args.destName)
 					specWarnRasslf:Play("tauntboss")
 				else
@@ -242,7 +242,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				if expireTime then
 					remaining = expireTime-GetTime()
 				end
-				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 5) then
+				if not UnitIsDeadOrGhost("player") and (not remaining or remaining and remaining < 40) then
 					specWarnKogtilf:Show(args.destName)
 					specWarnKogtilf:Play("tauntboss")
 				else
