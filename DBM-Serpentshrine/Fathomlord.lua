@@ -51,11 +51,11 @@ local berserkTimer       = mod:NewBerserkTimer(600)
 
 ------------------------ХМ-------------------------
 
+local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
 local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
 local warnStrela            = mod:NewTargetAnnounce(309253, 1) --Стрела катаклизма
 local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2) --стрела
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
-local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
 local warnP2    	        = mod:NewPhaseAnnounce(2, 2)
 
 local timerSvazCD	        = mod:NewCDTimer(25, 309262, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- связь

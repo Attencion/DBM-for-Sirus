@@ -33,13 +33,13 @@ function mod:Emerge()
 	timerSubmerge:Start()
 	timerSpoutCD:Start(45)
 	self:UnscheduleMethod("Submerge")
-	self:ScheduleMethod(115, "Submerge")
+	self:ScheduleMethod(105, "Submerge")
 end
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 21217, "The Lurker Below")
 	timerSubmerge:Start(90)
-	self:ScheduleMethod(90, "Submerge")
+	self:ScheduleMethod(80, "Submerge")
 	timerSpoutCD:Start(47)
 end
 
@@ -53,6 +53,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21217, "The Lurker Below", wipe)
+	DBM.RangeCheck:Hide()
 	self:UnscheduleMethod("Emerge")
 	self:UnscheduleMethod("Submerge")
 end

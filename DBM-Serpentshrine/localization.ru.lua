@@ -253,10 +253,14 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
+	SpecialMassiveShelll	= "Обстрел по вам - Отбегите от остальных",
+	MassiveShelll		= "Обстрел по >%s<"
 
 }
 
 L:SetOptionLocalization{
+	SpecialMassiveShelll	= "Спец-предупреждение, когда на вас $spell:310560",
+	MassiveShelll		= "Объявлять цели заклинания $spell:310560",
 	YellOnPowerfulShot	= "Кричать, когда на вас $spell:310564",
 	YellOnMassiveShell	= "Кричать, когда на вас $spell:310560",
 	SetIconOnMassiveShellTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(310560),

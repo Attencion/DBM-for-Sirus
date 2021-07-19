@@ -133,6 +133,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21216, "Hydross the Unstable", wipe)
+	DBM.RangeCheck:Hide()
 end
 
 

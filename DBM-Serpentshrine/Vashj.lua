@@ -108,7 +108,7 @@ do
 			self.vb.StaticIcons = 8
 		end
 	end
-	function mod:StaticAngerIcons2() -- метки и анонс целей статического заряда
+	function mod:StaticAngerIcons2() -- метки и анонс целей статического заряда2
 		table.sort(StaticTargets2, sort_by_group)
 		for i, v in ipairs(StaticTargets2) do
 			if mod.Options.AnnounceStatic2 then
@@ -199,6 +199,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21212, "Lady Vashj", wipe)
+	DBM.RangeCheck:Hide()
 	warned_elem = false
 	warned_preP1 = false
 	warned_preP2 = false

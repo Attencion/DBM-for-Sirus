@@ -172,7 +172,7 @@ L:SetWarningLocalization{
 	WarningPhasePunch		= "Фазовый удар на |3-5(>%s<) - cтак %d",
 	WarningCosmicSmash 		= "Кара небесная - взрыв через 4 секунды",
 	WarnPhase2Soon			= "Скоро фаза 2",
-	warnStarLow				= "У Вспыхивающей звезды мало здоровья"
+	warnStarLow				= "У Звезды мало здоровья - Осторожнее!"
 }
 
 L:SetOptionLocalization{
@@ -182,7 +182,7 @@ L:SetOptionLocalization{
 	PossibleNextCosmicSmash	= "Отсчет времени до следующей Кары небесной",
 	TimerCombatStart		= "Отсчет времени до начала боя",
 	WarnPhase2Soon			= "Предупреждать заранее о фазе 2 (на ~23%)",
-	warnStarLow				= "Спец-предупреждение, когда у Вспыхивающей звезды мало здоровья (на ~25%)"
+	warnStarLow				= "Спец-предупреждение, когда у Вспыхивающей звезды мало здоровья (на ~20%)"
 }
 
 L:SetMiscLocalization{
@@ -253,7 +253,7 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	SpecWarnBlast	= "Удар часового - прерывание",
+	SpecWarnBlast	= "Удар часового - ПРЕРВИТЕ КАСТ",
 	WarnCatDied		= "Дикий эащитник погибает (осталось %d жизней)",
 	WarnCatDiedOne	= "Дикий эащитник погибает (осталась 1 жизнь)",
 }
@@ -278,7 +278,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-    TimerSpeedKill	= "Бесценный склад"
+    TimerSpeedKill	= "Бесценный склад (Hardmode)"
 }
 
 L:SetOptionLocalization{
@@ -303,7 +303,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerSpeedKill	= "Сиф-он"
+	TimerSpeedKill	= "Сиф-он (Hardmode)"
 }
 
 L:SetOptionLocalization{
@@ -401,7 +401,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerHardmode	= "Самоуничтожение",
+	TimerHardmode	= "Самоуничтожение (Hardmode)",
 	TimeToPhase2	= "Фаза 2",
 	TimeToPhase3	= "Фаза 3",
 	TimeToPhase4	= "Фаза 4"
@@ -449,13 +449,13 @@ L:SetGeneralLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerHardmode = "Саронитовый враг"
+	TimerHardmode = "Саронитовый враг (Hardmode)"
 }
 
 L:SetWarningLocalization{
-    SpecWarnSearingFlames	        = "Жгучее пламя - ПРЕРВИТЕ",
+    SpecWarnSearingFlames	        = "Жгучее пламя - ПРЕРВИТЕ КАСТ",
 	SpecialWarningShadowCrash		= "Темное сокрушение на вас - ОТБЕГИТЕ",
-	SpecialWarningShadowCrashNear	= "Темное сокрушение около вас - остерегайтесь",
+	SpecialWarningShadowCrashNear	= "Темное сокрушение около вас - ОСТЕРЕГАЙТЕСЬ",
 	SpecialWarningLLNear			= "Вытягивание жизни на |3-5(%s) около вас"
 }
 

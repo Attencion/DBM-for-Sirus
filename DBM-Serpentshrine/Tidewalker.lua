@@ -39,7 +39,7 @@ local warnPhase2     	  = mod:NewPhaseAnnounce(2)
 
 local specWarnZemla       = mod:NewSpecialWarningMoveAway(310152, nil, nil, nil, 3, 5) -- Землетрясение
 local warnKrik2           = mod:NewSpecialWarningCast(310151, "SpellCaster", nil, nil, 2, 2)
-local specWarnSuh		= mod:NewSpecialWarningYou(310155)
+local specWarnSuh		= mod:NewSpecialWarningYou(310155, nil, nil, nil, 2, 2)
 
 local timerVzglad		= mod:NewTargetTimer(60, 310136, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON) -- Взгляд
 local timerHwatCD         = mod:NewCDTimer(32, 310144, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON) -- хватка

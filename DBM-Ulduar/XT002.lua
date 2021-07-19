@@ -23,6 +23,7 @@ local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 
 local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941, nil, nil, nil, 1, 2) --свет
 local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943, nil, nil, nil, 1, 2) --бомба
+local specWarnTympanicTantrum		= mod:NewSpecialWarningDodge(312939, nil, nil, nil, 1, 2) --раскаты
 local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2) --Hard mode void zone
 
 local enrageTimer					= mod:NewBerserkTimer(600)
@@ -49,6 +50,7 @@ local warned_preP2 = false
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33293, "XT002")
+	self.vb.tantrumCast = 0
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
 	self.vb.phase = 1
@@ -71,8 +73,9 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(62776, 312586, 312939) then --Раскаты ярости
+		specWarnTympanicTantrum:Show()
 		timerTympanicTantrum:Start()
-		timerTympanicTantrumCD:Stop()
+		timerTympanicTantrumCD:Start()
 		if self.Options.PlaySoundOnSpell then
 			PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
 		end

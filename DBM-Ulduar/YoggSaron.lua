@@ -218,19 +218,21 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnP2:Show()
 		brainportal2:Start(60)
 		warnBrainPortalSoon:Schedule(57)
-		if self.Options.ShowSaraHealth then
-			DBM.BossHealth:RemoveBoss(33134)--33890
+		if self.Options.ShowSaraHealth then --Мозг
+			DBM.BossHealth:RemoveBoss(33134)
 			DBM.BossHealth:AddBoss(33890,L.Mozg)
 		end
-	elseif args:IsSpellID(313001, 313002, 313027, 313028) then	-- Взгляд безумца (reduces sanity)
+	elseif args:IsSpellID(313001, 313002, 313027, 313028) then --Взгляд безумца1
 		timerLunaricGaze:Start()
-		if self.vb.phase == 3 then
-		specWarnLunaricGaze:Show()
-		brainportal:Cancel()
-		brainportal2:Cancel()
-		if self.Options.ShowSaraHealth then
-			DBM.BossHealth:RemoveBoss(33890)--33890
+		if args:IsPlayer() then
+			specWarnLunaricGaze:Show()
 		end
+		if self.vb.phase == 3 then
+			brainportal:Cancel()
+			brainportal2:Cancel()
+		end
+		if self.Options.ShowSaraHealth then --Мозг
+			DBM.BossHealth:RemoveBoss(33890)
 		end
 	elseif args.spellId == 64465 then
 		if self.Options.SetIconOnBeacon then
