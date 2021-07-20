@@ -23,7 +23,7 @@ local timerFlameJetsCast	   = mod:NewCastTimer(2.7, 312727, nil, nil, nil, 2, ni
 local timerFlameJetsCooldown   = mod:NewCDTimer(33, 312727, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 local timerScorchCooldown	   = mod:NewCDTimer(31, 312730, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerScorchCast		   = mod:NewCastTimer(3, 312730, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
-local timerSlagPot		       = mod:NewTargetTimer(10, 312731, nil, nil, nil, 3, nil)
+local timerSlagPot		       = mod:NewTargetTimer(10, 312731, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 local timerAchieve		       = mod:NewAchievementTimer(240, 6745, "TimerSpeedKill")
 
 local yellSlagPot		       = mod:NewYell(312731)

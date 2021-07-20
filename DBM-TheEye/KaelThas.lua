@@ -78,7 +78,7 @@ local timerJusticeCD    = mod:NewCDTimer(9, 308741, nil, "Tank|Healer", nil, 5, 
 local timerJustice	= mod:NewTargetTimer(30, 308741, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerIsc	    	= mod:NewTargetTimer(15, 308756, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerShadowCD	= mod:NewCDTimer(17, 308742, nil, nil, nil, 4)
-local timerBombhmCD	= mod:NewCDTimer(35, 308749, nil, nil, nil, 1, nil, DBM_CORE_HEALER_ICON)
+local timerBombhmCD	= mod:NewCDTimer(37, 308749, nil, nil, nil, 1, nil, DBM_CORE_HEALER_ICON)
 local timerCataCD	= mod:NewCDTimer(126, 308790, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 local timerCataCast	= mod:NewCastTimer(8, 308790, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 local timerVzrivCD	= mod:NewCDTimer(115, 308797, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
@@ -132,6 +132,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19622, "Kael'thas Sunstrider", wipe)
+	DBM.RangeCheck:Hide()
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)

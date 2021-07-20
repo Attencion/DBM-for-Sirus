@@ -125,7 +125,7 @@ function mod:SPELL_AURA_APPLIED(args)
 					warnPhasePunch:Show(args.destName, amount)
 				end
 			end
-		else
+		else	
 			warnPhasePunch:Show(args.destName, amount)
 			timerPhasePunch:Start(args.destName)
 		end

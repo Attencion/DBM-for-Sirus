@@ -139,6 +139,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
+	YellOnOverwhelmingPower		= "Кричать, когда на вас $spell:312772",
 	PlaySoundLightningTendrils	= "Звуковой сигнал при $spell:312786",
 	SetIconOnOverwhelmingPower	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312772),
 	SetIconOnStaticDisruption	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312770),
@@ -148,6 +149,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
+	YellOverwhelmingPower	= "Мощь переполняет меня!",
 	Steelbreaker		= "Сталелом",
 	RunemasterMolgeim	= "Мастер рун Молгейм",
 	StormcallerBrundir 	= "Буревестник Брундир"

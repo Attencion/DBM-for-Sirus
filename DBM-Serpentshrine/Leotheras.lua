@@ -158,9 +158,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(310481) then --рывок
 	timerChardgCast:Start()
 	warnChardg:Show(args.destName)
-		if args:IsPlayer() then
-			specWarnChardg:Show()
-		end
+	if args:IsPlayer() then
+		specWarnChardg:Show()
+	end
 	elseif args:IsSpellID(310484) then --демон
 	warnMeta:Show()
 	timerMetaCast:Start()
@@ -178,8 +178,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
 	end
 	elseif args:IsSpellID(310518) then --мета2
-		warnMeta2:Show()
-		timerMeta2:Start()
+	warnMeta2:Show()
+	timerMeta2:Start()
 	if self.Options.PlaySoundOnSpell then
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_08.wav")
 	end
@@ -269,10 +269,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(310496) then --хм Клеймо
 		warnKlei:Show(args.destName)
+		timerKlei:Start(args.destName)
 		if self.Options.KleiIcon then
 			self:SetIcon(args.destName, 8, 30)
-			timerKlei:Start(args.destName)
-		elseif args:IsPlayer() then
+		end
+		if args:IsPlayer() then
 			specWarnKlei:Show()
 			yellKlei:Yell()
 		end

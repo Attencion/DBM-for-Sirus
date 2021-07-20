@@ -108,6 +108,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 18805, "High Astromancer Solarian", wipe)
+	DBM.RangeCheck:Hide()
 end
 
 --------------------------нормал--------------------------

@@ -6,7 +6,7 @@ local L = DBM_GUI_Translations
 L.MainFrame = "Deadly Boss Mods"
 
 L.TranslationByPrefix		= "Адаптация под Sirus - "
-L.TranslationBy 			= " Admiiral, Крольчонок, Aleksart163"
+L.TranslationBy 			= " Admiiral, Крольчонок, Tielle"
 L.Website					= "Посетите наш форум для обсуждения и поддержки на |cFF73C2FBhttps://forum.sirus.su/threads/dbm-dlja-sirusa.89486|r"
 L.WebsiteButton				= "Форум"
 
@@ -81,7 +81,7 @@ L.Editbox_WindowWidth		= "Ширина окна"
 L.Editbox_WindowHeight		= "Высота окна"
 
 L.PizzaTimer_Headline 		= 'Создать "Pizza Timer"'
-L.PizzaTimer_Title			= 'Название (например, "Pizza!")'
+L.PizzaTimer_Title			= 'Название (например, "Перекур!")'
 L.PizzaTimer_Hours 			= "час."
 L.PizzaTimer_Mins 			= "мин."
 L.PizzaTimer_Secs 			= "сек."
