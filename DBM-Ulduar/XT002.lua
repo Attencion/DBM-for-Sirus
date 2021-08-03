@@ -23,7 +23,7 @@ local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 
 local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941, nil, nil, nil, 1, 2) --свет
 local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943, nil, nil, nil, 1, 2) --бомба
-local specWarnTympanicTantrum		= mod:NewSpecialWarningDodge(312939, nil, nil, nil, 1, 2) --раскаты
+local specWarnTympanicTantrum		= mod:NewSpecialWarningDodgeCount(312939, nil, nil, nil, 2, 2) --раскаты
 local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2) --Hard mode void zone
 
 local enrageTimer					= mod:NewBerserkTimer(600)
@@ -44,16 +44,17 @@ mod:AddBoolOption("RangeFrame")
 mod:AddBoolOption("PlaySoundOnSpell", true)
 
 mod.vb.phase = 0
+mod.vb.tantrumCount = 0
 
 local warned_preP1 = false
 local warned_preP2 = false
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 33293, "XT002")
-	self.vb.tantrumCast = 0
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
 	self.vb.phase = 1
+	self.vb.tantrumCount = 0
 	warned_preP1 = false
 	warned_preP2 = false
 	if mod:IsDifficulty("heroic10") then
@@ -68,17 +69,17 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 33293, "XT002", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(62776, 312586, 312939) then --Раскаты ярости
-		specWarnTympanicTantrum:Show()
+		self.vb.tantrumCount = self.vb.tantrumCount + 1
+		specWarnTympanicTantrum:Show(self.vb.tantrumCount)
 		timerTympanicTantrum:Start()
-		timerTympanicTantrumCD:Start()
-		if self.Options.PlaySoundOnSpell then
-			PlaySoundFile("Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav")
-		end
+		timerTympanicTantrumCD:Start(nil, self.vb.tantrumCount+1)
 	end
 end
 
@@ -104,7 +105,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellGravityBomb:Yell()
 			DBM.RangeCheck:Show(20)
 			if self.Options.PlaySoundOnSpell then
-			PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
+				PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
 			end
 		elseif self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 8, 9)

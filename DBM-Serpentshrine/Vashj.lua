@@ -205,7 +205,6 @@ function mod:OnCombatEnd(wipe)
 	warned_preP2 = false
 	warned_preP3 = false
 	warned_preP4 = false
-	DBM.RangeCheck:Hide()
 	if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
 		if masterlooterRaidID then
 			SetLootMethod(lootmethod, "raid"..masterlooterRaidID)
@@ -369,7 +368,7 @@ function mod:UNIT_HEALTH(uId)
 		end
 	else
 		if self.vb.phase == 2 and not warned_preP4 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.50 then  --Обычка
-			if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
+		if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
 			if masterlooterRaidID then
 				SetLootMethod(lootmethod, "raid"..masterlooterRaidID)
 			else

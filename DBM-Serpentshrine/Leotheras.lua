@@ -277,6 +277,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnKlei:Show()
 			yellKlei:Yell()
 		end
+		if self.Options.PlaySoundOnSpell then
+			PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_09.wav")
+		end
 		if mod.Options.AnnounceKlei then
 			if DBM:GetRaidRank() > 0 then
 				SendChatMessage(L.Klei:format(KleiIcons, args.destName), "RAID_WARNING")

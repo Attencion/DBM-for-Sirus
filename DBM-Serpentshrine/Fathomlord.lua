@@ -51,18 +51,21 @@ local berserkTimer       = mod:NewBerserkTimer(600)
 
 ------------------------ХМ-------------------------
 
-local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
+local warnZemlya            = mod:NewCountAnnounce(309289, 4) --Землетрясение
 local warnPhaseCast	        = mod:NewSpellAnnounce(309292, 4)
-local warnStrela            = mod:NewTargetAnnounce(309253, 1) --Стрела катаклизма
-local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2) --стрела
 local warnOko	            = mod:NewSpellAnnounce(309258, 2, nil, "Melee")
 local warnP2    	        = mod:NewPhaseAnnounce(2, 2)
+local specWarnCastHeala     = mod:NewSpecialWarning("SpecWarnCastHeala", canInterrupt) --Хил
+local warnStrela            = mod:NewTargetAnnounce(309253, 1) --Стрела катаклизма
+local specWarnZemlya	    = mod:NewSpecialWarningMoveAway(309289, nil, nil, nil, 3, 5) --Землетрясение
+local specWarnStrela	    = mod:NewSpecialWarningYou(309253, nil, nil, nil, 3, 2) --стрела
 
 local timerSvazCD	        = mod:NewCDTimer(25, 309262, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- связь
 local timerOkoCD	        = mod:NewCDTimer(16, 309258, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Око шторма
 local timerCastHeala	    = mod:NewCDTimer(29, 309256, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON) --хил
 local timerPhaseCast        = mod:NewCastTimer(60, 309292, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) --Скользящий натиск
 local timerPhaseCastCD	    = mod:NewCDTimer(150, 309292, nil, nil, nil, 6, nil, DBM_CORE_DEADLY_ICON) --Скользящий натиск
+local timerZemlyaCast		= mod:NewCastTimer(5, 309289, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerStrelaCast	    = mod:NewCastTimer(6, 309253) --Стрела катаклизма
 local timerStrelaCD	        = mod:NewCDTimer(43, 309253, nil, nil, nil, 3, nil, DBM_CORE_TANK_ICON) --Стрела катаклизма
 -----------Шарккис-----------
@@ -82,6 +85,8 @@ local phase							= 1
 local SvazTargets = {}
 local CastKop = 1
 local SvazIcons = 7
+
+mod.vb.zemlyaCount = 0
 
 do
 	local function sort_by_group(v1, v2)
@@ -114,6 +119,7 @@ end
 
 function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21214, "Fathom-Lord Karathress")
+	self.vb.zemlyaCount = 0
 	phase = 1
 	if mod:IsDifficulty("heroic25") then
 		berserkTimerhm:Start()
@@ -155,6 +161,10 @@ function mod:SPELL_AURA_REMOVED(args)
 		berserkTimerhm:Start()
 		timerPhaseCastCD:Start(95)
 		DBM.RangeCheck:Show(7)
+	elseif args:IsSpellID(309262) and args:IsPlayer() then --Связь
+		if self.Options.SetIconOnSvazTargets then
+			self:SetIcon(args.destName, 0)
+		end
 	end
 end
 
@@ -163,10 +173,20 @@ function mod:SPELL_CAST_START(args)
 		warnNovaSoon:Schedule(18)
 		specWarnNova:Show()
 		timerNovaCD:Start()
+	elseif args:IsSpellID(38358) then --Гнев прилива
+		specWarnWrath:Show()
+		timerWrathCD:Start()
+		warnWrathSoon:Schedule(15)
 	elseif args:IsSpellID(309256) then --Хил
 		specWarnCastHeala:Show()
 		specWarnCastHeala:Play("kickcast")
 		timerCastHeala:Start()
+	elseif args:IsSpellID(309289) then --Землетрясение
+		self.vb.zemlyaCount = self.vb.zemlyaCount + 1
+		warnZemlya:Show(self.vb.zemlyaCount)
+		timerZemlyaCast:Start()
+		specWarnZemlya:Show()
+		specWarnZemlya:Play("moveaway")
 	elseif args:IsSpellID(309292) then --натиск
 		warnPhaseCast:Show()
 		timerPhaseCast:Start()
@@ -190,10 +210,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(309258) then --Око шторма
 		warnOko:Show()
 		timerOkoCD:Start()
-	elseif args:IsSpellID(38358) then --Гнев прилива
-		specWarnWrath:Show()
-		timerWrathCD:Start()
-		warnWrathSoon:Schedule(15)
 	elseif args:IsSpellID(309262) then --Связь
 		timerSvazCD:Start()
 	end

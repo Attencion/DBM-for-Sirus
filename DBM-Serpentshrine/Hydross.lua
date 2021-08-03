@@ -34,8 +34,10 @@ local berserkTimer          = mod:NewBerserkTimer(600)
 
 ----------хм-------------------
 
-local warnSklep         = mod:NewTargetAnnounce(309046, 4) -- лужа
-local warnKor           = mod:NewTargetAnnounce(309065, 4) -- коррозия
+local warnYad			= mod:NewCountAnnounce(309072, 4) -- яд
+local warnChis			= mod:NewCountAnnounce(309055, 4) -- цунами
+local warnSklep         = mod:NewTargetAnnounce(309046, 3) -- лужа
+local warnKor           = mod:NewTargetAnnounce(309065, 3) -- коррозия
 
 local specWarnArrow     = mod:NewSpecialWarningMove(309052, 3) -- залп вод
 local specWarnAya       = mod:NewSpecialWarningMove(309069, 3) -- залп яда
@@ -46,7 +48,7 @@ local specWarnSklep     = mod:NewSpecialWarningRun(309046, nil, nil, nil, 1, 4) 
 local specWarnKor       = mod:NewSpecialWarningRun(309065, nil, nil, nil, 1, 4) -- коррозия
 
 local timerSklepCD	= mod:NewCDTimer(32, 309046, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON) -- лужа
-local timerKorCD	= mod:NewCDTimer(32, 309065, nil, nil, nil, 3, nil, DBM_CORE_DISEASE_ICON) -- коррозия
+local timerKorCD	= mod:NewCDTimer(32, 309065, nil, nil, nil, 3, nil, DBM_CORE_POISON_ICON) -- коррозия
 local timerArrowCD	= mod:NewCDTimer(25, 309052, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп вод
 local timerAyaCD	= mod:NewCDTimer(25, 309069, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп яда
 local timerArrowCast	= mod:NewCastTimer(1.5, 309052, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON) -- залп  вод каст
@@ -63,10 +65,13 @@ mod:AddBoolOption("AnnounceSklep", false)
 mod:AddBoolOption("AnnounceKor", false)
 
 mod.vb.phase = 0
-local SklepTargets = {}
-local KorTargets = {}
+mod.vb.yadCount = 0
+mod.vb.chisCount = 0
 mod.vb.SklepIcon = 8
 mod.vb.KorlIcon = 8
+
+local SklepTargets = {}
+local KorTargets = {}
 
 do
 	local function sort_by_group(v1, v2)
@@ -119,6 +124,8 @@ end
 
 function mod:OnCombatStart()
 	berserkTimer:Start()
+	self.vb.chisCount = 0
+	self.vb.yadCount = 0
 	self.vb.phase = 1
 	self.vb.SklepIcons = 8
 	self.vb.KorIcon = 8
@@ -139,20 +146,22 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(309052) then --залп вод
-	timerArrowCD:Start()
-	timerArrowCast:Start()
-	specWarnArrow:Show()
+		timerArrowCD:Start()
+		timerArrowCast:Start()
+		specWarnArrow:Show()
 	elseif args:IsSpellID(309069) then --залп яда
-	timerAyaCD:Start()
-	timerAyaCast:Start()
-	specWarnAya:Show()
+		timerAyaCD:Start()
+		timerAyaCast:Start()
+		specWarnAya:Show()
 	elseif args:IsSpellID(309072) then  --грязная фаза
-	timerYadCast:Start(25)
-	timerKorCD:Start(56)
-	timerAyaCD:Start(50)
-	specWarnYad:Show()
-	timerArrowCD:Cancel()
-	timerSklepCD:Cancel()
+		self.vb.yadCount = self.vb.yadCount + 1
+		warnYad:Show(self.vb.yadCount)
+		timerYadCast:Start(25, self.vb.yadCount)
+		timerKorCD:Start(56)
+		timerAyaCD:Start(50)
+		specWarnYad:Show()
+		timerArrowCD:Cancel()
+		timerSklepCD:Cancel()
 	end
 end
 
@@ -221,8 +230,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnVileSludge:Show(args.destName)
 	-------------- хм-------------------
     elseif  args:IsSpellID(309055) then -- чистая фаза
+		self.vb.chisCount = self.vb.chisCount + 1
+		warnChis:Show(self.vb.chisCount)
+        timerChisCast:Start(nil, self.vb.chisCount)
 	    specWarnChis:Show()
-        timerChisCast:Start()
 	    timerKorCD:Cancel()
 	    timerAyaCD:Cancel()
 	    timerArrowCD:Start()

@@ -247,7 +247,8 @@ L:SetGeneralLocalization{
 
 L:SetMiscLocalization{
 	Defender = "Дикий эащитник (%d)",
-	YellPull = "Вы зря сюда заявились!"
+	YellPull = "Вы зря сюда заявились!",
+	YellPull2 = "Бежать некуда."
 }
 
 L:SetTimerLocalization{
@@ -410,8 +411,6 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	YellOnblastWarn         = "Кричать, когда на вас $spell:312790",
-    YellOnshellWarn         = "Кричать, когда на вас $spell:312435",
 	TimeToPhase2			= "Отсчет времени для фазы 2",
 	TimeToPhase3			= "Отсчет времени для фазы 3",
 	TimeToPhase4			= "Отсчет времени для фазы 4",
@@ -473,7 +472,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	EmoteSaroniteVapors	= "Облако саронитовых паров образовывается поблизости!",
-	YellLeech			= "Метка на мне! УШЛИ ВСЕ ОТ МЕНЯ!"
+	YellLeech			= "Метка Безликого на мне! УШЛИ ВСЕ ОТ МЕНЯ!"
 }
 
 ------------------
@@ -489,8 +488,7 @@ L:SetMiscLocalization{
 	YellPull 			= "Скоро мы сразимся с главарем этих извергов! Обратите гнев и ненависть против его прислужников!",
 	YellPhase2	 		= "Я – это сон наяву.",
 	Sara 				= "Сара",
-	Mozg				= "Мозг Йог-Сарона",
-	WarningYellSqueeze	= "Выдавливание на мне! Помогите!"
+	Mozg				= "Мозг Йог-Сарона"
 }
 
 L:SetWarningLocalization{
@@ -499,7 +497,7 @@ L:SetWarningLocalization{
 	WarningSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnSanity 					= "Осталось %d Здравомыслия",
 	SpecWarnGuardianLow				= "Прекратите атаковать этого Стража",
-	SpecWarnMadnessOutNow			= "Доведение до помешательства заканчивается - выбегайте",
+	SpecWarnMadnessOutNow			= "Доведение до помешательства заканчивается - ВЫБЕГАЙТЕ",
 	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",
 	SpecWarnFervor					= "Рвение Сары на вас",
 	SpecWarnFervorCast				= "Рвение Сары накладывается на вас",
@@ -507,6 +505,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
+	TimerSpeedKill	= "Древнее некуда",
 	NextPortal	= "Провал Безумия",
 	NextPortal2 = "Перезарядка Портала"
 }
@@ -522,6 +521,7 @@ L:SetOptionLocalization{
 	SpecWarnFervorCast				= "Спец-предупреждение, когда на вас накладывается $spell:312989\n(должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	specWarnBrainPortalSoon			= "Спец-предупреждение о следующем Провале Безумия",
 	NextPortal						= "Отсчет времени до следующего Провала Безумия",
+	ShowSaraHealth					= "Показывать здоровье Сары в фазе 1 (должна быть в цели или фокусе хотя бы у одного члена рейда)",
 	MaladyArrow						= "Показывать стрелку, когда $spell:313029 около вас",
 }
 

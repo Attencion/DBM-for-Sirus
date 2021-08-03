@@ -23,8 +23,6 @@ mod:SetBossHealthInfo(
 	32857, L.StormcallerBrundir
 )
 
-local warnSupercharge			= mod:NewSpellAnnounce(312766, 4)
-
 --Брундир
 -- High Voltage ... 63498
 local warnChainlight			= mod:NewSpellAnnounce(312780, 2, nil, false, 2)
@@ -41,7 +39,7 @@ mod:AddBoolOption("PlaySoundLightningTendrils", true)
 
 --Сталелом
 -- High Voltage ... don't know what to show here - 63498
-local warnFusionPunch			= mod:NewSpellAnnounce(312769, 4)
+local warnFusionPunch			= mod:NewTargetAnnounce(312769, 4)
 local timerFusionPunchCast		= mod:NewCastTimer(3, 312769, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFusionPunchActive	= mod:NewTargetTimer(4,312769, nil, nil, nil, 5, nil, DBM_CORE_MAGIC_ICON)
 local warnOverwhelmingPower		= mod:NewTargetAnnounce(312772, 2)
@@ -80,14 +78,6 @@ local enrageTimer				= mod:NewBerserkTimer(900)
 
 local disruptTargets = {}
 
-local guids = {}
-local function buildGuidTable()
-	table.wipe(guids)
-	for i = 1, GetNumRaidMembers() do
-		guids[UnitGUID("raid"..i.."pet") or ""] = UnitName("raid"..i)
-	end
-end
-
 mod.vb.disruptIcon = 7
 
 function mod:OnCombatStart(delay)
@@ -118,19 +108,19 @@ local function warnStaticDisruptionTargets()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(61920, 312766, 312413) then --Суперзаряд
-		warnSupercharge:Show()
-	elseif args:IsSpellID(63479, 61879, 312427, 312780) then --Цепная молния
+	if args:IsSpellID(63479, 61879, 312427, 312780) then --Цепная молния
 		warnChainlight:Show()
 	elseif args:IsSpellID(63483, 61915, 312783, 312430) then --Вихрь молний
 		timerLightningWhirl:Start()
+	elseif args:IsSpellID(61912, 63494, 312417, 312770) then --Статический сбой
+		timerStaticDisruption:Start()
 	elseif args:IsSpellID(61903, 63493, 312416, 312769) then --Энергетический удар
-		local player = guids[args.destGUID]
-		warnFusionPunch:Show(player)
-		timerFusionPunchCast:Start()
-		if player == UnitName("player") then
+		local uId = DBM:GetRaidUnitId(args.destName)
+		if self:IsTanking(uId) then
 			specwarnFusionPunch:Show()
 		end
+		warnFusionPunch:Show(targetname)
+		timerFusionPunchCast:Start()
 	elseif args:IsSpellID(62274, 63489, 312421, 312774) then --Рунический щит
 		warnShieldofRunes:Show()
 		timerShieldofRunesCD:Start()
@@ -154,8 +144,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(61973, 61974, 64320) then --Руна мощи
 		self:ScheduleMethod(0.1, "RuneTarget", 0.1, 16, true, true)
 		timerRuneofPower:Start()
-	elseif args:IsSpellID(61912, 63494, 312417, 312770) then --Статический сбой
-		timerStaticDisruption:Start()
 	elseif args:IsSpellID(61869, 63481, 312428, 312781) then --Перегрузка
 		timerOverload:Start()
 		if self.Options.AlwaysWarnOnOverload or UnitName("target") == L.StormcallerBrundir then
@@ -215,7 +203,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			timerOverwhelmingPower:Start(35, args.destName)
 		end
-
 		if self.Options.SetIconOnOverwhelmingPower then
 			if mod:IsDifficulty("heroic10") then
 				self:SetIcon(args.destName, 8, 60) -- skull for 60 seconds (until meltdown)

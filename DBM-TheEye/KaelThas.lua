@@ -99,6 +99,7 @@ local yellBombhm	   = mod:NewYell(308750)
 mod:AddSetIconOption("SetIconOnMC", 36797, true, true, {5, 6, 7})
 mod:AddSetIconOption("VzrivIcon", 308797, true, true, {8})
 mod:AddBoolOption("AnnounceVzriv", false)
+mod:AddBoolOption("RangeFrame", true)
 
 mod.vb.phase = 0
 local BombhmTargets = {}
@@ -132,7 +133,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19622, "Kael'thas Sunstrider", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -157,7 +160,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			timerBombhmCD:Start(42)
 			warnNextAdd:Show(L.NamesAdds["Capernian"])
 			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
-			DBM.RangeCheck:Show(10)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(10)
+			end
 		elseif msg == L.YellTelon then
 			timerBombhmCD:Cancel()
 			DBM.RangeCheck:Hide()
@@ -170,17 +175,20 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			warnPhase:Show(L.WarnPhase3)
 			timerPhase4:Start()
 			timerRoarCD:Start()
-			warnBombSoon:Schedule(10)
-			timerBombCD:Start(15)
 			timerBombhmCD:Start()
-			DBM.RangeCheck:Show(10)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(10)
+			end
 		elseif msg == L.YellPhase4  then
 			self.vb.phase = 4
 			warnPhase:Show(L.WarnPhase4)
 			timerPhase4:Cancel()
 			timerCataCD:Start(60)
-			DBM.RangeCheck:Hide()
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Hide()
+			end
 		elseif msg == L.YellPhase5  then
+			timerBombhmCD:Cancel()
 			self.vb.phase = 5
 			warnPhase:Show(L.WarnPhase5)
 			timerCataCD:Cancel()
@@ -198,7 +206,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			timerRoarCD:Cancel()
 			warnNextAdd:Show(L.NamesAdds["Capernian"])
 			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
-			DBM.RangeCheck:Show(10)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(10)
+			end
 		elseif msg == L.YellTelon then
 			DBM.RangeCheck:Hide()
 			warnConflagrateSoon:Cancel()
@@ -220,7 +230,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			timerRoarCD:Start()
 			warnBombSoon:Schedule(10)
 			timerBombCD:Start(15)
-			DBM.RangeCheck:Show(10)
+			if self.Options.RangeFrame then
+				DBM.RangeCheck:Show(10)
+			end
 		elseif msg == L.YellPhase4  then
 			self.vb.phase = 4
 			warnPhase:Show(L.WarnPhase4)
@@ -302,7 +314,9 @@ function mod:SPELL_CAST_START(args)
 		timerCataCD:Start()
 		timerCataCast:Start()
 		specWarnCata:Show()
-		DBM.RangeCheck:Show(40, GetRaidTargetIndex)
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(40)
+		end
 		self:ScheduleMethod(10, "Timer")
 	end
 end

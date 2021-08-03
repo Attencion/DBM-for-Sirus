@@ -12,6 +12,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_REMOVED",
 	"SPELL_AURA_APPLIED",
+	"SPELL_SUMMON",
 	"SPELL_CAST_START"
 )
 
@@ -25,11 +26,13 @@ local warnPhase2		= mod:NewAnnounce("Phase2", 2) -- Фаза повышенно�
 --local warnKnockback		= mod:NewSoonAnnounce(308470, 2, nil, "Tank|Healer|RemoveEnrage")  -- тяжкий удар
 local warnMagnet        = mod:NewTargetAnnounce(308467, 4) -- Сфера магнетизм
 local warnSign          = mod:NewTargetAnnounce(308471, 4) -- Знак
+local warnOrb			= mod:NewSpellAnnounce(308466, 4) --Сферы
 
 --local warnSpawnOrbs				= mod:NewAnnounce("SpawnOrbs", 2)
 --local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 --local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
+local specWarnOrb		= mod:NewSpecialWarningCount(308466, nil, nil, nil, 1, 2) --Сферы
 local specWarnSign      = mod:NewSpecialWarningMoveAway(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet    = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
 
@@ -44,6 +47,7 @@ local berserkTimer		= mod:NewBerserkTimer(600)
 
 mod:AddSetIconOption("SetIconOnSignTargets", 308471, true, true, {3, 4, 5, 6, 7, 8})
 mod:AddBoolOption("AnnounceSign", false)
+mod:AddBoolOption("RangeFrame", true)
 
 local beaconIconTargets	= {}
 local MagnetTargets = {}
@@ -51,6 +55,7 @@ local SignTargets = {}
 local SignIcons = 8
 
 mod.vb.phase = 0
+mod.vb.orbCount = 0
 
 do
 	local function sort_by_group(v1, v2)
@@ -83,10 +88,13 @@ function mod:OnCombatStart(delay)
 	table.wipe(beaconIconTargets)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
 	if mod:IsDifficulty("heroic25") then
+		self.vb.orbCount = 0
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
 		--timerKnockbackCD:Start()
-		DBM.RangeCheck:Show(15)
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(15)
+		end
 	else
 		berserkTimer:Start()
 		timerNextPounding:Start()
@@ -96,7 +104,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19516, "Void Reaver", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 ----------------------об--------------------------------------
@@ -106,10 +116,22 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNextKnockback:Start()
 	elseif args:IsSpellID(34162) then
 		timerNextPounding:Start()
+	elseif args:IsSpellID(308471) then
+		timerSignCD:Start()
 	end
 end
 
 -------------------------хм------------------------------------
+
+
+function mod:SPELL_SUMMON(args)
+	if args:IsSpellID(308466) then --Сферы
+		self.vb.orbCount = self.vb.orbCount + 1
+		specWarnOrb:Show(self.vb.orbCount)
+		timerSignCD:Start(nil, self.vb.orbCount+1)
+		warnOrb:Show()
+	end
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(308465) then --- 1 фаза
@@ -129,7 +151,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		self:UnscheduleMethod("SetSignIcons")
 		self:ScheduleMethod(0.1, "SetSignIcons")
-		timerSignCD:Start()
 	elseif args:IsSpellID(308467) then
 		MagnetTargets[#MagnetTargets + 1] = args.destName
 		if args:IsPlayer() then
@@ -150,7 +171,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(308471) then
 		if self.Options.SetIconOnSignTargets then
-		self:SetIcon(args.destName, 0)
+			self:SetIcon(args.destName, 0)
 		end
 	end
 end

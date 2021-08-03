@@ -28,12 +28,12 @@ end
 local warnShadowCrash			= mod:NewTargetAnnounce(312625, 3)
 local warnLeechLife				= mod:NewTargetAnnounce(312974, 4)
 local warnSurgeDarknessSoon     = mod:NewPreWarnAnnounce(312981, 5, 2) --Всплеск
-local warnSurgeDarkness			= mod:NewSpellAnnounce(312981, 3) --сплеск
+local warnSurgeDarkness			= mod:NewCountAnnounce(312981, 3) --Всплеск
 
 local specwarnSearingFlames	    = mod:NewSpecialWarning("SpecWarnSearingFlames", canInterrupt)
 local specWarnShadowCrash		= mod:NewSpecialWarning("SpecialWarningShadowCrash")
 local specWarnShadowCrashNear	= mod:NewSpecialWarning("SpecialWarningShadowCrashNear")
-local specWarnSurgeDarkness	    = mod:NewSpecialWarningDefensive(312981, "Tank", nil, nil, 2, 2)
+local specWarnSurgeDarkness	    = mod:NewSpecialWarningCount(312981, "Tank", nil, nil, 2, 2)
 local specWarnLifeLeechYou		= mod:NewSpecialWarningYou(312974, nil, nil, nil, 4, 2)
 local specWarnLifeLeechNear 	= mod:NewSpecialWarning("SpecialWarningLLNear", true)
 
@@ -41,7 +41,7 @@ local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
 local timerSearingFlamesCD      = mod:NewNextTimer(16, 312977, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 local timerSurgeofDarkness	    = mod:NewBuffActiveTimer(10, 312981, nil, nil, nil, 6, nil)
-local timerNextSurgeofDarkness	= mod:NewCDTimer(62, 312981, nil, nil, nil, 6, nil, DBM_CORE_TANK_ICON)
+local timerNextSurgeofDarkness	= mod:NewNextTimer(62, 312981, nil, nil, nil, 6, nil, DBM_CORE_TANK_ICON)
 local timerSaroniteVapors		= mod:NewNextTimer(30, 63322, nil, nil, nil, 5)
 local timerLifeLeech	        = mod:NewTargetTimer(10, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerLeech		        = mod:NewNextTimer(37, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
@@ -55,9 +55,11 @@ mod:AddSetIconOption("SetIconOnShadowCrash", 312625, true, false, {7})
 mod:AddBoolOption("CrashArrow", false)
 mod:AddBoolOption("BypassLatencyCheck", false)
 
+mod.vb.surgeCount = 0
 
 function mod:OnCombatStart(delay)
     DBM:FireCustomEvent("DBM_EncounterStart", 33271, "GeneralVezax")
+	self.vb.surgeCount = 0
 	timerEnrage:Start(-delay)
 	timerAchieve:Start(-delay)
 	timerNextSurgeofDarkness:Start(-delay)
@@ -77,11 +79,12 @@ function mod:SPELL_CAST_START(args)
         specwarnSearingFlames:Show()
         specwarnSearingFlames:Play("kickcast")
 	elseif args:IsSpellID(62662, 312628, 312981) then --Всплеск тьмы
-		warnSurgeDarkness:Show()
-		timerNextSurgeofDarkness:Start()
-        warnSurgeDarknessSoon:Schedule(57)
+		self.vb.surgeCount = self.vb.surgeCount + 1
+		warnSurgeDarkness:Show(self.vb.surgeCount)
 		specWarnSurgeDarkness:Show()
 		specWarnSurgeDarkness:Play("defensive")
+		timerNextSurgeofDarkness:Start(nil, self.vb.surgeCount+1)
+        warnSurgeDarknessSoon:Schedule(57)
 	end
 end
 

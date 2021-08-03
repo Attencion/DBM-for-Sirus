@@ -24,6 +24,7 @@ local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 3, nil, "Tank|Heale
 local warningBomb				= mod:NewTargetAnnounce(312910, 4) --Взрыв руны
 
 local specWarnOrb				= mod:NewSpecialWarningMove(312892) --Поражение громом
+local specWarnLightningCharge	= mod:NewSpecialWarningCount(312896, nil, nil, nil, 1, 2) --Разряд молнии
 local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 2, 2) --дисбаланс
 local specWarnUnbalancingStrikelf = mod:NewSpecialWarningTaunt(312898, "Tank", nil, nil, 1, 2) --дисбаланс
 local specWarnNova				= mod:NewSpecialWarningYou(312904, nil, nil, nil, 2, 2) --Нова
@@ -43,12 +44,15 @@ local timerAchieve				= mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
 local yellBomb		            = mod:NewYell(312910)
 
 mod:AddSetIconOption("SetIconOnBomb", 312910, true, false, {8})
-mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("RangeFrame", true)
+
+mod.vb.chargeCount = 0
 
 local lastcharge				= {} 
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32865, "Thorim")
+	self.vb.chargeCount = 0
 	enrageTimer:Start()
 	timerAchieve:Start()
 	if self.Options.RangeFrame then
@@ -63,7 +67,7 @@ local function sortFails1C(e1, e2)
 end
 
 function mod:OnCombatEnd()
-        DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
+	DBM:FireCustomEvent("DBM_EncounterEnd", 32865, "Thorim", wipe)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
@@ -124,8 +128,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	    warnVolley:Show()
         timerVolley:Start()
     elseif args:IsSpellID(312896, 312543, 62279) then --Разряд молнии
+		self.vb.chargeCount = self.vb.chargeCount + 1
+		specWarnLightningCharge:Show(self.vb.chargeCount)
+		timerLightningCharge:Start(16, self.vb.chargeCount+1)
    	    warnLightningCharge:Show()
-		timerLightningCharge:Start()
 	end
 end
 

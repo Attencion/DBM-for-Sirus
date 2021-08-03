@@ -39,24 +39,27 @@ local warnSimulKill			= mod:NewAnnounce("WarnSimulKill", 1)
 local warnFury				= mod:NewTargetAnnounce(312880, 3)
 local warnRoots				= mod:NewTargetAnnounce(312860, 3)
 local warnAlliesOfNature	= mod:NewSpellAnnounce(62678, 4)
-local warnDarEonar			= mod:NewAnnounce("WarningDarEonar", 1, 62528)
+local warnTremor			= mod:NewCountAnnounce(312842, 3)
 
-local specWarnSparkWhip     = mod:NewSpecialWarning("SpecWarnSparkWhip", canInterrupt) -- Хил
-local specWarnFury			= mod:NewSpecialWarningYou(312880, nil, nil, nil, 1, 2)
-local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, nil, 2, 2) -- Hard mode
-local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2)	-- Hard mode
+local specWarnSparkWhip     = mod:NewSpecialWarning("SpecWarnSparkWhip", canInterrupt) --Плеть
+local specWarnAllies		= mod:NewSpecialWarningSwitchCount(62678, nil, nil, nil, 1, 2) --Призыв защитников
+local specWarnFury			= mod:NewSpecialWarningYou(312880, nil, nil, nil, 1, 2) --Гнев природы
+local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, nil, 2, 2) --Кик каста
+local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2) --Нестабильная энергия
 
 local enrage 				= mod:NewBerserkTimer(600)
 local timerAlliesOfNature	= mod:NewCDTimer(60, 62678, "Призыв союзников", nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 local timerSimulKill		= mod:NewTimer(12, "TimerSimulKill")
 local timerFury				= mod:NewTargetTimer(10, 312880, nil, nil, nil, 3, nil)
 local timerTremorCD			= mod:NewCDTimer(35, 312842, nil, nil, nil, 7, nil)
-local timerDarEonarCD		= mod:NewCDTimer(40, 62528, "Дар Эонар", nil, nil, 1)
 
 mod:AddBoolOption("HealthFrame", true)
 mod:AddBoolOption("YellOnRoots", true)
 mod:AddSetIconOption("FuryIcon", 312880, true, false, {8, 7})
 mod:AddSetIconOption("RootsIcon", 312860, true, false, {6})
+
+mod.vb.alliesCount = 0
+mod.vb.tremorCount = 0
 
 local adds		= {}
 local rootedPlayers 	= {}
@@ -66,6 +69,8 @@ local iconId		= 6
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
+	self.vb.alliesCount = 0
+	self.vb.tremorCount = 0
 	enrage:Start()
 	table.wipe(adds)
 	timerAlliesOfNature:Start(10)		
@@ -84,14 +89,19 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(62437, 62859, 312489, 312842) then --дрожание
+		self.vb.tremorCount = self.vb.tremorCount + 1
+		warnTremor:Show(self.vb.tremorCount)
 		specWarnTremor:Show()
-		timerTremorCD:Start()	
+		timerTremorCD:Start(nil, self.vb.tremorCount+1)	
 	end
 end 
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(62678, 62873) then --Призыв защитников
-		timerAlliesOfNature:Start()
+		self.vb.alliesCount = self.vb.alliesCount + 1
+		timerAlliesOfNature:Start(nil, self.vb.alliesCount+1)
+		specWarnAllies:Show(self.vb.alliesCount)
+		specWarnAllies:Play("changetarget")
 		warnAlliesOfNature:Show()
 	elseif args:IsSpellID(312883) then
        	timerBoom:Start(8)
@@ -122,7 +132,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			self:Schedule(0.5, showRootWarning)
 		end
-
 	elseif args:IsSpellID(62451, 62865, 312535, 312888) and args:IsPlayer() then --Нестабильная энергия
 		specWarnBeam:Show()
 	end 
@@ -137,13 +146,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		iconId = iconId + 1
     elseif args:IsSpellID(63571, 62589, 312527, 312880) then --Гнев природы
         DBM.RangeCheck:Hide()
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L.EmoteDar then
-		warnDarEonar:Show()
-		timerDarEonarCD:Start()
 	end
 end
 

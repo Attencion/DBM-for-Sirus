@@ -47,14 +47,14 @@ local berserkTimerN			= mod:NewBerserkTimer(1200)
 local warnFlameBlow		        = mod:NewStackAnnounce(308628, 1, nil, "Tank|Healer")
 local specWarnPhase2Soon		= mod:NewSpecialWarning("WarnPhase2Soon", 1)  --вторая фаза
 local specWarnPhase2			= mod:NewSpecialWarning("WarnPhase2", 1)  --вторая фаза
-local specWarnFlamefall			= mod:NewSpecialWarningSpell(308987, nil, nil, nil, 1, 2)  --падение пламени
-local specWarnAnimated			= mod:NewSpecialWarningSpell(308633, nil, nil, nil, 1, 2)  --ожившее пламя
+local specWarnFlamefall			= mod:NewSpecialWarningDodge(308987, nil, nil, nil, 1, 2)  --падение пламени
+local specWarnAnimated			= mod:NewSpecialWarningCount(308633, nil, nil, nil, 1, 2)  --ожившее пламя
 local specWarnFireSign			= mod:NewSpecialWarningSpell(308638, nil, nil, nil, 1, 2)  --знак огня
 local specWarnPhoenixScream     = mod:NewSpecialWarningSpell(308671, nil, nil, nil, 1, 2)  --крик феникса
 local specWarnFireSign2         = mod:NewSpecialWarningYou(308638, nil, nil, nil, 1, 2)
 
-local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON) --ожившее плам¤
-local timerFireSignCD			= mod:NewCDTimer(37, 308638, nil, nil, nil, 7, nil, DBM_CORE_MAGIC_ICON) --знак огня
+local timerAnimatedCD			= mod:NewCDTimer(70, 308633, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON) --ожившее плам¤
+local timerFireSignCD			= mod:NewCDTimer(37, 308638, nil, nil, nil, 7, nil, DBM_CORE_CURSE_ICON) --знак огня
 local timerFlamefallCD			= mod:NewCDTimer(31, 308987, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON) --перезарядка перьев
 local timerPhoenixScreamCD		= mod:NewCDTimer(20, 308671, nil, nil, nil, 1, nil, DBM_CORE_HEROIC_ICON) --крик феникса
 
@@ -71,7 +71,7 @@ local timerWeaknessCast			= mod:NewCastTimer(20, 308664) --знак феникс
 local timerFuryCast			    = mod:NewCastTimer(20, 308665) --знак феникса: ярость
 local timerFatigueCast			= mod:NewCastTimer(20, 308667) --знак феникса: усталость
 
-local berserkTimerH			    = mod:NewBerserkTimer(444)
+local berserkTimerH			    = mod:NewBerserkTimer(445)
 local berserkTimerH2			= mod:NewBerserkTimer(500)
 
 
@@ -80,15 +80,16 @@ mod:AddBoolOption("YellOnFeather", true, "announce")
 mod:AddBoolOption("FeatherArrow")
 
 mod.vb.phase = 0
+mod.vb.animatCount = 0
 
 local warned_preP1 = false
 local LKTank
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19514, "Al'ar")
-
 	self.vb.phase = 1
 	if mod:IsDifficulty("heroic25") then
+		self.vb.animatCount = 0
 		timerAnimatedCD:Start()
 		timerFireSignCD:Start()
 		timerFlamefallCD:Start()
@@ -105,6 +106,7 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 19514, "Al'ar", wipe)
+	DBM.RangeCheck:Hide()
 end
 
 function mod:Platform()
@@ -139,7 +141,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-        if args:IsSpellID(308638) and args:IsPlayer() then	 --знак огня
+        if args:IsSpellID(308638) and args:IsPlayer() then --знак огня
 		    specWarnFireSign2:Show()
 	elseif args:IsSpellID(308628) then
 		warnFlameBlow:Show(args.destName, args.amount or 1)
@@ -168,8 +170,9 @@ function mod:SPELL_CAST_START(args)
 		timerFlamefallCD:Start()
 	    timerFlamefallCast:Start()
 	elseif args:IsSpellID(308633) then --ожившее пламя
-		specWarnAnimated:Show()
-		timerAnimatedCD:Start()
+		self.vb.animatCount = self.vb.animatCount + 1
+		specWarnAnimated:Show(self.vb.animatCount)
+		timerAnimatedCD:Start(nil, self.vb.animatCount+1)
 		timerAnimatedCast:Start()
 	------- 2 Phase ---------
 	elseif args:IsSpellID(308671) then --крик феникса

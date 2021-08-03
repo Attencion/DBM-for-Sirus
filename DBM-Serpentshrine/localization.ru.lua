@@ -21,7 +21,7 @@ L:SetWarningLocalization{
 	WarnMarkOfCorruption    = "Знак порчи %s%%",
 	SpecWarnThreatReset     = "Сброс угрозы - ОСТАНОВИТЕСЬ!!!",
 	Yad                     = "Фаза яда - БЕГИТЕ В ЛУЖУ ВОДЫ",
-	Chis                    = "Фаза воды - УКЛОНЯЙТЕСЬ"
+	Chis                    = "Фаза воды - УКЛОНЯЙТЕСЬ ОТ ЦУНАМИ"
 }
 
 L:SetOptionLocalization{
@@ -253,7 +253,7 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	SpecialMassiveShelll	= "Обстрел по вам - Отбегите от остальных",
+	SpecialMassiveShelll	= "Обстрел по вам - Берегитесь",
 	MassiveShelll		= "Обстрел по >%s<"
 
 }
@@ -268,8 +268,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	YellPowerfulShot	= "Мощный выстрел летит в меня!",
-	YellMassiveShell	= "Массированный обстрел по мне!"
+
 }
 
 ---------------

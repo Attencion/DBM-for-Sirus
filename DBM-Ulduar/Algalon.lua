@@ -20,24 +20,24 @@ mod:RegisterEvents(
 )
 
 local warnPhasePunch		    = mod:NewStackAnnounce(313033, 1, nil, "Tank")
+local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 5, 3)
 local announceBigBang			= mod:NewSpellAnnounce(313034, 4)
 local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnPhase2Soon			= mod:NewAnnounce("WarnPhase2Soon", 2)
-local announcePreBigBang		= mod:NewPreWarnAnnounce(313034, 5, 3)
-local announceBlackHole			= mod:NewSpellAnnounce(313039, 3)
+local announceBlackHole			= mod:NewCountAnnounce(313039, 3)
 local announceCosmicSmash		= mod:NewAnnounce("WarningCosmicSmash", 3, 313036)
 
 local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)
 local specWarnPhasePunch		= mod:NewSpecialWarningStack(313033, nil, 3, nil, nil, 1, 6)
 local specWarnPhasePunchlf		= mod:NewSpecialWarningTaunt(313033, "Tank", nil, nil, 1, 2)
-local specWarnBigBang			= mod:NewSpecialWarningDefensive(313034, nil, nil, nil, 3, 2)
+local specWarnBigBang			= mod:NewSpecialWarningCount(313034, nil, nil, nil, 3, 5)
 local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(313036, nil, nil, nil, 2, 2)
 
 local timerCombatStart		    = mod:NewTimer(7, "TimerCombatStart", 2457)
 local enrageTimer				= mod:NewBerserkTimer(360)
 local timerNextBigBang			= mod:NewNextTimer(90.5, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
 local timerBigBangCast			= mod:NewCastTimer(8, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
-local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar")
+local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar", 300137)
 local timerCDCosmicSmash		= mod:NewCDTimer(25, 64598, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 64598, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerPhasePunch			= mod:NewBuffActiveTimer(45, 313033, nil, "Tank", nil, 5, nil, DBM_CORE_HEALER_ICON)
@@ -48,8 +48,13 @@ local warned_preP2 = false
 local warned_star = false
 local combattime = 0
 
+mod.vb.bigbangCount = 0
+mod.vb.holeCount = 0
+
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32871, "Algalon")
+	self.vb.bigbangCount = 0
+	self.vb.holeCount = 0
 	warned_preP2 = false
 	warned_star = false
 	combattime = GetTime()
@@ -82,10 +87,11 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(64584, 64443, 312681, 313034) then --Суровый удар
-		specWarnBigBang:Show()
+		self.vb.bigbangCount = self.vb.bigbangCount + 1
+		specWarnBigBang:Show(self.vb.bigbangCount)
 		specWarnBigBang:Play("defensive")
+		timerNextBigBang:Start(90.5, self.vb.bigbangCount+1)
 		timerBigBangCast:Start()
-		timerNextBigBang:Start()
 		announceBigBang:Show()
 		announcePreBigBang:Schedule(85)
 	end
@@ -93,7 +99,8 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(313039, 64122, 65108, 312686) then --Взрыв чёрной дыры
-		announceBlackHole:Show()
+		self.vb.holeCount = self.vb.holeCount + 1
+		announceBlackHole:Show(self.vb.holeCount)
 		warned_star = false
 	elseif args:IsSpellID(64598, 62301, 313036, 312683, 62304, 64597) then	--Кара небесная
 		timerCastCosmicSmash:Start()

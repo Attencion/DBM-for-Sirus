@@ -23,7 +23,7 @@ do
 	local class = select(2, UnitClass("player"))
 	canInterrupt = class == "SHAMAN"
 		or class == "WARRIOR"
-                or class == "DEATHKNIGHT"
+		or class == "DEATHKNIGHT"
 end
 
 
@@ -57,13 +57,12 @@ local specWarnHelp		= mod:NewSpecialWarningAdds(308558, nil, nil, nil, 1, 2)  --
 local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
 local specWarnWrathH	= mod:NewSpecialWarningRun(308548, nil, nil, nil, 1, 2) -- Гнев
 local specWarnDebaf  	= mod:NewSpecialWarningRun(308544, nil, nil, nil, 3, 4) -- Дебаф 1я фаза
-local specWarnFlashVoid  = mod:NewSpecialWarningDefensive(308585, nil, nil, nil, 2, 2) -- фир 2 фаза
+local specWarnFlashVoid  = mod:NewSpecialWarningDefensive(308585, nil, nil, nil, 3, 2) -- фир 2 фаза
 local specWarnValkyrLow	 = mod:NewSpecialWarning("SpecWarnValkyrLow", nil, nil, nil, 1, 2)
 
 local timerNextHeal		= mod:NewTimer(15, "TimerNextHeal", 308561, nil, nil, 1, DBM_CORE_INTERRUPT_ICON)
 local timerNextGates	= mod:NewTimer(40, "TimerNextGates", 308545, nil, nil, 3)
 local timerNextRing		= mod:NewTimer(18, "TimerNextRing", 308563, nil, nil, 7)
-local timerNextStar		= mod:NewTimer(12, "TimerNextStar", 308565, "Healer", nil, 5, nil, DBM_CORE_MAGIC_ICON)
 local timerNextHelp		= mod:NewTimer(120, "TimerNextHelp", 308558, nil, nil, 1, DBM_CORE_TANK_ICON)
 local timerWrathH		= mod:NewTargetTimer(6, 308548, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
 local timerNextWrathH	= mod:NewCDTimer(43, 308548, nil, nil, nil, 1, nil, DBM_CORE_DEADLY_ICON)
@@ -74,6 +73,7 @@ local yellWrathN		= mod:NewYell(42783)
 
 mod:AddSetIconOption("SetIconOnWrathN", 42783, true, false, {8})
 mod:AddSetIconOption("SetIconOnWrathH", 308548, true, false, {8})
+mod:AddBoolOption("RangeFrame", true)
 
 local priestsN = true
 local priestsH = true
@@ -96,19 +96,21 @@ function mod:OnCombatStart(delay)
 	       self.vb.phase = 1
 	       timerAdds:Start()
 	       warnAddsSoon:Schedule(52)
-		   table.wipe(warnedValkyrGUIDs)
 	elseif mod:IsDifficulty("heroic25") then
 	       timerNextHelp:Start(39)
 	       timerNextGates:Start(20)
 	       timerNextWrathH:Start()
 	       self.vb.phase = 1
+		   table.wipe(warnedValkyrGUIDs)
 	end
 end
 
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 18805, "High Astromancer Solarian", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 --------------------------нормал--------------------------
@@ -157,34 +159,33 @@ function mod:SPELL_CAST_START(args)
 		priestsH = true
 		provid	 = true
 	elseif args:IsSpellID(308545) and self.vb.phase == 1 then -- врата
-                timerNextGates:Start()
-                specWarnGates:Show()
+		timerNextGates:Start()
+		specWarnGates:Show()
 		warnGates:Schedule(0)
 	elseif args:IsSpellID(308545) and self.vb.phase == 2 then -- врата
-                timerNextGates:Start(30)
+		timerNextGates:Start(30)
 		warnGates:Schedule(0)
 	elseif args:IsSpellID(308561) then -- Хил
 		timerNextHeal:Start()
 		specWarnHeal:Show(args.sourceName)
-                specWarnHeal:Play("kickcast")
+		specWarnHeal:Play("kickcast")
 		warnHeal:Schedule(0)
 	elseif args:IsSpellID(308585) then -- УЖАС
 		specWarnFlashVoid:Show(args.sourceName)
-                specWarnFlashVoid:Play("defensive")
+		specWarnFlashVoid:Play("defensive")
 		timerFlashVoid:Schedule(5)
 	elseif args:IsSpellID(308576) then
 		self.vb.phase = 2
 		timerFlashVoid:Start()
 		timerNextGates:Cancel()
 		timerNextGates:Start(15)
-                timerNextHelp:Cancel()
+		timerNextHelp:Cancel()
 		warnPhase2:Show()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(308565) then -- Пламя
-		timerNextStar:Start()
 		warnStar:Show()
 	end
 end
@@ -199,7 +200,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnWrathH:Show()
-                        yellWrathH:Yell()
+			yellWrathH:Yell()
 		end
 	elseif args:IsSpellID(308544) and self.vb.phase == 1 then -- Стаки луча
 		if args:IsPlayer() then
@@ -218,20 +219,20 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnWrathN:Show()
-                        yellWrathN:Yell()
+			yellWrathN:Yell()
 		end
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(42783) then        -- знак об
-	        if self.Options.SetIconOnWrathN then
-		        self:SetIcon(args.destName, 0)
+		if self.Options.SetIconOnWrathN then
+			self:SetIcon(args.destName, 0)
 		end
 	elseif args:IsSpellID(308548) then   -- знак гер
 		if self.Options.SetIconOnWrathH then
-		        self:SetIcon(args.destName, 0)
-                end
+			self:SetIcon(args.destName, 0)
+		end
 	end
 end
 
@@ -301,7 +302,7 @@ function mod:UNIT_HEALTH(uId)
 		        warnPhase2:Show()
 		end
 	end
-	if (mod:IsDifficulty("heroic10") or mod:IsDifficulty("heroic25")) and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedValkyrGUIDs[UnitGUID(uId)] then
+	if mod:IsDifficulty("heroic25") and uId == "target" and self:GetUnitCreatureId(uId) == 200020 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.40 and not warnedValkyrGUIDs[UnitGUID(uId)] then
 		warnedValkyrGUIDs[UnitGUID(uId)] = true
 		specWarnValkyrLow:Show()
 		specWarnValkyrLow:Play("stopattack")

@@ -28,10 +28,10 @@ local berserkTimer      = mod:NewBerserkTimer(720)
 -----------ХМ-------------
 
 local warnVzglad          = mod:NewStackAnnounce(310136, 5, nil, "Tank|Healer") -- Взгляд
-local warnZemla           = mod:NewSoonAnnounce(310152, 4) -- Землетрясение
+local warnZemla           = mod:NewSpellAnnounce(310152, 3) -- Землетрясение
 local warnHwat            = mod:NewTargetAnnounce(310144, 3) -- Хватка
 local warnSuh             = mod:NewTargetAnnounce(310155, 3) -- Обезвоживание
-local warnKrik            = mod:NewSpellAnnounce(310151, 3) -- Земля
+local warnKrik            = mod:NewCountAnnounce(310151, 3) -- Земля
 local warnTop             = mod:NewSpellAnnounce(310140, 2) -- Топот
 local warnMon             = mod:NewSpellAnnounce(310137, 3) -- Топот
 local warnPhase2Soon   	  = mod:NewPrePhaseAnnounce(2)
@@ -60,6 +60,7 @@ mod:AddSetIconOption("SetIconOnSuhTargets", 310155, true, true, {8, 7, 6, 5, 4})
 mod:AddBoolOption("AnnounceSuh", false)
 
 mod.vb.phase = 0
+mod.vb.krikCount = 0
 
 local graveTargets = {}
 local warned_preP1 = false
@@ -105,6 +106,7 @@ function mod:OnCombatStart()
 	DBM:FireCustomEvent("DBM_EncounterStart", 21213, "Morogrim Tidewalker")
 	if mod:IsDifficulty("heroic25") then
 	berserkTimerhm:Start()
+	self.vb.krikCount = 0
 	self.vb.phase = 1
 	warned_preP1 = false
 	warned_preP2 = false
@@ -140,16 +142,17 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(310152) then -- Землетрясение
-		warnZemla:Show(10)
+		warnZemla:Show()
 		timerZemlaCast:Start()
 		timerZemlaCD:Start()
 		specWarnZemla:Show()
 		DBM.RangeCheck:Show(8)
 		PlaySoundFile("Sound\\Creature\\illidan\\black_illidan_04.wav")
 	elseif args:IsSpellID(310151) then -- призывной рёв
-		warnKrik:Show()
+		self.vb.krikCount = self.vb.krikCount + 1
+		warnKrik:Show(self.vb.krikCount)
 		warnKrik2:Show()
-		timerKrikCD:Start()
+		timerKrikCD:Start(nil, self.vb.krikCount+1)
 	end
 end
 

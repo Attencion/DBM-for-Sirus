@@ -18,7 +18,7 @@ L:SetWarningLocalization{
 	SpecWarnFeatherNear	= "Падающее перо феникса около вас - остерегайтесь",
 	WarnSupernova = "Супернова >%d<",
 	WarnPhase2Soon = "Скоро 2-я фаза",
-	WarnPhase2 = "ФАЗА 2 - БЕГИТЕ",
+	WarnPhase2 = "ФАЗА 2 - БЕГИТЕ НА ВЕРХНИЙ ЭТАЖ",
 	WarnFlamefal0 = "Перья полетели, БЕГИТЕ!!!",
 
 	WarnFireSign = "Знак огня"
@@ -54,8 +54,7 @@ L:SetGeneralLocalization{
 
 L:SetTimerLocalization{
 	TimerNextRing = "Ослепление",
-        TimerNextHelp = "Вызов послушников",
-	TimerNextStar = "Звездное пламя",
+	TimerNextHelp = "Вызов послушников",
 	TimerNextGates = "Призыв врат бездны",
 	TimerNextHeal = "Высшее исцеление",
 	TimerAdds = "Вызов послушников",
@@ -70,18 +69,18 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame = "Показывать окно проверки дистанции",
     SpecWarnValkyrLow   = "Спец-предупреждение, когда у Воплощения Бездны меньше 40% ХП",
     TimerNextHelp   = "Отсчет времени до следующего $spell:308558",
     specWarnStar    = "Спец-предупреждение об $spell:308565 (для диспела)",
     specWarnHeal	= "Спец-предупреждение об $spell:308561 (для кика)",
 	WarnAddsSoon    = "Предупреждение о скором вызове послушников",
 	TimerNextRing   = "Отсчет времени до следующего $spell:308563 ",
-	TimerNextStar   = "Отсчет времени до следующего $spell:308565 ",
 	TimerNextHeal   = "Отсчет времени до следующего $spell:308561 ",
 	TimerNextGates  = "Отсчет времени до следующего $spell:308545 ",
 	TimerAdds       = "Отсчет времени до следующих послушников",
 	TimerPriests    = "Отсчет времени до следующих жрецов",
-        Zrec		= "Показывать стрелку на Жреца"
+	Zrec		= "Показывать стрелку на Жреца"
 }
 
 L:SetMiscLocalization{
@@ -108,6 +107,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame = "Показывать окно проверки дистанции",
 	Phase1 = "Предупреждать о фазе с пониженным уроном",
 	Phase2 = "Предупреждать о фазе с повышенным уроном",
 	SetIconOnSignTargets     = "Устанавливать иконки на цели $spell:308471",
@@ -143,6 +143,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame = "Показывать окно проверки дистанции",
 	specWarnBattleRoar = "Спец-предупреждение об $spell:308733 (для кика)",
 	WarnNextAdd = "Объявление о скорой активации следующего помощника",
 	TimerNextAdd = "Отсчет времени до следующего помощника",
