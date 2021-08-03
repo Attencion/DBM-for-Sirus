@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210720150000"),
+	Revision = parseCurseDate("20210805150000"),
 	DisplayVersion = "5.54", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 02) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -122,7 +122,7 @@ DBM.DefaultOptions = {
 	SpecialWarningSound5 = "Sound\\Creature\\Loathstare\\Loa_Naxx_Aggro02.wav",
 	ModelSoundValue = "Short",
 	CountdownVoice = "Alarak",
-	CountdownVoice2 = "Kerrigan",
+	CountdownVoice2 = "Artanis",
 	CountdownVoice3 = "Jim Raynor",
 	ChosenVoicePack = "None",
 	VoiceOverSpecW2 = "DefaultOnly",
@@ -325,7 +325,6 @@ DBM.Mods = {}
 DBM.ModLists = {}
 DBM.Counts = {
 	{text = "Alarak",					value = "Alarak",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak\\", max = 5},
-	{text = "Alarak2",					value = "Alarak2",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Alarak2\\", max = 5},
 	{text = "Artanis",					value = "Artanis",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Artanis\\", max = 5},
 	{text = "Kerrigan",					value = "Kerrigan",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Kerrigan\\", max = 5},
 	{text = "Jim Raynor",				value = "Jim Raynor",	path = "Interface\\AddOns\\DBM-Core\\Sounds\\Raynor\\", max = 5},
@@ -342,8 +341,8 @@ DBM.Counts = {
 DBM.Victory = {
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "Alarak: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
-	{text = "Alarak: Win2",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Alarak_Win.ogg", length = 4},
+	{text = "Alarak: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Alarak_Win.ogg", length = 4},
+	{text = "Alarak: Rak-Shir",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\AlarakRakshir.ogg", length = 4},
 	{text = "Artanis: Win",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Artanis_Win.ogg", length = 4},
 	{text = "Kerrigan: Win",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Kerrigan_Win.ogg", length = 4},
 	{text = "Jim Raynor: Win",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Victory\\Jim Raynor_Win.ogg", length = 4},
@@ -373,19 +372,12 @@ DBM.Defeat = {
 DBM.Music = {--Contains all music media, period
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "Anduin Theme: Part 2",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 285},
-	{text = "Anduin Theme: A World Divided",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 322},
-	{text = "Nightsong",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_NightElves_B.mp3", length = 217},
-	{text = "Invincible",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
 	{text = "Bronze Jam",				value = "Sound\\Music\\ZoneMusic\\IcecrownRaid\\IR_BronzeJam.mp3", length = 116},
 	{text = "Ulduar: Titan Orchestra",	value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
 }
 DBM.DungeonMusic = {--Filtered list of media assigned to dungeon/raid background music catagory
 	{text = "None",						value = "None"},
 	{text = "Random",					value = "Random"},
-	{text = "Anduin Theme: Part 2",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt1_B.mp3", length = 285},
-	{text = "Anduin Theme: A World Divided",			value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_AnduinPt2_B.mp3", length = 322},
-	{text = "Invincible",				value = "Interface\\AddOns\\DBM-Core\\sounds\\Custom\\MUS_70_Invincible_B.mp3", length = 197},
 	{text = "Ulduar: Titan Orchestra",	value = "Sound\\Music\\ZoneMusic\\UlduarRaidInt\\UR_TitanOrchestraIntro.mp3", length = 102},
 }
 DBM.BattleMusic = {--Filtered list of media assigned to boss/encounter background music catagory
