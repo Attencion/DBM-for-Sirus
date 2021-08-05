@@ -38,9 +38,11 @@ local warnYad			= mod:NewCountAnnounce(309072, 4) -- яд
 local warnChis			= mod:NewCountAnnounce(309055, 4) -- цунами
 local warnSklep         = mod:NewTargetAnnounce(309046, 3) -- лужа
 local warnKor           = mod:NewTargetAnnounce(309065, 3) -- коррозия
+local warnArrow         = mod:NewSpellAnnounce(309052, 3, nil, "Melee") -- залп вод
+local warnAya			= mod:NewSpellAnnounce(309069, 3, nil, "Melee") -- залп яда
 
-local specWarnArrow     = mod:NewSpecialWarningMove(309052, 3) -- залп вод
-local specWarnAya       = mod:NewSpecialWarningMove(309069, 3) -- залп яда
+local specWarnArrow     = mod:NewSpecialWarningMove(309052, "SpellCaster", nil, nil, 2, 3) -- залп вод
+local specWarnAya       = mod:NewSpecialWarningMove(309069, "SpellCaster", nil, nil, 2, 3) -- залп яда
 local specWarnYad       = mod:NewSpecialWarning("Yad", 309072, nil, nil, 1, 6) -- Перефаза яда
 local specWarnChis      = mod:NewSpecialWarning("Chis", 309055, nil, nil, 1, 6) -- Перефаза чист
 
@@ -149,10 +151,12 @@ function mod:SPELL_CAST_START(args)
 		timerArrowCD:Start()
 		timerArrowCast:Start()
 		specWarnArrow:Show()
+		warnArrow:Show()
 	elseif args:IsSpellID(309069) then --залп яда
 		timerAyaCD:Start()
 		timerAyaCast:Start()
 		specWarnAya:Show()
+		warnAya:Show()
 	elseif args:IsSpellID(309072) then  --грязная фаза
 		self.vb.yadCount = self.vb.yadCount + 1
 		warnYad:Show(self.vb.yadCount)

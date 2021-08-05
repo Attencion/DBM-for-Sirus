@@ -160,6 +160,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		berserkTimerhm:Cancel()
 		berserkTimerhm:Start()
 		timerPhaseCastCD:Start(95)
+		timerCastHeala:Cancel()
 		DBM.RangeCheck:Show(7)
 	elseif args:IsSpellID(309262) and args:IsPlayer() then --Связь
 		if self.Options.SetIconOnSvazTargets then
