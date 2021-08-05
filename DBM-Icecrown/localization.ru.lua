@@ -324,7 +324,6 @@ L:SetOptionLocalization{
 	MalleableGooIcon		= "Устанавливать метку на первую цель заклинания $spell:72295",
 	NextUnboundPlagueTargetIcon	= "Устанавливать метку на следующую цель заклинания $spell:72856",
 	YellOnMalleableGoo		= "Кричать, когда на вас $spell:72295",
-	YellOnUnbound			= "Кричать, когда на вас $spell:72856",
     GooArrow				= "Показывать стрелку DBM, когда $spell:72295 рядом с вами",
 	SpecWarnUnboundPlague		= "Спец-предупреждение для передачи заклинания $spell:72856",
 	SpecWarnNextPlageSelf		= "Спец-предупреждение, когда вы являетесь следующей целью\nзаклинания $spell:72856",
@@ -334,8 +333,7 @@ L:SetOptionLocalization{
 L:SetMiscLocalization{
 	EmoteMalleable	= "|TInterface\\Icons\\inv_misc_herb_evergreenmoss.blp:16|t %s разливает |cFF00FF00вязкую жижу!|r",
 	YellPull		= "Отличные новости, народ! Я усовершенствовал штамм чумы, которая уничтожит весь Азерот!",
-	YellMalleable	= "Вязкая гадость на мне!",
-	YellUnbound		= "Безудержная чума на мне!"
+	YellMalleable	= "Вязкая гадость на мне!"
 }
 
 --------------------------

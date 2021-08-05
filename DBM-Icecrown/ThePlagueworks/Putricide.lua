@@ -45,7 +45,6 @@ local specWarnOozeVariable			= mod:NewSpecialWarningYou(70352)	-- Heroic Ability
 local specWarnGasVariable			= mod:NewSpecialWarningYou(70353)	-- Heroic Ability
 local specWarnUnboundPlague			= mod:NewSpecialWarningYou(72856, nil, nil, nil, 1, 2)	-- Heroic Ability
 local specWarnMutatedPlague         = mod:NewSpecialWarningStack(72451, "Tank|Healer", 4, nil, nil, 1, 6)
-local yellUnboundPlague				= mod:NewYell(70911)
 
 local timerGaseousBloat				= mod:NewTargetTimer(20, 70672, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)	-- Duration of debuff
 local timerSlimePuddleCD			= mod:NewCDTimer(35, 70341, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)	-- Approx
@@ -299,7 +298,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnUnboundPlague:Show()
 			specWarnUnboundPlague:Play("targetyou")
 			timerUnboundPlague:Start()
-			yellUnboundPlague:Yell()
 		else
 			warnUnboundPlague:Show(args.destName)
 		end
