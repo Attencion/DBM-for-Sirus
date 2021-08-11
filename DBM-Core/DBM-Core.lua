@@ -69,7 +69,7 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = parseCurseDate("20210805150000"),
+	Revision = parseCurseDate("20210812160000"),
 	DisplayVersion = "5.54", -- the string that is shown as version
 	ReleaseRevision = releaseDate(2021, 05, 02) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
@@ -121,9 +121,9 @@ DBM.DefaultOptions = {
 	SpecialWarningSound4 = "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav",
 	SpecialWarningSound5 = "Sound\\Creature\\Loathstare\\Loa_Naxx_Aggro02.wav",
 	ModelSoundValue = "Short",
-	CountdownVoice = "Alarak",
-	CountdownVoice2 = "Artanis",
-	CountdownVoice3 = "Jim Raynor",
+	CountdownVoice = "Artanis",
+	CountdownVoice2 = "Alarak",
+	CountdownVoice3 = "Kerrigan",
 	ChosenVoicePack = "None",
 	VoiceOverSpecW2 = "DefaultOnly",
 	AlwaysPlayVoice = false,
