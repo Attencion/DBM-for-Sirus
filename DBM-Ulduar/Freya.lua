@@ -42,7 +42,7 @@ local warnAlliesOfNature	= mod:NewSpellAnnounce(62678, 4)
 local warnTremor			= mod:NewCountAnnounce(312842, 3)
 
 local specWarnSparkWhip     = mod:NewSpecialWarning("SpecWarnSparkWhip", canInterrupt) --Плеть
-local specWarnAllies		= mod:NewSpecialWarningSwitchCount(62678, nil, nil, nil, 1, 2) --Призыв защитников
+local specWarnAllies		= mod:NewSpecialWarningSwitch(62678, nil, nil, nil, 1, 2) --Призыв защитников
 local specWarnFury			= mod:NewSpecialWarningYou(312880, nil, nil, nil, 1, 2) --Гнев природы
 local specWarnTremor		= mod:NewSpecialWarningCast(312842, "SpellCaster", nil, nil, 2, 2) --Кик каста
 local specWarnBeam			= mod:NewSpecialWarningMove(312888, nil, nil, nil, 1, 2) --Нестабильная энергия
@@ -58,7 +58,6 @@ mod:AddBoolOption("YellOnRoots", true)
 mod:AddSetIconOption("FuryIcon", 312880, true, false, {8, 7})
 mod:AddSetIconOption("RootsIcon", 312860, true, false, {6})
 
-mod.vb.alliesCount = 0
 mod.vb.tremorCount = 0
 
 local adds		= {}
@@ -69,7 +68,6 @@ local iconId		= 6
 
 function mod:OnCombatStart(delay)
 	DBM:FireCustomEvent("DBM_EncounterStart", 32906, "Freya")
-	self.vb.alliesCount = 0
 	self.vb.tremorCount = 0
 	enrage:Start()
 	table.wipe(adds)
@@ -88,7 +86,7 @@ local function showRootWarning()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(62437, 62859, 312489, 312842) then --дрожание
+	if args:IsSpellID(62859, 312842, 312489, 62437) then --дрожание
 		self.vb.tremorCount = self.vb.tremorCount + 1
 		warnTremor:Show(self.vb.tremorCount)
 		specWarnTremor:Show()
@@ -98,13 +96,10 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(62678, 62873) then --Призыв защитников
-		self.vb.alliesCount = self.vb.alliesCount + 1
-		timerAlliesOfNature:Start(nil, self.vb.alliesCount+1)
-		specWarnAllies:Show(self.vb.alliesCount)
+		timerAlliesOfNature:Start()
+		specWarnAllies:Show()
 		specWarnAllies:Play("changetarget")
 		warnAlliesOfNature:Show()
-	elseif args:IsSpellID(312883) then
-       	timerBoom:Start(8)
 	elseif args:IsSpellID(62648, 62939, 312875, 312522) then --Плеть
 		specWarnSparkWhip:Show()
 		specWarnSparkWhip:Play("kickcast")

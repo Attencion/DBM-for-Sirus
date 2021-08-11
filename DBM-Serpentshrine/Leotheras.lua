@@ -82,6 +82,7 @@ mod:AddSetIconOption("SetIconOnPepelTargets", 310514, true, true, {4, 5, 6, 7})
 mod:AddSetIconOption("KleiIcon", 310496, true, true, {8})
 mod:AddBoolOption("AnnounceKlei", false)
 mod:AddBoolOption("AnnouncePepel", false)
+mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("PlaySoundOnSpell", true)
 
 mod.vb.phase = 0
@@ -150,6 +151,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21215, "Leotheras the Blind", wipe)
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 

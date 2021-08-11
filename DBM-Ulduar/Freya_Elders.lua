@@ -52,7 +52,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.PlaySoundOnFistOfStone then
 			PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 		end
-	elseif args:IsSpellID(62325, 62932, 312489, 312503, 312842, 312856) then --Дрожание земли
+	elseif args:IsSpellID(62325, 62932, 312503, 312856) then --Дрожание земли
 		specWarnGroundTremor:Show()
 	elseif args:IsSpellID(312857, 312504, 62337, 62933) then --Окаменевшая кора
         timerCoreCD:Start()	

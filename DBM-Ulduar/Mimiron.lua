@@ -28,35 +28,36 @@ local shellWarn					= mod:NewTargetAnnounce(312435, 2)
 local lootannounce				= mod:NewAnnounce("MagneticCore", 1)
 local warnBombSpawn				= mod:NewAnnounce("WarnBombSpawn", 3)
 local warnFrostBomb				= mod:NewSpellAnnounce(64623, 4)
-local warnFlames				= mod:NewSpellAnnounce(312450, 2)
+local warnFlames				= mod:NewSpellAnnounce(312803, 2)
+local warnDarkGlare				= mod:NewSpellAnnounce(63293, 4)
 
 local warnShockBlast			= mod:NewSpecialWarningDodgeCount(312792, nil, nil, nil, 4, 2)
-local warnDarkGlare				= mod:NewSpecialWarningDodgeCount(63293, nil, nil, nil, 3, 2)
+local specwarnDarkGlare			= mod:NewSpecialWarningCount(63293, nil, nil, nil, 3, 5)
 local specwarnFrostBomb			= mod:NewSpecialWarningDodgeCount(64623, nil, nil, nil, 2, 2)
 local warnPlasmaBlast			= mod:NewSpecialWarningDefensive(312790, nil, nil, nil, 2, 2)
 
 local enrage 					= mod:NewBerserkTimer(900)
 local timerHardmode				= mod:NewTimer(610, "TimerHardmode", 312812)
-local timerP1toP2				= mod:NewTimer(48, "TimeToPhase2", "136116", nil, nil, 6)
-local timerP2toP3				= mod:NewTimer(27, "TimeToPhase3", "136116", nil, nil, 6)
-local timerP3toP4				= mod:NewTimer(30, "TimeToPhase4", "136116", nil, nil, 6)
+local timerP1toP2				= mod:NewTimer(48, "TimeToPhase2", nil, nil, nil, 6)
+local timerP2toP3				= mod:NewTimer(27, "TimeToPhase3", nil, nil, nil, 6)
+local timerP3toP4				= mod:NewTimer(30, "TimeToPhase4", nil, nil, nil, 6)
 local timerProximityMines		= mod:NewNextTimer(35, 312789, nil, nil, nil, 3)
-local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2)
-local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2)
-local timerSpinUp				= mod:NewCastTimer(4, 312794, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
-local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
-local timerNextDarkGlare		= mod:NewNextTimer(40, 63274, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) -- Лазерный обстрел P3Wx2
+local timerShockBlast			= mod:NewCastTimer(4, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerShockBlastCD			= mod:NewCDTimer(40, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerSpinUp				= mod:NewCastTimer(4, 312794, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerDarkGlareCast		= mod:NewCastTimer(10, 63274, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerNextDarkGlare		= mod:NewNextTimer(40, 63274, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) -- Лазерный обстрел P3Wx2
 local timerNextShockblast		= mod:NewNextTimer(35, 312792, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerPlasmaBlastCD		= mod:NewCDTimer(30, 312790, nil, "Tank|Healer", 2, 5)
 local timerShell				= mod:NewTargetTimer(6, 312435, nil, "Tank|Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
 local timerShellCD		        = mod:NewCDTimer(10, 312435, nil, nil, 2, 5, nil, DBM_CORE_HEALER_ICON)
-local timerFlameSuppressant		= mod:NewNextTimer(80, 312793, nil, nil, nil, 7)
+local timerFlameSuppressant		= mod:NewNextTimer(70, 312793, nil, nil, nil, 7)
 local timerNextFlames			= mod:NewNextTimer(27.5, 312803, nil, nil, nil, 3)
 local timerNextFrostBomb        = mod:NewNextTimer(60, 64623, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON) --Ледяная бомба
 local timerBombExplosion		= mod:NewCastTimer(15, 312804, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 --local timerVolleyCD		        = mod:NewCDTimer(20, 63041)
 
-mod:AddSetIconOption("SetIconOnNapalm", 312435, true, false, {1, 2, 3, 4, 5, 6, 7})
+mod:AddSetIconOption("SetIconOnNapalm", 312435, true, false, {7, 6, 5, 4, 3, 2, 1})
 mod:AddSetIconOption("SetIconOnPlasmaBlast", 312790, true, false, {8})
 mod:AddBoolOption("HealthFramePhase4", true)
 mod:AddBoolOption("AutoChangeLootToFFA", true)
@@ -75,11 +76,12 @@ local spinningUp = DBM:GetSpellInfo(312794)
 local lastSpinUp = 0
 local is_spinningUp = false
 local napalmShellTargets = {}
+local napalmShellIcon 	= 7
 
-local function warnNapalmShellTargets(self)
+local function warnNapalmShellTargets()
 	shellWarn:Show(table.concat(napalmShellTargets, "<, >"))
 	table.wipe(napalmShellTargets)
-	self.vb.napalmShellIcon = 7
+	napalmShellIcon = 7
 end
 
 function mod:OnCombatStart(delay)
@@ -91,7 +93,7 @@ function mod:OnCombatStart(delay)
 	enrage:Start(-delay)
 	self.vb.phase = 0
 	is_spinningUp = false
-	self.vb.napalmShellIcon = 7
+	napalmShellIcon = 7
 	table.wipe(napalmShellTargets)
 	self:NextPhase()
 	timerPlasmaBlastCD:Start(-delay)
@@ -175,16 +177,16 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(63666, 65026, 312347, 312435, 312700, 312788) and args:IsDestTypePlayer() then --Заряд напалма
+	if args:IsSpellID(63666, 65026, 312347, 312435, 312700, 312788) and args:IsDestTypePlayer() then -- Заряд напалма
 		napalmShellTargets[#napalmShellTargets + 1] = args.destName
 		timerShell:Start()
 		timerShellCD:Start()
 		if self.Options.SetIconOnNapalm then
-			self:SetIcon(args.destName, self.vb.napalmShellIcon, 6)
+			self:SetIcon(args.destName, napalmShellIcon, 6)
+			napalmShellIcon = napalmShellIcon - 1
 		end
-		self.vb.napalmShellIcon = self.vb.napalmShellIcon - 1
 		self:Unschedule(warnNapalmShellTargets)
-		self:Schedule(0.3, warnNapalmShellTargets, self)
+		self:Schedule(0.3, warnNapalmShellTargets)
 	elseif args:IsSpellID(64529, 62997, 312437, 312790) then --Взрыв плазмы
 		blastWarn:Show(args.destName)
 		if self.Options.SetIconOnPlasmaBlast then
@@ -195,16 +197,18 @@ end
 
 local function show_warning_for_spinup(self)
 	if is_spinningUp then
-		self.vb.glareCount = self.vb.glareCount + 1
-		warnDarkGlare:Show(self.vb.glareCount)
-		timerNextDarkGlare:Start(40, self.vb.glareCount+1)
+		warnDarkGlare:Show()
 	end
-end
-
+end	
+		
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(63027, 63667, 312436, 312789) then --Мины
 		timerProximityMines:Start()
+	elseif args:IsSpellID(312450, 312803, 64566) then --Пламя
+		warnFlames:Show()
 	elseif args:IsSpellID(63414, 312794, 312441) then --Вращение
+		self.vb.glareCount = self.vb.glareCount + 1
+		specwarnDarkGlare:Show(self.vb.glareCount)
 		is_spinningUp = true
 		timerSpinUp:Start()
 		timerDarkGlareCast:Schedule(4)
@@ -221,14 +225,13 @@ function mod:NextPhase()
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33432, L.MobPhase1)
 		end
-
 	elseif self.vb.phase == 2 then
 		timerNextShockblast:Stop()
 		timerProximityMines:Stop()
 		timerFlameSuppressant:Stop()
 		timerNextFlameSuppressant:Stop()
 		timerP1toP2:Start()
-		timerNextDarkGlare:Start(85)
+		timerNextDarkGlare:Schedule(44)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
@@ -251,7 +254,6 @@ function mod:NextPhase()
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33670, L.MobPhase3)
 		end
-
 	elseif self.vb.phase == 4 then
 		if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
 			if masterlooterRaidID then
@@ -261,7 +263,7 @@ function mod:NextPhase()
 			end
 		end
 		timerP3toP4:Start()
-		timerNextDarkGlare:Schedule(22)
+		timerNextDarkGlare:Schedule(25)
 		timerNextShockblast:Schedule(55)
 		if self.vb.hardmode then
 			self:UnscheduleMethod("Flames")
@@ -274,11 +276,6 @@ function mod:NextPhase()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
 			DBM.BossHealth:AddBoss(33432, L.MobPhase1)
 		end
-		if self.vb.hardmode then
-			self:UnscheduleMethod("Flames")
-			self:Flames()
-            timerNextFrostBomb:Start(73)
-        end
 	end
 end
 
@@ -336,7 +333,7 @@ end
 
 function mod:OnSync(event, args)
 	if event == "SpinUpFail" then
-		self.vb.is_spinningUp = false
+		is_spinningUp = false
 		timerSpinUp:Cancel()
 		timerDarkGlareCast:Cancel()
 		timerNextDarkGlare:Cancel()

@@ -25,6 +25,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
 	TimerMarkOfHydross      = DBM_CORE_AUTO_TIMER_OPTIONS.next:format(38215, GetSpellInfo(38215) or "unknown"),
 	TimerMarkOfCorruption   = DBM_CORE_AUTO_TIMER_OPTIONS.next:format(38219, GetSpellInfo(38219) or "unknown"),
 	WarnMarkOfHydross       = DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(38215, GetSpellInfo(38215) or "unknown"),
@@ -66,7 +67,8 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-        AnnounceSuh	  = "Объявлять игроков, на кого установлено $spell:310155, в рейд чат ",
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
+	AnnounceSuh	  = "Объявлять игроков, на кого установлено $spell:310155, в рейд чат ",
 	WarnMurlocksSoon  = "Объявлять о скором вызове мурлоков",
 	WarnGlobes        = "Объявлять о появлении глобул",
 	TimerMurlocks     = "Отсчет времени до вызова мурлоков"
@@ -99,6 +101,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
 	PlaySoundOnSpell		= "Звуковой сигнал при применении способностей",
 	TimerDemon              = "Отсчет времени до превращения в демона",
 	TimerNormal             = "Отсчет времени до конца формы демона",
@@ -170,6 +173,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
 	BossHealthFrame	= "Показывать здоровье боссов в фазе 1 (должны быть в цели или фокусе хотя бы у одного члена рейда)",
 	SpecWarnCastHeala	= "Спец-предупреждение об $spell:309256 (для кика)",
 	YellOnStrela	= "Кричать, когда на вас $spell:309253",
@@ -215,6 +219,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
 	AutoChangeLootToFFA	= "Смена режима добычи на Каждый за себя в фазе 2 (в обычке, для лидера рейда)",
 	YellOnStaticAnger	= "Кричать, когда на вас $spell:310636",
 	YellOnStaticAnger2	= "Кричать, когда на вас $spell:310659",
@@ -259,6 +264,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
+	RangeFrame	= "Показывать игроков  в окне проверки дистанции",
 	SpecialMassiveShelll	= "Спец-предупреждение, когда на вас $spell:310560",
 	MassiveShelll		= "Объявлять цели заклинания $spell:310560",
 	YellOnPowerfulShot	= "Кричать, когда на вас $spell:310564",

@@ -18,13 +18,12 @@ mod:RegisterEvents(
 
 local warnPhase2				= mod:NewPhaseAnnounce(2, 1)
 local warnStormhammer			= mod:NewTargetAnnounce(312890, 2) --Оглушительный гром
-local warnLightningCharge		= mod:NewSpellAnnounce(312897, 3) --Разряд молнии
 local warnVolley          		= mod:NewSpellAnnounce(312902, 4) --Залп ледяных стрел
 local warnUnbalancingStrike		= mod:NewTargetAnnounce(312898, 3, nil, "Tank|Healer") --Деформирующий удар
 local warningBomb				= mod:NewTargetAnnounce(312910, 4) --Взрыв руны
 
 local specWarnOrb				= mod:NewSpecialWarningMove(312892) --Поражение громом
-local specWarnLightningCharge	= mod:NewSpecialWarningCount(312896, nil, nil, nil, 1, 2) --Разряд молнии
+local specWarnLightningCharge	= mod:NewSpecialWarningDodgeCount(312896, nil, nil, nil, 1, 2) --Разряд молнии
 local specWarnUnbalancingStrike	= mod:NewSpecialWarningYou(312898, "Tank", nil, nil, 2, 2) --дисбаланс
 local specWarnUnbalancingStrikelf = mod:NewSpecialWarningTaunt(312898, "Tank", nil, nil, 1, 2) --дисбаланс
 local specWarnNova				= mod:NewSpecialWarningYou(312904, nil, nil, nil, 2, 2) --Нова
@@ -33,12 +32,12 @@ mod:AddBoolOption("AnnounceFails", false, "announce")
 
 local enrageTimer			    = mod:NewBerserkTimer(369)
 local timerStormhammer			= mod:NewCDTimer(18, 312889, nil, nil, nil, 3)
-local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 2) --Разряд молнии
+local timerLightningCharge	 	= mod:NewCDTimer(16, 312896, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Разряд молнии
 local timerLightningCharge2	 	= mod:NewCDTimer(12, 312895, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON) --Цепная молния
-local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON) --нова
-local timerVolley               = mod:NewCDTimer(20, 312902, nil, nil, nil, 7, nil, DBM_CORE_HEALER_ICON) --залп
+local timerNova          	 	= mod:NewCDTimer(20, 312904, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON) --нова
+local timerVolley               = mod:NewCDTimer(20, 312902, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON) --залп
 local timerUnbalancingStrike	= mod:NewTargetTimer(15, 312898, nil, "Tank|Healer", nil, 3, nil, DBM_CORE_TANK_ICON) --дисбаланс
-local timerUnbalancingStrikeCD	= mod:NewCDTimer(20, 312898, nil, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON)	--дисбаланс
+local timerUnbalancingStrikeCD	= mod:NewCDTimer(20, 312898, nil, "Tank", nil, 3, nil, DBM_CORE_TANK_ICON..DBM_CORE_DEADLY_ICON) --дисбаланс
 local timerAchieve				= mod:NewAchievementTimer(175, 6770, "TimerSpeedKill")
 
 local yellBomb		            = mod:NewYell(312910)
@@ -131,7 +130,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.chargeCount = self.vb.chargeCount + 1
 		specWarnLightningCharge:Show(self.vb.chargeCount)
 		timerLightningCharge:Start(16, self.vb.chargeCount+1)
-   	    warnLightningCharge:Show()
 	end
 end
 

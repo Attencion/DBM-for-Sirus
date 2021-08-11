@@ -80,6 +80,7 @@ local berserkTimerhm        = mod:NewBerserkTimer(360)
 
 mod:AddSetIconOption("SetIconOnSvazTargets", 309261, true, true, {5, 6, 7})
 mod:AddBoolOption("AnnounceSvaz", false)
+mod:AddBoolOption("RangeFrame", true)
 
 local phase							= 1
 local SvazTargets = {}
@@ -149,8 +150,10 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21214, "Fathom-Lord Karathress", wipe)
-	DBM.RangeCheck:Hide()
     DBM.BossHealth:Clear()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)

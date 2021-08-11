@@ -174,13 +174,16 @@ function mod:SPELL_CAST_START(args)
 		specWarnFlashVoid:Show(args.sourceName)
 		specWarnFlashVoid:Play("defensive")
 		timerFlashVoid:Schedule(5)
-	elseif args:IsSpellID(308576) then
+	elseif args:IsSpellID(308576) then --2ая фаза
 		self.vb.phase = 2
 		timerFlashVoid:Start()
 		timerNextGates:Cancel()
 		timerNextGates:Start(15)
 		timerNextHelp:Cancel()
 		warnPhase2:Show()
+		if self.Options.Zrec then
+			DBM.Arrow:Hide()
+		end
 	end
 end
 

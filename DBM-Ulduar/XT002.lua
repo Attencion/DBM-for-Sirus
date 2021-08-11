@@ -24,14 +24,14 @@ local warnPhase2Soon				= mod:NewAnnounce("WarnPhase2Soon", 2)
 local specWarnLightBomb				= mod:NewSpecialWarningMoveAway(312941, nil, nil, nil, 1, 2) --свет
 local specWarnGravityBomb			= mod:NewSpecialWarningRun(312943, nil, nil, nil, 1, 2) --бомба
 local specWarnTympanicTantrum		= mod:NewSpecialWarningDodgeCount(312939, nil, nil, nil, 2, 2) --раскаты
-local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2) --Hard mode void zone
+local specWarnConsumption			= mod:NewSpecialWarningMove(312948, nil, nil, nil, 1, 2) --Хард мод войд зона
 
 local enrageTimer					= mod:NewBerserkTimer(600)
 local timerTympanicTantrum			= mod:NewCastTimer(8, 312939, nil, nil, nil, 2, nil)
-local timerTympanicTantrumCD		= mod:NewCDTimer(30, 312939, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
-local timerLightBomb				= mod:NewTargetTimer(9, 312588, nil, nil, nil, 3, nil)
+local timerTympanicTantrumCD		= mod:NewCDTimer(30, 312939, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON..DBM_CORE_HEALER_ICON)
+local timerLightBomb				= mod:NewTargetTimer(9, 312588, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 local timerLightBombCD		        = mod:NewCDTimer(20, 312588, nil, "Healer", nil, 3, nil, DBM_CORE_HEALER_ICON)
-local timerGravityBomb				= mod:NewTargetTimer(9, 312943, nil, nil, nil, 3, nil)
+local timerGravityBomb				= mod:NewTargetTimer(9, 312943, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerGravityBombCD			= mod:NewCDTimer(20, 312943, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
 local timerAchieve					= mod:NewAchievementTimer(205, 6749, "TimerSpeedKill")
 
@@ -40,7 +40,7 @@ local yellLightBomb		       		= mod:NewYell(312941)
 
 mod:AddSetIconOption("SetIconOnGravityBombTarget", 312943, true, false, {8})
 mod:AddSetIconOption("SetIconOnLightBombTarget", 312588, true, false, {7})
-mod:AddBoolOption("RangeFrame")
+mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("PlaySoundOnSpell", true)
 
 mod.vb.phase = 0
@@ -63,7 +63,7 @@ function mod:OnCombatStart(delay)
 		timerTympanicTantrumCD:Start(68-delay)
 	end
 	if self.Options.RangeFrame then
-    DBM.RangeCheck:Show(20)	   
+		DBM.RangeCheck:Show(20)	   
     end
 end
 
@@ -93,7 +93,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnLightBomb:Play("moveaway")
 			yellLightBomb:Yell()
 			DBM.RangeCheck:Show(8)
-		elseif self.Options.SetIconOnLightBombTarget then
+		end
+		if self.Options.SetIconOnLightBombTarget then
 			self:SetIcon(args.destName, 7, 9)
 		end
 	elseif args:IsSpellID(63024, 64234, 312590, 312943) then --Гравибомба
@@ -104,10 +105,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnGravityBomb:Show()
 			yellGravityBomb:Yell()
 			DBM.RangeCheck:Show(20)
-			if self.Options.PlaySoundOnSpell then
-				PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
-			end
-		elseif self.Options.SetIconOnGravityBombTarget then
+		end
+		if self.Options.PlaySoundOnSpell then
+			PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
+		end
+		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 8, 9)
 		end
 	end
@@ -118,14 +120,16 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerLightBomb:Stop()
 	    if args:IsPlayer() and self.Options.RangeFrame then
 			DBM.RangeCheck:Show(8)
-	    elseif self.Options.SetIconOnLightBombTarget then
+		end
+	    if self.Options.SetIconOnLightBombTarget then
 			self:SetIcon(args.destName, 0)
 		end
 	elseif args:IsSpellID(63024, 64234, 312590, 312943) then --Гравибомба
 		timerGravityBomb:Stop()
 		if args:IsPlayer() and self.Options.RangeFrame then
-			DBM.RangeCheck:Show(8)	
-		elseif self.Options.SetIconOnGravityBombTarget then
+			DBM.RangeCheck:Show(8)
+		end
+		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 0)
 		end
 	end

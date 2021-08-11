@@ -36,6 +36,7 @@ local specWarnShadowCrashNear	= mod:NewSpecialWarning("SpecialWarningShadowCrash
 local specWarnSurgeDarkness	    = mod:NewSpecialWarningCount(312981, "Tank", nil, nil, 2, 2)
 local specWarnLifeLeechYou		= mod:NewSpecialWarningYou(312974, nil, nil, nil, 4, 2)
 local specWarnLifeLeechNear 	= mod:NewSpecialWarning("SpecialWarningLLNear", true)
+local specWarnArmor				= mod:NewSpecialWarningSwitch(312976, "Tank|Dps", nil, nil, 1, 2)
 
 local timerEnrage				= mod:NewBerserkTimer(600)
 local timerSearingFlamesCast	= mod:NewCastTimer(2, 312977)
@@ -43,7 +44,7 @@ local timerSearingFlamesCD      = mod:NewNextTimer(16, 312977, nil, nil, nil, 2,
 local timerSurgeofDarkness	    = mod:NewBuffActiveTimer(10, 312981, nil, nil, nil, 6, nil)
 local timerNextSurgeofDarkness	= mod:NewNextTimer(62, 312981, nil, nil, nil, 6, nil, DBM_CORE_TANK_ICON)
 local timerSaroniteVapors		= mod:NewNextTimer(30, 63322, nil, nil, nil, 5)
-local timerLifeLeech	        = mod:NewTargetTimer(10, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerLifeLeech	        = mod:NewTargetTimer(10, 312974, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 local timerLeech		        = mod:NewNextTimer(37, 312974, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
 local timerAchieve				= mod:NewAchievementTimer(190, 6783, "TimerHardmode")
 
@@ -97,6 +98,9 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(62662, 312628, 312981) then --Всплекс тьмы
 		timerSurgeofDarkness:Start()
+	elseif args:IsSpellID(312623, 312976, 63364) then --Саронитовая броня
+		specWarnArmor:Show()
+		specWarnArmor:Play("killmob")
 	end
 end
 

@@ -112,7 +112,7 @@ L:SetTimerLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnPhase2Soon			= "Скоро фаза 2"
+	WarnPhase2Soon	= "Скоро фаза 2"
 }
 
 L:SetOptionLocalization{
@@ -121,6 +121,10 @@ L:SetOptionLocalization{
     RangeFrame		            = "Показывать игроков  в окне проверки дистанции (8-20)",
 	SetIconOnLightBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312941),
 	SetIconOnGravityBombTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(312943)
+}
+
+L:SetMiscLocalization{
+	YellPull = "Новые игрушки? Для меня? Обещаю, в этот раз я их не поломаю!"
 }
 
 --------------------
@@ -281,7 +285,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-    TimerSpeedKill	= "Бесценный склад (Hardmode)"
+    TimerSpeedKill	= "Бесценный склад"
 }
 
 L:SetOptionLocalization{
@@ -306,11 +310,11 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerSpeedKill	= "Сиф-он (Hardmode)"
+	TimerSpeedKill	= "Сиф-он"
 }
 
 L:SetOptionLocalization{
-	RangeFrame		= "Показывать окно проверки дистанции 8",
+	RangeFrame		= "Показывать окно проверки дистанции",
 	AnnounceFails	= "Объявлять игроков, попавших под $spell:312544, в рейд-чат\n(требуются права лидера или помощника)"
 }
 
@@ -343,7 +347,6 @@ L:SetMiscLocalization{
 }
 
 L:SetWarningLocalization{
-	WarningDarEonar		= "Дар Эонар",
 	SpecWarnSparkWhip	= "Искрящаяся плеть - ПРЕРВИТЕ КАСТ",
 	WarnSimulKill		= "Первый помощник погиб - воскрешение через ~12 сек."
 }
@@ -353,7 +356,6 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	WarningDarEonar		= "Предупреждение для Дара Эонар",
 	SpecWarnSparkWhip	= "Спец-предупреждение об $spell:312875 (для кика)",
 	FuryIcon			= "Устанавливать метки на цели заклинания $spell:312880",
 	RootsIcon			= "Устанавливать метки на цели заклинания $spell:312860",
@@ -363,7 +365,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	EmoteDar			= "Дар Хранительницы жизни начинает расти!"
+
 }
 
 ----------------------
@@ -404,7 +406,7 @@ L:SetWarningLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerHardmode	= "Самоуничтожение (Hardmode)",
+	TimerHardmode	= "Самоуничтожение",
 	TimeToPhase2	= "Фаза 2",
 	TimeToPhase3	= "Фаза 3",
 	TimeToPhase4	= "Фаза 4"
@@ -450,7 +452,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetTimerLocalization{
-	TimerHardmode = "Саронитовый враг (Hardmode)"
+	TimerHardmode = "Саронитовый враг"
 }
 
 L:SetWarningLocalization{

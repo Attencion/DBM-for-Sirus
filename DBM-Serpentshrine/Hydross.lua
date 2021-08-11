@@ -63,6 +63,7 @@ local yellKor		= mod:NewYell(309065)
 
 mod:AddSetIconOption("SetIconOnSklepTargets", 309046, true, true, {6, 7, 8})
 mod:AddSetIconOption("SetIconOnKorTargets", 309065, true, true, {6, 7, 8})
+mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("AnnounceSklep", false)
 mod:AddBoolOption("AnnounceKor", false)
 
@@ -134,6 +135,9 @@ function mod:OnCombatStart()
 	if mod:IsDifficulty("heroic25") then
 	timerArrowCD:Start()
 	timerSklepCD:Start()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Show(5)
+	end
 	else
 	timerMarkOfHydross:Start("10")
 	DBM:FireCustomEvent("DBM_EncounterStart", 21216, "Hydross the Unstable")
@@ -142,7 +146,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21216, "Hydross the Unstable", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 

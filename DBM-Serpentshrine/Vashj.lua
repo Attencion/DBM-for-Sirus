@@ -65,6 +65,7 @@ mod:AddBoolOption("Elem")
 mod:AddBoolOption("AutoChangeLootToFFA", true)
 mod:AddSetIconOption("SetIconOnStaticTargets", 310636, true, true, {7, 8})
 mod:AddSetIconOption("SetIconOnStaticTargets2", 310659, true, true, {7, 8})
+mod:AddBoolOption("RangeFrame", true)
 mod:AddBoolOption("AnnounceStatic", false)
 mod:AddBoolOption("AnnounceStatic2", false)
 
@@ -187,9 +188,11 @@ function mod:OnCombatStart(delay)
 	self.vb.StaticIcons = 8
 	self.vb.StaticIcons2 = 8
 	if mod:IsDifficulty("heroic25") then
-		DBM.RangeCheck:Show(20)
 		timerElemCD:Start(10)
 		timerStaticAngerCD:Start()
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(20)
+		end
 	else	-- Обычка
 		if DBM:GetRaidRank() == 2 then
 		lootmethod, _, masterlooterRaidID = GetLootMethod()
@@ -199,12 +202,14 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21212, "Lady Vashj", wipe)
-	DBM.RangeCheck:Hide()
 	warned_elem = false
 	warned_preP1 = false
 	warned_preP2 = false
 	warned_preP3 = false
 	warned_preP4 = false
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 	if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
 		if masterlooterRaidID then
 			SetLootMethod(lootmethod, "raid"..masterlooterRaidID)
@@ -368,13 +373,13 @@ function mod:UNIT_HEALTH(uId)
 		end
 	else
 		if self.vb.phase == 2 and not warned_preP4 and self:GetUnitCreatureId(uId) == 21212 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.50 then  --Обычка
-		if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
-			if masterlooterRaidID then
-				SetLootMethod(lootmethod, "raid"..masterlooterRaidID)
-			else
-				SetLootMethod(lootmethod)
+			if self.Options.AutoChangeLootToFFA and DBM:GetRaidRank() == 2 then
+				if masterlooterRaidID then
+					SetLootMethod(lootmethod, "raid"..masterlooterRaidID)
+				else
+					SetLootMethod(lootmethod)
+				end
 			end
-		end
 			warned_preP4 = true
 			self.vb.phase = 3
 			warnPhase3:Show()

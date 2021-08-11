@@ -3,8 +3,8 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("20210501003000")
 
-mod:SetCreatureID(32927)
-mod:RegisterCombat("combat", 32867, 32927, 32857)
+mod:SetCreatureID(32867, 32927, 32857)
+mod:RegisterCombat("combat")
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
 
 mod:RegisterEvents(
@@ -112,8 +112,6 @@ function mod:SPELL_CAST_START(args)
 		warnChainlight:Show()
 	elseif args:IsSpellID(63483, 61915, 312783, 312430) then --Вихрь молний
 		timerLightningWhirl:Start()
-	elseif args:IsSpellID(61912, 63494, 312417, 312770) then --Статический сбой
-		timerStaticDisruption:Start()
 	elseif args:IsSpellID(61903, 63493, 312416, 312769) then --Энергетический удар
 		local uId = DBM:GetRaidUnitId(args.destName)
 		if self:IsTanking(uId) then
@@ -144,6 +142,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(61973, 61974, 64320) then --Руна мощи
 		self:ScheduleMethod(0.1, "RuneTarget", 0.1, 16, true, true)
 		timerRuneofPower:Start()
+	elseif args:IsSpellID(61912, 63494, 312417, 312770) then --Статический сбой
+		timerStaticDisruption:Start()
 	elseif args:IsSpellID(61869, 63481, 312428, 312781) then --Перегрузка
 		timerOverload:Start()
 		if self.Options.AlwaysWarnOnOverload or UnitName("target") == L.StormcallerBrundir then

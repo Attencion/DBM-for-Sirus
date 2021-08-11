@@ -33,10 +33,10 @@ local specWarnPhasePunchlf		= mod:NewSpecialWarningTaunt(313033, "Tank", nil, ni
 local specWarnBigBang			= mod:NewSpecialWarningCount(313034, nil, nil, nil, 3, 5)
 local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(313036, nil, nil, nil, 2, 2)
 
-local timerCombatStart		    = mod:NewTimer(7, "TimerCombatStart", 2457)
+local timerCombatStart		    = mod:NewTimer(8, "TimerCombatStart", 2457)
 local enrageTimer				= mod:NewBerserkTimer(360)
 local timerNextBigBang			= mod:NewNextTimer(90.5, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
-local timerBigBangCast			= mod:NewCastTimer(8, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerBigBangCast			= mod:NewCastTimer(8, 313034, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON, nil, 2, 5)
 local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar", 300137)
 local timerCDCosmicSmash		= mod:NewCDTimer(25, 64598, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 64598, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
@@ -89,7 +89,6 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(64584, 64443, 312681, 313034) then --Суровый удар
 		self.vb.bigbangCount = self.vb.bigbangCount + 1
 		specWarnBigBang:Show(self.vb.bigbangCount)
-		specWarnBigBang:Play("defensive")
 		timerNextBigBang:Start(90.5, self.vb.bigbangCount+1)
 		timerBigBangCast:Start()
 		announceBigBang:Show()

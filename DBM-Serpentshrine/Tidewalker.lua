@@ -58,6 +58,7 @@ local yellSuh			= mod:NewYell(310155)
 
 mod:AddSetIconOption("SetIconOnSuhTargets", 310155, true, true, {8, 7, 6, 5, 4})
 mod:AddBoolOption("AnnounceSuh", false)
+mod:AddBoolOption("RangeFrame", true)
 
 mod.vb.phase = 0
 mod.vb.krikCount = 0
@@ -110,7 +111,9 @@ function mod:OnCombatStart()
 	self.vb.phase = 1
 	warned_preP1 = false
 	warned_preP2 = false
-	DBM.RangeCheck:Show(8)
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Show(8)
+	end
 	else
 	warnMurlocksSoon:Schedule(37)
 	timerMurlocks:Start(42)
@@ -121,7 +124,9 @@ end
 
 function mod:OnCombatEnd(wipe)
 	DBM:FireCustomEvent("DBM_EncounterEnd", 21213, "Morogrim Tidewalker", wipe)
-	DBM.RangeCheck:Hide()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:UNIT_HEALTH(uId)
