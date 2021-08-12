@@ -249,7 +249,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnBlessing:Play("targetyou")
 		end
 		if self.Options.SetIconOnBlessingTarget then
-			self:SetIcon(args.destName, 6)
+			self:SetIcon(args.destName, 6, 20)
 		end
 	elseif args:IsSpellID(313013, 312660, 64152) then --Иссушающий яд
 		warnWithering:Show(args.destName)
