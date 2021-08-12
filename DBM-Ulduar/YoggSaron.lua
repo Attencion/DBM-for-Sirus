@@ -33,10 +33,10 @@ local warnBrainPortalSoon			= mod:NewAnnounce("WarnBrainPortalSoon", 2, 57687)
 local warnEmpowerSoon				= mod:NewSoonAnnounce(313014, 4)
 local warnDeathCoil 				= mod:NewTargetAnnounce(313029, 3)
 local warnBlessing					= mod:NewTargetAnnounce(312990, 3)
-local warnWithering					= mod:NewTargetAnnounce(313013, 3)
-local warnPlague					= mod:NewTargetAnnounce(313011, 3)
 local warnApathy					= mod:NewTargetAnnounce(313010, 3)
+local warnPlague					= mod:NewTargetAnnounce(313011, 3)
 local warnCursedoom					= mod:NewTargetAnnounce(313012, 3)
+local warnWithering					= mod:NewTargetAnnounce(313013, 3)
 
 local specWarnBrainLink 			= mod:NewSpecialWarningMoveTo(312994, nil, nil, nil, 2, 2) --Схожее мышление
 local specWarnDeathCoil				= mod:NewSpecialWarningYou(313029, nil, nil, nil, 1, 2)   -- Душевная болезнь
@@ -47,10 +47,10 @@ local specWarnDeafeningRoar			= mod:NewSpecialWarningCount(313000, nil, nil, nil
 local specWarnMadness				= mod:NewSpecialWarningCount(313003, nil, nil, nil, 1, 2) --Безумие
 local specWarnFervor				= mod:NewSpecialWarningYou(312989, nil, nil, nil, 2, 2)
 local specWarnBlessing				= mod:NewSpecialWarningYou(312990, nil, nil, nil, 2, 2) --Благословение
-local specWarnWithering				= mod:NewSpecialWarningYou(313013, nil, nil, nil, 2, 2) --Иссушающий яд
-local specWarnPlague				= mod:NewSpecialWarningYou(313011, nil, nil, nil, 2, 2) --Черная чума
 local specWarnApathy				= mod:NewSpecialWarningYou(313010, nil, nil, nil, 2, 2) --Апатия
+local specWarnPlague				= mod:NewSpecialWarningYou(313011, nil, nil, nil, 2, 2) --Черная чума
 local specWarnCursedoom				= mod:NewSpecialWarningYou(313012, nil, nil, nil, 2, 2) --Проклятие рока
+local specWarnWithering				= mod:NewSpecialWarningYou(313013, nil, nil, nil, 2, 2) --Иссушающий яд
 local specWarnMaladyNear			= mod:NewSpecialWarningClose(313029, nil, nil, nil, 1, 2)
 
 local enrageTimer					= mod:NewBerserkTimer(900)
@@ -58,10 +58,10 @@ local timerMaladyCD					= mod:NewCDTimer(22, 313029, nil, nil, nil, 3, nil, DBM_
 local timerBrainLinkCD				= mod:NewCDTimer(24, 312994, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 local timerBlessing					= mod:NewTargetTimer(20, 312990, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
-local timerWithering				= mod:NewTargetTimer(18, 313013, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_POISON_ICON)
-local timerPlague					= mod:NewTargetTimer(24, 313011, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_DISEASE_ICON)
 local timerApathy					= mod:NewTargetTimer(20, 313010, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
+local timerPlague					= mod:NewTargetTimer(24, 313011, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_DISEASE_ICON)
 local timerCursedoom				= mod:NewTargetTimer(12, 313012, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_CURSE_ICON)
+local timerWithering				= mod:NewTargetTimer(18, 313013, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_POISON_ICON)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 7)
 local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 7)
 local timerLunaricGaze				= mod:NewCastTimer(4, 313001, nil, nil, nil, 2)
@@ -81,6 +81,10 @@ mod:AddSetIconOption("SetIconOnFearTarget", 313029, true, false, {8})
 mod:AddBoolOption("ShowSaraHealth")
 mod:AddSetIconOption("SetIconOnFervorTarget", 312989, true, false, {7})
 mod:AddSetIconOption("SetIconOnBlessingTarget", 312990, true, false, {6})
+mod:AddSetIconOption("SetIconOnWitheringTarget", 313013, true, false, {5})
+mod:AddSetIconOption("SetIconOnPlagueTarget", 313011, true, false, {4})
+mod:AddSetIconOption("SetIconOnApathyTarget", 313010, true, false, {3})
+mod:AddSetIconOption("SetIconOnCursedoomTarget", 313012, true, false, {2})
 mod:AddSetIconOption("SetIconOnBrainLinkTarget", 312994, true, false, {7, 8})
 mod:AddSetIconOption("SetIconOnBeacon", 64465, true, false, {1, 2, 3, 4, 5, 6, 7, 8})
 --mod:AddInfoFrameOption(212647) --???
@@ -258,12 +262,18 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnWithering:Show()
 			specWarnWithering:Play("targetyou")
 		end
+		if self.Options.SetIconOnWitheringTarget then
+			self:SetIcon(args.destName, 5, 18)
+		end
 	elseif args:IsSpellID(313011, 312658, 64153) then --чума
 		warnPlague:Show(args.destName)
 		timerPlague:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnPlague:Show()
 			specWarnPlague:Play("targetyou")
+		end
+		if self.Options.SetIconOnPlagueTarget then
+			self:SetIcon(args.destName, 4, 24)
 		end
 	elseif args:IsSpellID(313010, 312657, 64156) then --Апатия
 		warnApathy:Show(args.destName)
@@ -272,12 +282,18 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnApathy:Show()
 			specWarnApathy:Play("targetyou")
 		end
+		if self.Options.SetIconOnApathyTarget then
+			self:SetIcon(args.destName, 3, 20)
+		end
 	elseif args:IsSpellID(313012, 312659, 64157) then --Рок
 		warnCursedoom:Show(args.destName)
 		timerCursedoom:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnCursedoom:Show()
 			specWarnCursedoom:Play("targetyou")
+		end
+		if self.Options.SetIconOnCursedoomTarget then
+			self:SetIcon(args.destName, 2, 12)
 		end
 	elseif args:IsSpellID(63138, 312636, 312989) then --Рвение Сары
 		warnFervor:Show(args.destName)
@@ -318,13 +334,17 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif args:IsSpellID(312990, 312637, 63134) and self.Options.SetIconOnBlessingTarget then --Благословение
 		self:SetIcon(args.destName, 0)
 		timerBlessing:Cancel()
-	elseif args:IsSpellID(313013, 312660, 64152) then --Иссушающий яд
+	elseif args:IsSpellID(313013, 312660, 64152) and self.Options.SetIconOnWitheringTarget then --Иссушающий яд
+		self:SetIcon(args.destName, 0)
 		timerWithering:Cancel()
-	elseif args:IsSpellID(313011, 312658, 64153) then --чума
+	elseif args:IsSpellID(313011, 312658, 64153)  and self.Options.SetIconOnPlagueTarget then --чума
+		self:SetIcon(args.destName, 0)
 		timerPlague:Cancel()
-	elseif args:IsSpellID(313010, 312657, 64156) then --Апатия
+	elseif args:IsSpellID(313010, 312657, 64156)  and self.Options.SetIconOnApathyTarget then --Апатия
+		self:SetIcon(args.destName, 0)
 		timerApathy:Cancel()
-	elseif args:IsSpellID(313012, 312659, 64157) then --Рок
+	elseif args:IsSpellID(313012, 312659, 64157)  and self.Options.SetIconOnCursedoomTarget then --Рок
+		self:SetIcon(args.destName, 0)
 		timerCursedoom:Cancel()
 	elseif args:IsSpellID(63894, 64775) then --Теневой барьер Йог-Сарона
 		self:SendSync("Phase3")			-- Sync this because you don't get it in your combat log if you are in brain room.
