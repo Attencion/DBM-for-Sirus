@@ -101,13 +101,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnGravityBomb:Show(args.destName)
 		timerGravityBomb:Start(args.destName)
 		timerGravityBombCD:Start()
-		if args:IsPlayer() and self.Options.RangeFrame then
+		if args:IsPlayer() and self.Options.PlaySoundOnSpell then
 			specWarnGravityBomb:Show()
 			yellGravityBomb:Yell()
-			DBM.RangeCheck:Show(20)
-		end
-		if self.Options.PlaySoundOnSpell then
 			PlaySoundFile("Sound\\Creature\\LadyMalande\\BLCKTMPLE_LadyMal_Aggro01.wav")
+		end
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(20)
 		end
 		if self.Options.SetIconOnGravityBombTarget then
 			self:SetIcon(args.destName, 8, 9)
