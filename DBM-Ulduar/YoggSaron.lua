@@ -5,7 +5,7 @@ mod:SetRevision("20210425232323")
 
 mod:SetCreatureID(33288)
 mod:RegisterCombat("yell", L.YellPull)
-mod:SetUsedIcons(8, 7, 6, 2, 1)
+mod:SetUsedIcons(8, 7, 6, 5, 4, 3, 2, 1)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START",
@@ -58,18 +58,18 @@ local timerMaladyCD					= mod:NewCDTimer(22, 313029, nil, nil, nil, 3, nil, DBM_
 local timerBrainLinkCD				= mod:NewCDTimer(24, 312994, nil, nil, nil, 7, nil, DBM_CORE_DEADLY_ICON)
 local timerFervor					= mod:NewTargetTimer(15, 312989, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
 local timerBlessing					= mod:NewTargetTimer(20, 312990, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON)
-local timerApathy					= mod:NewTargetTimer(20, 313010, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
-local timerPlague					= mod:NewTargetTimer(24, 313011, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_DISEASE_ICON)
-local timerCursedoom				= mod:NewTargetTimer(12, 313012, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_CURSE_ICON)
-local timerWithering				= mod:NewTargetTimer(18, 313013, nil, nil, nil, 3, nil, DBM_CORE_HEALER_ICON..DBM_CORE_POISON_ICON)
+local timerApathy					= mod:NewTargetTimer(20, 313010, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON)
+local timerPlague					= mod:NewTargetTimer(24, 313011, nil, nil, nil, 3, nil, DBM_CORE_DISEASE_ICON)
+local timerCursedoom				= mod:NewTargetTimer(12, 313012, nil, nil, nil, 3, nil, DBM_CORE_CURSE_ICON)
+local timerWithering				= mod:NewTargetTimer(18, 313013, nil, nil, nil, 3, nil, DBM_CORE_POISON_ICON)
 local brainportal					= mod:NewTimer(20, "NextPortal", 57687, nil, nil, 7)
 local brainportal2					= mod:NewCDTimer(60, 64775, nil, nil, nil, 7)
-local timerLunaricGaze				= mod:NewCastTimer(4, 313001, nil, nil, nil, 2)
-local timerNextLunaricGaze			= mod:NewCDTimer(10, 313001, nil, nil, nil, 2)
+local timerLunaricGaze				= mod:NewCastTimer(4, 313001, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerNextLunaricGaze			= mod:NewCDTimer(10, 313001, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 local timerEmpower					= mod:NewCDTimer(46, 64465, nil, nil, nil, 3)
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64465, nil, nil, nil, 3)
 local timerMadness 					= mod:NewCastTimer(60, 313003, nil, nil, nil, 5, nil, DBM_CORE_DEADLY_ICON, nil, 1, 5)
-local timerMadnessCD				= mod:NewCDTimer(90, 313003, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON)
+local timerMadnessCD				= mod:NewCDTimer(90, 313003, nil, nil, nil, 3, nil, DBM_CORE_DEADLY_ICON, nil, 2, 5)
 local timerCastDeafeningRoar		= mod:NewCastTimer(2.3, 313000, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 local timerNextDeafeningRoar		= mod:NewNextTimer(20, 313000, nil, nil, nil, 2, nil, DBM_CORE_INTERRUPT_ICON)
 --local timerDeathCoilCD				= mod:NewCDTimer(22, 312993, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON)
@@ -217,6 +217,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.vb.phase == 3 then
 			brainportal:Cancel()
 			brainportal2:Cancel()
+			specWarnMadnessOutNow:Cancel()
 		end
 		if self.Options.ShowSaraHealth then --Мозг
 			DBM.BossHealth:RemoveBoss(33890)
@@ -308,7 +309,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpellID(63894, 64775) and self.vb.phase < 2 then --Теневой барьер Йог-Сарона
 		self.vb.phase = 2
 		warnP2:Show()
-		brainportal2:Start(60)
+		brainportal:Start(60)
 		warnBrainPortalSoon:Schedule(57)
 		if self.Options.ShowSaraHealth then --Мозг
 			DBM.BossHealth:RemoveBoss(33134)

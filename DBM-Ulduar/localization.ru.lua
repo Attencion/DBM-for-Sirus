@@ -46,6 +46,10 @@ L:SetTimerLocalization{
     TimerSpeedKill	= "Растопить печку"
 }
 
+L:SetMiscLocalization{
+	YellPull	= "Дерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!"
+}
+
 L:SetWarningLocalization{
 }
 
@@ -294,6 +298,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
+	YellPull    = "Вы будете наказаны за это вторжение!",
 	YellKill	= "Наконец-то я... свободен от его оков…"
 }
 

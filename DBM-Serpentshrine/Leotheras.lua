@@ -56,6 +56,7 @@ local specWarnRasslf		= mod:NewSpecialWarningTaunt(310480, "Tank", nil, nil, 1, 
 local specWarnChardg        = mod:NewSpecialWarningYou(310481, nil, nil, nil, 1, 2)
 local specWarnKlei          = mod:NewSpecialWarningYou(310496, nil, nil, nil, 1, 2)
 local specWarnObstrel       = mod:NewSpecialWarningRun(310510, nil, nil, nil, 2, 2)
+local specWarnChardg2		= mod:NewSpecialWarningDodge(310481, "Melee", nil, nil, 2, 2)
 local specWarnAnig          = mod:NewSpecialWarningDodge(310508, nil, nil, nil, 2, 2)
 local specWarnVzg           = mod:NewSpecialWarningDodge(310516, nil, nil, nil, 2, 2)
 local specWarnVost          = mod:NewSpecialWarningSoak(310503, nil, nil, nil, 1, 2)
@@ -162,6 +163,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(310481) then --рывок
 	timerChardgCast:Start()
 	warnChardg:Show(args.destName)
+	specWarnChardg2:Show()
 	if args:IsPlayer() then
 		specWarnChardg:Show()
 	end

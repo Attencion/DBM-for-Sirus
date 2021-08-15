@@ -32,7 +32,6 @@ local warnOrb			= mod:NewSpellAnnounce(308466, 4) --Сферы
 --local warnScope					= mod:NewSoonAnnounce(308984, 2, nil, "Tank|Healer|RemoveEnrage")  -- Сферы
 --local warnBah					= mod:NewAnnounce("Bah", 2)  -- Сферы
 
-local specWarnOrb		= mod:NewSpecialWarningCount(308466, nil, nil, nil, 1, 2) --Сферы
 local specWarnSign      = mod:NewSpecialWarningMoveAway(308471, nil, nil, nil, 3, 4) -- Знак
 local specWarnMagnet    = mod:NewSpecialWarningRun(308467, nil, nil, nil, 1, 4) -- Магнетизм
 
@@ -55,7 +54,6 @@ local SignTargets = {}
 local SignIcons = 8
 
 mod.vb.phase = 0
-mod.vb.orbCount = 0
 
 do
 	local function sort_by_group(v1, v2)
@@ -88,7 +86,6 @@ function mod:OnCombatStart(delay)
 	table.wipe(beaconIconTargets)
 	DBM:FireCustomEvent("DBM_EncounterStart", 19516, "Void Reaver")
 	if mod:IsDifficulty("heroic25") then
-		self.vb.orbCount = 0
 	    timerLoadCD:Start()
 	    timerOrbCD:Start()
 		--timerKnockbackCD:Start()
@@ -126,9 +123,6 @@ end
 
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(308466) then --Сферы
-		self.vb.orbCount = self.vb.orbCount + 1
-		specWarnOrb:Show(self.vb.orbCount)
-		timerSignCD:Start(nil, self.vb.orbCount+1)
 		warnOrb:Show()
 	end
 end

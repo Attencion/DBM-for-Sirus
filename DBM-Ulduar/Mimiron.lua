@@ -231,7 +231,7 @@ function mod:NextPhase()
 		timerFlameSuppressant:Stop()
 		timerNextFlameSuppressant:Stop()
 		timerP1toP2:Start()
-		timerNextDarkGlare:Schedule(44)
+		timerDarkGlareCast:Schedule(44)
 		if self.Options.HealthFrame then
 			DBM.BossHealth:Clear()
 			DBM.BossHealth:AddBoss(33651, L.MobPhase2)
@@ -263,7 +263,7 @@ function mod:NextPhase()
 			end
 		end
 		timerP3toP4:Start()
-		timerNextDarkGlare:Schedule(25)
+		timerDarkGlareCast:Schedule(44)
 		timerNextShockblast:Schedule(55)
 		if self.vb.hardmode then
 			self:UnscheduleMethod("Flames")

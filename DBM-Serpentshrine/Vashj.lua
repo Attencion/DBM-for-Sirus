@@ -217,6 +217,11 @@ function mod:OnCombatEnd(wipe)
 			SetLootMethod(lootmethod)
 		end
 	end
+	if mod:IsDifficulty("heroic25") then
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(20)
+		end
+	end	
 end
 
 
@@ -279,7 +284,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(310636) then	-- Заряд 1 фаза
 		if self.Options.StaticAngerIcons then
 			self:SetIcon(args.destName, 0)
-                end
+		end
 	elseif args:IsSpellID(310659) then	-- заряд 2 фаза
 		if self.Options.StaticAngerIcons2 then
 			self:SetIcon(args.destName, 0)

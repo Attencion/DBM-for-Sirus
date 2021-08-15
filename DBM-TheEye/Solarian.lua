@@ -51,7 +51,7 @@ local warnGates			= mod:NewSoonAnnounce(308545, 3) -- Врата бездны - 
 local warnPhase2Soon    = mod:NewPrePhaseAnnounce(2)
 local warnPhase2     	= mod:NewPhaseAnnounce(2)
 
-local specWarnHeal		= mod:NewSpecialWarning("specWarnHeal", canInterrupt)   -- Хил
+local specWarnHeal		= mod:NewSpecialWarning("SpecWarnHeal", canInterrupt)   -- Хил
 local specWarnGates		= mod:NewSpecialWarningSoak(308545, nil, nil, nil, 1, 2)  -- Врата
 local specWarnHelp		= mod:NewSpecialWarningAdds(308558, nil, nil, nil, 1, 2)  -- Послушники
 local specWarnRing		= mod:NewSpecialWarningLookAway(308562, nil, nil, nil, 2, 2)  -- Кольцо
