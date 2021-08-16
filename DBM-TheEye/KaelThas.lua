@@ -156,7 +156,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		    warnNextAdd:Show(L.NamesAdds["Lord Sanguinar"])
 		    timerNextAdd:Start(12.5, L.NamesAdds["Lord Sanguinar"])
 		elseif msg == L.YellCaper then
-			timerRoarCD:Cancel()
 			timerBombhmCD:Start(42)
 			warnNextAdd:Show(L.NamesAdds["Capernian"])
 			timerNextAdd:Start(7, L.NamesAdds["Capernian"])
@@ -174,7 +173,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self.vb.phase = 3
 			warnPhase:Show(L.WarnPhase3)
 			timerPhase4:Start()
-			timerRoarCD:Start()
 			timerBombhmCD:Start()
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Show(10)
